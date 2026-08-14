@@ -6,13 +6,11 @@
 ## Overview
 
 A full-screen interval timer that runs entirely in the browser,
-built as a **visual companion to the "Indoor row" activity on my Garmin Instinct watch**.
+built as a **visual companion** to the "Indoor row" activity
+on my Garmin Instinct watch.
 
-The watch drives the workout;
-**dolfin** gives you a big, glanceable "where am I" display to prop in front of the erg.
-
-No backend, no build step, no dependencies: just static files that can be simply copied
-behind a Web server like `nginx`.
+No backend, no build step, no dependencies: **dolfin** is made by just static files
+that can be simply copied behind a Web server like `nginx`.
 
 Optionally, **dolfin** installs as a PWA and works offline.
 
@@ -25,14 +23,15 @@ A live example of **dolfin** can be found at
 
 ## How It Works
 
-There are two screens: the setup screen and the timer screen.
+There are two screens: the Setup Screen and the Timer Screen.
 
 ### Setup Screen
 
 ![The Setup Screen](imgs/setup_screen.png)
 
 It has seven controls, with the default values for the times
-matching the Garmin activity I use most frequently:
+and repetitions matching the Garmin activity I use most frequently
+(1h10m workout):
 
 | Control                | Default    |
 | ---------------------- | ---------- |
@@ -150,7 +149,7 @@ A live example can be found at
 [https://www.albertopettarin.it/dolfin/](https://www.albertopettarin.it/dolfin/)
 
 
-## Browser support
+## Browser Support
 
 Any reasonably recent browser is supported.
 
@@ -180,7 +179,8 @@ file for details.
 
 ## About The Name **dolfin**
 
-**Dolfin** is the Venetian-dialect name for the iron comb on the bow of a gondola,
+**Dolfin** is the Venetian-dialect name for the iron comb on the bow of a
+[gondola](https://it.wikipedia.org/wiki/Gondola),
 the *ferro di prua*, whose six forward teeth stand for the six *sestieri* of Venice,
 while the single rear tooth stands for the Giudecca,
 and the arch above the top tooth is traditionally read as the Rialto bridge.
@@ -192,7 +192,7 @@ traced from a photograph of the real thing.
 ## Legal Disclaimers
 
 This project and its authors are not affiliated
-nor (unfortunately) endorsed nor supported by
+nor (unfortunately) endorsed or supported by
 [Dolfin](https://dolfin.it/en),
 the company producing the mythical
 [Polaretti](https://www.polaretti.it/en)
