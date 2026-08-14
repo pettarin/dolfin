@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>dolfin</title>
+<meta name="description" content="Full-screen interval timer companion for indoor rowing sessions.">
+<meta name="theme-color" content="#05070a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<link rel="stylesheet" href="./style.css">
+<script src="./dolfin.js" defer></script>
+</head>
+<body class="screen-setup">
+
+<!-- ── setup ─────────────────────────────────────────────────────────────── -->
+<section id="setup" class="screen setup" aria-label="Session setup">
+  <div class="setup-card">
+    <header class="setup-head">
+      <img class="logo" src="./icon.svg" alt="" width="56" height="56">
+      <div>
+        <h1>dolfin</h1>
+        <p class="tagline">indoor row interval companion</p>
+      </div>
+    </header>
+
+    <form id="setup-form" novalidate autocomplete="off">
+      <div class="field">
+        <label for="warmup">Warm up time</label>
+        <div class="row">
+          <input class="slider" id="warmup-range" type="range" min="0" max="300" step="5"
+                 value="300" aria-label="Warm up time in seconds">
+          <input id="warmup" name="warmup" type="text" inputmode="numeric" spellcheck="false"
+                 value="00:05:00" aria-describedby="warmup-error">
+        </div>
+        <p class="error" id="warmup-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="reps">Repetitions</label>
+        <div class="row row-small">
+          <input class="slider" id="reps-range" type="range" min="0" max="100" step="1"
+                 value="24" aria-label="Repetitions">
+          <input id="reps" name="reps" type="text" inputmode="numeric" spellcheck="false"
+                 value="24" aria-describedby="reps-error">
+        </div>
+        <p class="error" id="reps-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="effort">Effort time</label>
+        <div class="row">
+          <input class="slider" id="effort-range" type="range" min="0" max="300" step="5"
+                 value="105" aria-label="Effort time in seconds">
+          <input id="effort" name="effort" type="text" inputmode="numeric" spellcheck="false"
+                 value="00:01:45" aria-describedby="effort-error">
+        </div>
+        <p class="error" id="effort-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="rest">Rest time</label>
+        <div class="row">
+          <input class="slider" id="rest-range" type="range" min="0" max="300" step="5"
+                 value="45" aria-label="Rest time in seconds">
+          <input id="rest" name="rest" type="text" inputmode="numeric" spellcheck="false"
+                 value="00:00:45" aria-describedby="rest-error">
+        </div>
+        <p class="error" id="rest-error" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="cooldown">Cool down time</label>
+        <div class="row">
+          <input class="slider" id="cooldown-range" type="range" min="0" max="300" step="5"
+                 value="300" aria-label="Cool down time in seconds">
+          <input id="cooldown" name="cooldown" type="text" inputmode="numeric" spellcheck="false"
+                 value="00:05:00" aria-describedby="cooldown-error">
+        </div>
+        <p class="error" id="cooldown-error" hidden></p>
+      </div>
+
+      <div class="field field-check">
+        <label class="check check-static" for="summary-total">
+          <span>Session total</span>
+          <output class="readonly-value" id="summary-total" aria-live="polite">—</output>
+        </label>
+      </div>
+
+      <div class="field field-check">
+        <label class="check" for="fullscreen">
+          <span>Full screen</span>
+          <input id="fullscreen" name="fullscreen" type="checkbox" checked>
+        </label>
+      </div>
+
+      <div class="field">
+        <label for="notice">Transition notice time</label>
+        <div class="row row-small">
+          <input class="slider" id="notice-range" type="range" min="0" max="10" step="1"
+                 value="5" aria-label="Transition notice time in seconds">
+          <input id="notice" name="notice" type="text" inputmode="numeric" spellcheck="false"
+                 value="5" aria-describedby="notice-error">
+        </div>
+        <p class="error" id="notice-error" hidden></p>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-primary" id="ok-btn">OK</button>
+        <button type="button" class="btn btn-ghost" id="reset-btn">Reset</button>
+      </div>
+
+      <p class="hint">
+        <span class="version"><a href="https://github.com/pettarin/dolfin" target="_blank"
+            rel="noopener">dolfin</a> 1.0.0</span>
+        <span aria-hidden="true">·</span>
+        <span class="made">made with <svg class="heart" viewBox="0 0 24 24" role="img"
+            aria-label="love"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3
+            7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4
+            6.86-8.55 11.54L12 21.35z"/></svg>
+          in <span role="img" aria-label="Italy">🇮🇹</span> by <a
+            href="https://www.albertopettarin.it" target="_blank" rel="noopener">alberto</a></span>
+      </p>
+    </form>
+  </div>
+</section>
+
+<!-- ── session ───────────────────────────────────────────────────────────── -->
+<section id="session" class="screen session" aria-label="Session in progress" hidden>
+  <div class="half half-top">
+    <header class="phase-head">
+      <span class="phase-name" id="phase-name" aria-live="polite">WARM UP</span>
+      <span class="next" id="next-up"></span>
+    </header>
+
+    <div class="bar phase-bar" id="phase-bar" role="progressbar"
+         aria-label="Current phase progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="bar-fill phase-bar-fill" id="phase-bar-fill"></div>
+      <div class="bar-label"><span class="countdown" id="countdown">0:00</span></div>
+    </div>
+  </div>
+
+  <div class="half half-bottom">
+    <div class="bar overall-bar">
+      <div class="bar-fill overall-fill" id="overall-fill"></div>
+      <div class="bar-label"><span class="rep-counter" id="rep-counter"></span></div>
+    </div>
+
+    <footer class="overall-meta">
+      <span class="overall-left">left: <span id="overall-remaining">00:00:00</span></span>
+      <span class="session-buttons">
+        <button type="button" class="btn btn-end" id="fs-btn">Go Full Screen</button>
+        <button type="button" class="btn btn-end" id="end-btn">End</button>
+      </span>
+    </footer>
+  </div>
+
+  <div class="paused" id="paused-overlay" hidden>
+    <span class="paused-word">PAUSED</span>
+    <span class="paused-hint">tap anywhere or press space to resume</span>
+  </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,465 @@
+/* dolfin — dark, high-contrast, glanceable from across the room. */
+
+:root {
+  color-scheme: dark;
+
+  --bg: #05070a;
+  --panel: #0c121a;
+  --line: #1d2733;
+  --text: #e9eff6;
+  --muted: #8ba0b6;
+  --danger: #ff7a6b;
+  --accent: #ff6b3d;
+
+  /* overridden per phase on <body> */
+  --phase: #9ab0c6;
+
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --pad: clamp(0.75rem, 2.5vmin, 2rem);
+  --small-control: 6.5rem; /* Reset button, and the transition-notice row */
+}
+
+body.phase-warmup   { --phase: #f2a63a; }
+body.phase-effort   { --phase: #ff5c3d; }
+body.phase-rest     { --phase: #35b7ff; }
+body.phase-cooldown { --phase: #2fd6a6; }
+body.phase-done     { --phase: #9ab0c6; }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.screen-session {
+  background: var(--bg);
+  background: color-mix(in oklab, var(--phase) 13%, var(--bg));
+  transition: background-color 350ms ease;
+}
+
+.screen {
+  height: 100dvh;
+  padding:
+    calc(var(--pad) + env(safe-area-inset-top))
+    calc(var(--pad) + env(safe-area-inset-right))
+    calc(var(--pad) + env(safe-area-inset-bottom))
+    calc(var(--pad) + env(safe-area-inset-left));
+}
+
+/* ── setup ─────────────────────────────────────────────────────────────── */
+
+.setup {
+  display: grid;
+  justify-items: center;
+  /* "safe" so a card taller than the viewport stays scrollable from the top
+     instead of having its head clipped (landscape phones) */
+  align-content: safe center;
+  overflow-y: auto;
+}
+
+.setup-card {
+  width: min(34rem, 100%);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: clamp(1.25rem, 4vmin, 2.25rem);
+}
+
+.setup-head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.75rem;
+}
+
+.logo {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 0.7rem;
+  flex: none;
+}
+
+.setup-head h1 {
+  margin: 0;
+  font-size: 1.9rem;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  margin: 0.15rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.field { margin-bottom: 1.1rem; }
+
+.field label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+/* slider left, value box right, on one row */
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 9rem;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* the notice row lines up with the buttons underneath it: the slider spans the
+   width of OK, the box the width of Reset — same track sizes, same gap */
+.row-small {
+  grid-template-columns: minmax(0, 1fr) var(--small-control);
+  gap: 0.75rem;
+}
+
+.row-small input[type="text"] { text-align: center; }
+
+.field .row input[type="range"] {
+  width: 100%;
+  min-height: 0;
+  height: 1.6rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.field input {
+  width: 100%;
+  min-height: 3.1rem;
+  padding: 0 0.9rem;
+  font-family: var(--mono);
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  background: #070c12;
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+}
+
+.field input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: transparent;
+}
+
+.field input[aria-invalid="true"] { border-color: var(--danger); }
+
+.error {
+  margin: 0.4rem 0 0;
+  font-size: 0.85rem;
+  color: var(--danger);
+}
+
+.field-check { margin-bottom: 1.25rem; }
+
+/* `.field label` above is display:block, muted and small — these rules have to
+   out-specify it, hence `label.check` rather than plain `.check` */
+.field label.check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  min-height: 3.1rem;
+  margin-bottom: 0;
+  padding: 0 0.9rem;
+  font-size: 1.1rem;
+  color: var(--text);
+  background: #070c12;
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  cursor: pointer;
+}
+
+/* likewise `.field input`, which would stretch the box to full width */
+.field label.check input {
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  min-height: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.field label.check:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* the session total shares the Full screen row: caption left, value right,
+   both inside the one box — but there is nothing to click */
+.field label.check-static { cursor: default; }
+
+.readonly-value {
+  font-family: var(--mono);
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn {
+  flex: 1;
+  min-height: 3.25rem;
+  padding: 0 1.25rem;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 0.6rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  color: #140904;
+  background: var(--accent);
+}
+
+.btn-primary:hover { filter: brightness(1.08); }
+
+.btn-ghost {
+  flex: 0 0 var(--small-control);
+  color: var(--muted);
+  background: transparent;
+  border-color: var(--line);
+}
+
+.btn-ghost:hover { color: var(--text); }
+
+.hint {
+  margin: 1.1rem 0 0;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.hint a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* keep each phrase whole when the footer wraps */
+.made,
+.version { white-space: nowrap; }
+
+/* drawn rather than the emoji, so it takes the theme colour */
+.heart {
+  width: 1.05em;
+  height: 1.05em;
+  vertical-align: -0.18em;
+  fill: var(--accent);
+}
+
+.hint a:hover { text-decoration: underline; }
+
+.hint a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 0.2rem;
+}
+
+/* ── session ───────────────────────────────────────────────────────────── */
+
+/* two equal halves: phase on top, whole session below */
+.session {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: clamp(0.5rem, 2vh, 1.5rem);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.half {
+  display: grid;
+  gap: clamp(0.35rem, 1.2vh, 0.9rem);
+  min-height: 0;
+}
+
+/* the halves mirror each other: caption then bar, bar then meta */
+.half-top    { grid-template-rows: auto minmax(0, 1fr); }
+.half-bottom { grid-template-rows: minmax(0, 1fr) auto; }
+
+.phase-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.phase-name {
+  font-size: clamp(1.4rem, 5vmin, 3rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--phase);
+}
+
+.next {
+  font-size: clamp(0.9rem, 3vmin, 1.8rem);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-align: right;
+}
+
+.bar {
+  position: relative;
+  min-height: 0;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.9rem;
+  overflow: hidden;
+}
+
+.bar-fill {
+  position: absolute;
+  inset: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.phase-bar-fill { background: var(--phase); }
+
+.overall-fill {
+  background: rgba(255, 255, 255, 0.28);
+  background: color-mix(in oklab, var(--phase) 38%, transparent);
+}
+
+/* the reading sits over the bar, so it needs to survive both track and fill */
+.bar-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+  text-shadow: 0 0.02em 0.09em rgba(0, 0, 0, 0.55);
+}
+
+.countdown {
+  font-family: var(--mono);
+  font-size: min(25vh, 24vw);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.rep-counter {
+  font-family: var(--mono);
+  font-size: min(20vh, 16vw);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* long readings (hour-long phases, three-digit reps) step down a size so they
+   never run out of the bar on a narrow screen */
+.countdown.long   { font-size: min(18vh, 13vw); }
+.rep-counter.long { font-size: min(16vh, 11vw); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .session.urgent .countdown { animation: throb 1s ease-in-out infinite; }
+}
+
+@keyframes throb {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+.overall-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--mono);
+  /* same size as "next: …" in the top half, for symmetry */
+  font-size: clamp(0.9rem, 3vmin, 1.8rem);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.session-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-end {
+  flex: 0 0 auto;
+  min-height: 2.1rem;
+  padding: 0 0.9rem;
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.16);
+  border-radius: 0.45rem;
+}
+
+.btn-end:hover { color: var(--text); }
+
+body.phase-done #end-btn {
+  color: #140904;
+  background: var(--accent);
+  border-color: transparent;
+  min-height: 2.6rem;
+  font-size: 1rem;
+}
+
+.paused {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: rgba(5, 7, 10, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.paused-word {
+  font-size: clamp(2.5rem, 14vmin, 9rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.paused-hint {
+  font-size: clamp(0.85rem, 2.6vmin, 1.3rem);
+  color: var(--muted);
+}

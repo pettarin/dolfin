@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Dolfin, the iron comb on the bow of a Venetian gondola">
+  <title>dolfin</title>
+  <rect width="512" height="512" fill="#0b1016"/>
+  <!-- Dolfin / ferro di prua, proportions traced from the real iron: the corno
+       fans out from a tip at the top left, six equal teeth forward for the
+       sestieri, one long tooth back for the Giudecca, the arch cut above the
+       top tooth, spine tapering into the tail.
+       Sized to sit inside the maskable safe circle (centre 256,256 r 205). -->
+  <g fill="#ff6b3d">
+    <!-- corno, with the hook hanging below it; its underside merges into the
+         top tooth, the way the real iron is one piece there -->
+    <path d="M175 181
+             L177.6 92
+             C177.6 79 183 73 192 73
+             C211 73 234 81 250.6 91
+             C271 104 283 126 285.4 148
+             C286.6 160 285.4 172 282 181
+             L273.4 212
+             L262 181
+             Z"/>
+    <!-- spine -->
+    <rect x="225.4" y="160" width="21.6" height="170"/>
+    <!-- six sestieri, forward, all the same length -->
+    <rect x="172.6" y="181" width="55.2" height="15" rx="7.5"/>
+    <rect x="172.6" y="201" width="55.2" height="15" rx="7.5"/>
+    <rect x="172.6" y="221" width="55.2" height="15" rx="7.5"/>
+    <rect x="172.6" y="241" width="55.2" height="15" rx="7.5"/>
+    <rect x="172.6" y="261" width="55.2" height="15" rx="7.5"/>
+    <rect x="172.6" y="286" width="55.2" height="15" rx="7.5"/>
+    <!-- Giudecca, back -->
+    <rect x="236" y="181" width="96" height="15" rx="7.5"/>
+    <!-- tail -->
+    <path d="M236 315 C240 375 268 415 330 431"
+          fill="none" stroke="#ff6b3d" stroke-width="18" stroke-linecap="round"/>
+  </g>
+  <!-- the arch, cut through the metal above the top tooth -->
+  <path d="M184 181 A 21 17 0 0 1 226 181 Z" fill="#0b1016"/>
+</svg>
