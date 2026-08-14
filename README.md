@@ -1,6 +1,6 @@
 # dolfin
 
-**dolfin* is your indoor row interval companion
+**dolfin** is your indoor row interval companion
 
 
 ## Overview
