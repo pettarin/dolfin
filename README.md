@@ -29,7 +29,7 @@ There are two screens: the setup screen and the timer screen.
 
 ### Setup Screen
 
-TODO 1: add screenshot here.
+![The Setup Screen](imgs/setup_screen.png)
 
 It has seven controls, with the default values for the times
 matching the Garmin activity I use most frequently:
@@ -60,10 +60,14 @@ Values are remembered in `localStorage`, so the next visit starts where you left
 
 ### Timer Screen
 
-TODO 2: add screenshot here.
-
 The timer screen cycles through the defined intervals
 warm-up → ( (effort → rest) × repetitions ) → cool-down.
+
+![Warm-Up Phase](imgs/timer_screen_1.png)
+![Effort Phase](imgs/timer_screen_2.png)
+![Rest Phase](imgs/timer_screen_3.png)
+![Cool-Down Phase](imgs/timer_screen_4.png)
+![End Of Workout](imgs/timer_screen_5.png)
 
 A warm-up, effort, rest, or cool-down time of `00:00:00` simply skips that phase.
 
