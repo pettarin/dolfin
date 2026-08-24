@@ -86,6 +86,12 @@ so a long label makes for a smaller reading.
 Rowing plans typically use it for a stroke rate,
 but any short text will do.
 
+On the Workout screen the counter reads the phase group being run:
+an effort opens a group and a rest closes it,
+so an `e:` and the `r:` after it count as one group,
+a rest following another rest counts as a group of its own,
+and a plan of nothing but efforts counts one group per effort.
+
 For example, this plan:
 
 ```

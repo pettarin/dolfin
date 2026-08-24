@@ -327,6 +327,28 @@
     return { segments: segments, error: null };
   }
 
+  /** Numbers the phases of a plan by the group each belongs to, and returns how
+      many groups there are. A group is an effort and the rest after it, the pair
+      the counter on the session screen counts -- but a plan is free to depart
+      from that pattern, so the rule is that an effort opens a group and a rest
+      closes the one it is in. A rest following a rest therefore stands as a group
+      of its own, and so does a plan of nothing but efforts, one per effort. */
+  function numberPlan(segments) {
+    let rep = 0;
+    let open = false; // whether the group being numbered can still take a phase
+
+    segments.forEach((seg) => {
+      if (seg.kind === 'effort' || !open) {
+        rep++;
+        open = true;
+      }
+      if (seg.kind === 'rest') open = false;
+      seg.rep = rep;
+    });
+
+    return rep;
+  }
+
   /** Reads a field's box: a plain count for reps, a duration for the rest. */
   function parseField(field, text) {
     // free text, several phases at a time: there is no single value to read
@@ -414,9 +436,9 @@
         errors.plan = parsed.error;
       } else {
         values.segments = parsed.segments;
-        // the efforts of a plan are its repetitions, so the counter on the
-        // session screen reads the same as it does for the other two tabs
-        values.reps = parsed.segments.filter((seg) => seg.kind === 'effort').length;
+        // the groups of a plan are its repetitions, so the counter on the session
+        // screen reads the same as it does for the other two tabs
+        values.reps = numberPlan(parsed.segments);
       }
     } else if (name === 'programs') {
       // the effort block comes from the list, so it cannot be out of range
@@ -669,13 +691,9 @@
 
     push('warmup', cfg.warmup, 0);
     if (cfg.segments) {
-      // a generic plan spells its phases out; every one of them carries the
-      // number of the effort it is part of, so the counter keeps counting
-      let rep = 0;
-      cfg.segments.forEach((seg) => {
-        if (seg.kind === 'effort') rep++;
-        push(seg.kind, seg.secs, rep, seg.label);
-      });
+      // a generic plan spells its phases out, each carrying the number of the
+      // group it belongs to, which numberPlan() worked out when it was read
+      cfg.segments.forEach((seg) => push(seg.kind, seg.secs, seg.rep, seg.label));
     } else {
       for (let r = 1; r <= cfg.reps; r++) {
         push('effort', cfg.effort, r);
