@@ -29,94 +29,156 @@
     </header>
 
     <form id="setup-form" novalidate autocomplete="off">
-      <div class="field">
-        <label for="warmup">Warm up time</label>
-        <div class="row">
-          <input class="slider" id="warmup-range" type="range" min="0" max="300" step="5"
-                 value="300" aria-label="Warm up time in seconds">
-          <input id="warmup" name="warmup" type="text" inputmode="numeric" spellcheck="false"
-                 value="00:05:00" aria-describedby="warmup-error">
+      <div class="tabs" id="tabs" role="tablist" aria-label="Setup sections">
+        <button type="button" class="tab" id="tab-intervals" role="tab"
+                aria-controls="panel-intervals" aria-selected="true">Intervals</button>
+        <button type="button" class="tab" id="tab-programs" role="tab"
+                aria-controls="panel-programs" aria-selected="false"
+                tabindex="-1">Programs</button>
+        <button type="button" class="tab" id="tab-customization" role="tab"
+                aria-controls="panel-customization" aria-selected="false"
+                tabindex="-1">Customization</button>
+      </div>
+
+      <div class="panel" id="panel-intervals" role="tabpanel"
+           aria-labelledby="tab-intervals">
+        <div class="field">
+          <label for="warmup">Warm up time</label>
+          <div class="row">
+            <input class="slider" id="warmup-range" type="range" min="0" max="300" step="5"
+                   value="60" aria-label="Warm up time in seconds">
+            <input id="warmup" name="warmup" type="text" inputmode="numeric" spellcheck="false"
+                   value="00:01:00" aria-describedby="warmup-error">
+          </div>
+          <p class="error" id="warmup-error" hidden></p>
         </div>
-        <p class="error" id="warmup-error" hidden></p>
-      </div>
 
-      <div class="field">
-        <label for="reps">Repetitions</label>
-        <div class="row row-small">
-          <input class="slider" id="reps-range" type="range" min="0" max="100" step="1"
-                 value="24" aria-label="Repetitions">
-          <input id="reps" name="reps" type="text" inputmode="numeric" spellcheck="false"
-                 value="24" aria-describedby="reps-error">
+        <div class="field">
+          <label for="reps">Repetitions</label>
+          <div class="row">
+            <input class="slider" id="reps-range" type="range" min="0" max="100" step="1"
+                   value="24" aria-label="Repetitions">
+            <input id="reps" name="reps" type="text" inputmode="numeric" spellcheck="false"
+                   value="24" aria-describedby="reps-error">
+          </div>
+          <p class="error" id="reps-error" hidden></p>
         </div>
-        <p class="error" id="reps-error" hidden></p>
-      </div>
 
-      <div class="field">
-        <label for="effort">Effort time</label>
-        <div class="row">
-          <input class="slider" id="effort-range" type="range" min="0" max="300" step="5"
-                 value="105" aria-label="Effort time in seconds">
-          <input id="effort" name="effort" type="text" inputmode="numeric" spellcheck="false"
-                 value="00:01:45" aria-describedby="effort-error">
+        <div class="field">
+          <label for="effort">Effort time</label>
+          <div class="row">
+            <input class="slider" id="effort-range" type="range" min="0" max="300" step="5"
+                   value="105" aria-label="Effort time in seconds">
+            <input id="effort" name="effort" type="text" inputmode="numeric" spellcheck="false"
+                   value="00:01:45" aria-describedby="effort-error">
+          </div>
+          <p class="error" id="effort-error" hidden></p>
         </div>
-        <p class="error" id="effort-error" hidden></p>
-      </div>
 
-      <div class="field">
-        <label for="rest">Rest time</label>
-        <div class="row">
-          <input class="slider" id="rest-range" type="range" min="0" max="300" step="5"
-                 value="45" aria-label="Rest time in seconds">
-          <input id="rest" name="rest" type="text" inputmode="numeric" spellcheck="false"
-                 value="00:00:45" aria-describedby="rest-error">
+        <div class="field">
+          <label for="rest">Rest time</label>
+          <div class="row">
+            <input class="slider" id="rest-range" type="range" min="0" max="300" step="5"
+                   value="45" aria-label="Rest time in seconds">
+            <input id="rest" name="rest" type="text" inputmode="numeric" spellcheck="false"
+                   value="00:00:45" aria-describedby="rest-error">
+          </div>
+          <p class="error" id="rest-error" hidden></p>
         </div>
-        <p class="error" id="rest-error" hidden></p>
-      </div>
 
-      <div class="field">
-        <label for="cooldown">Cool down time</label>
-        <div class="row">
-          <input class="slider" id="cooldown-range" type="range" min="0" max="300" step="5"
-                 value="300" aria-label="Cool down time in seconds">
-          <input id="cooldown" name="cooldown" type="text" inputmode="numeric" spellcheck="false"
-                 value="00:05:00" aria-describedby="cooldown-error">
+        <div class="field">
+          <label for="cooldown">Cool down time</label>
+          <div class="row">
+            <input class="slider" id="cooldown-range" type="range" min="0" max="300" step="5"
+                   value="60" aria-label="Cool down time in seconds">
+            <input id="cooldown" name="cooldown" type="text" inputmode="numeric" spellcheck="false"
+                   value="00:01:00" aria-describedby="cooldown-error">
+          </div>
+          <p class="error" id="cooldown-error" hidden></p>
         </div>
-        <p class="error" id="cooldown-error" hidden></p>
-      </div>
 
-      <div class="field field-check">
-        <label class="check check-static" for="summary-total">
-          <span>Session total</span>
-          <output class="readonly-value" id="summary-total" aria-live="polite">—</output>
-        </label>
-      </div>
-
-      <div class="field field-check">
-        <label class="check" for="fullscreen">
-          <span>Full screen</span>
-          <input id="fullscreen" name="fullscreen" type="checkbox" checked>
-        </label>
-      </div>
-
-      <div class="field">
-        <label for="notice">Transition notice time</label>
-        <div class="row row-small">
-          <input class="slider" id="notice-range" type="range" min="0" max="10" step="1"
-                 value="5" aria-label="Transition notice time in seconds">
-          <input id="notice" name="notice" type="text" inputmode="numeric" spellcheck="false"
-                 value="5" aria-describedby="notice-error">
+        <div class="field field-check">
+          <label class="check check-static" for="summary-total">
+            <span>Session total</span>
+            <output class="readonly-value" id="summary-total" aria-live="polite">—</output>
+          </label>
         </div>
-        <p class="error" id="notice-error" hidden></p>
+      </div>
+
+      <div class="panel" id="panel-programs" role="tabpanel"
+           aria-labelledby="tab-programs" hidden>
+        <div class="field">
+          <label for="prog-warmup">Warm up time</label>
+          <div class="row">
+            <input class="slider" id="prog-warmup-range" type="range" min="0" max="300" step="5"
+                   value="60" aria-label="Warm up time in seconds">
+            <input id="prog-warmup" name="prog-warmup" type="text" inputmode="numeric"
+                   spellcheck="false" value="00:01:00" aria-describedby="prog-warmup-error">
+          </div>
+          <p class="error" id="prog-warmup-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="program">Program</label>
+          <!-- options are built from PROGRAMS in dolfin.js, so the list lives in one place -->
+          <select id="program" name="program"></select>
+        </div>
+
+        <div class="field">
+          <label for="prog-cooldown">Cool down time</label>
+          <div class="row">
+            <input class="slider" id="prog-cooldown-range" type="range" min="0" max="300" step="5"
+                   value="60" aria-label="Cool down time in seconds">
+            <input id="prog-cooldown" name="prog-cooldown" type="text" inputmode="numeric"
+                   spellcheck="false" value="00:01:00" aria-describedby="prog-cooldown-error">
+          </div>
+          <p class="error" id="prog-cooldown-error" hidden></p>
+        </div>
+
+        <div class="field field-check">
+          <label class="check check-static" for="prog-summary-total">
+            <span>Session total</span>
+            <output class="readonly-value" id="prog-summary-total" aria-live="polite">—</output>
+          </label>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-customization" role="tabpanel"
+           aria-labelledby="tab-customization" hidden>
+        <div class="field field-check">
+          <label class="check" for="fullscreen">
+            <span>Launch full screen</span>
+            <input id="fullscreen" name="fullscreen" type="checkbox" checked>
+          </label>
+        </div>
+
+        <div class="field field-check">
+          <label class="check" for="allow-skip">
+            <span>Allow skipping phase</span>
+            <input id="allow-skip" name="allow-skip" type="checkbox">
+          </label>
+        </div>
+
+        <div class="field">
+          <label for="notice">Transition notice time (s)</label>
+          <div class="row">
+            <input class="slider" id="notice-range" type="range" min="0" max="10" step="1"
+                   value="5" aria-label="Transition notice time in seconds">
+            <input id="notice" name="notice" type="text" inputmode="numeric" spellcheck="false"
+                   value="5" aria-describedby="notice-error">
+          </div>
+          <p class="error" id="notice-error" hidden></p>
+        </div>
       </div>
 
       <div class="actions">
-        <button type="submit" class="btn btn-primary" id="ok-btn">OK</button>
+        <button type="submit" class="btn btn-primary" id="start-btn">Start</button>
         <button type="button" class="btn btn-ghost" id="reset-btn">Reset</button>
       </div>
 
       <p class="hint">
         <span class="version"><a href="https://github.com/pettarin/dolfin" target="_blank"
-            rel="noopener">dolfin</a> 1.0.0</span>
+            rel="noopener">dolfin</a> 2.0.0</span>
         <span aria-hidden="true">·</span>
         <span class="made">made with <svg class="heart" viewBox="0 0 24 24" role="img"
             aria-label="love"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3
@@ -153,8 +215,9 @@
     <footer class="overall-meta">
       <span class="overall-left">left: <span id="overall-remaining">00:00:00</span></span>
       <span class="session-buttons">
+        <button type="button" class="btn btn-end" id="skip-btn">Skip</button>
         <button type="button" class="btn btn-end" id="fs-btn">Go Full Screen</button>
-        <button type="button" class="btn btn-end" id="end-btn">End</button>
+        <button type="button" class="btn btn-end" id="end-btn">Stop</button>
       </span>
     </footer>
   </div>

@@ -18,7 +18,7 @@
   --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 
   --pad: clamp(0.75rem, 2.5vmin, 2rem);
-  --small-control: 6.5rem; /* Reset button, and the transition-notice row */
+  --value-box: 9rem; /* every value box, and the Reset button under them */
 }
 
 body.phase-warmup   { --phase: #f2a63a; }
@@ -104,6 +104,47 @@ body.screen-session {
   font-size: 0.9rem;
 }
 
+/* the two sections of the form share one strip, and split its width evenly */
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+/* deliberately not .btn: a filled box here would compete with Start underneath */
+.tab {
+  flex: 1;
+  min-height: 2.9rem;
+  padding: 0 0.75rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  /* sits on top of the strip's own line, so the two never double up */
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+}
+
+.tab:hover { color: var(--text); }
+
+/* keyed off the ARIA state, so what is seen and what is announced cannot drift */
+.tab[aria-selected="true"] {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--accent);
+  /* inset, so the ring is not clipped by the card padding */
+  outline-offset: -2px;
+  border-radius: 0.4rem 0.4rem 0 0;
+}
+
 .field { margin-bottom: 1.1rem; }
 
 .field label {
@@ -116,19 +157,15 @@ body.screen-session {
 /* slider left, value box right, on one row */
 .row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 9rem;
+  grid-template-columns: minmax(0, 1fr) var(--value-box);
   align-items: center;
   gap: 0.75rem;
 }
 
-/* the notice row lines up with the buttons underneath it: the slider spans the
-   width of OK, the box the width of Reset — same track sizes, same gap */
-.row-small {
-  grid-template-columns: minmax(0, 1fr) var(--small-control);
-  gap: 0.75rem;
-}
-
-.row-small input[type="text"] { text-align: center; }
+/* bare counts are short enough to look stranded at the left edge of their
+   box, unlike the durations, which very nearly fill theirs */
+#notice,
+#reps { text-align: center; }
 
 .field .row input[type="range"] {
   width: 100%;
@@ -153,6 +190,38 @@ body.screen-session {
   background: #070c12;
   border: 1px solid var(--line);
   border-radius: 0.6rem;
+}
+
+/* the combobox wears the same box as the inputs; it spans the panel because
+   "20 x (02:00 + 01:00)" does not fit the narrow value box the rows use */
+.field select {
+  width: 100%;
+  min-height: 3.1rem;
+  padding: 0 2.4rem 0 0.9rem;
+  font-family: var(--mono);
+  /* the labels are long and fixed-width: "INT: 12 x (01:45 + 00:45)" is 25
+     monospace characters, and a native select clips rather than scrolls. On a
+     320px screen the box gives the text about 200px, so it has to scale down
+     with the viewport, capping at a step below the inputs' 1.35rem */
+  font-size: clamp(0.8rem, 4vw, 1.15rem);
+  color: var(--text);
+  background: #070c12;
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  cursor: pointer;
+  /* chevron drawn inline rather than fetched, so the app stays offline-complete */
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%238ba0b6' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round' d='M1 1.5 6 6.5l5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 0.75rem;
+}
+
+.field select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: transparent;
 }
 
 .field input:focus-visible {
@@ -249,8 +318,11 @@ body.screen-session {
 
 .btn-primary:hover { filter: brightness(1.08); }
 
+/* with Start hidden on the Customization tab, Reset has the row to itself */
+#start-btn[hidden] + #reset-btn { flex: 1; }
+
 .btn-ghost {
-  flex: 0 0 var(--small-control);
+  flex: 0 0 var(--value-box);
   color: var(--muted);
   background: transparent;
   border-color: var(--line);
@@ -365,6 +437,7 @@ body.screen-session {
   align-items: center;
   justify-content: center;
   padding: 0 0.5rem;
+  text-align: center;
   text-shadow: 0 0.02em 0.09em rgba(0, 0, 0, 0.55);
 }
 
@@ -390,6 +463,10 @@ body.screen-session {
 .countdown.long   { font-size: min(18vh, 13vw); }
 .rep-counter.long { font-size: min(16vh, 11vw); }
 
+/* "Workout Completed" is seventeen characters, half again as long as the widest
+   reading the counter otherwise shows, so the finished state drops a step more */
+body.phase-done .rep-counter { font-size: min(11vh, 8vw); }
+
 @media (prefers-reduced-motion: no-preference) {
   .session.urgent .countdown { animation: throb 1s ease-in-out infinite; }
 }
@@ -403,7 +480,10 @@ body.screen-session {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  /* three buttons plus the clock outgrow a narrow phone, so the buttons drop to
+     a line of their own rather than running off the edge */
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
   font-family: var(--mono);
   /* same size as "next: …" in the top half, for symmetry */
   font-size: clamp(0.9rem, 3vmin, 1.8rem);
@@ -415,6 +495,8 @@ body.screen-session {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  /* keeps the group hard right whether or not it wrapped onto its own line */
+  margin-left: auto;
 }
 
 .btn-end {
@@ -432,10 +514,21 @@ body.screen-session {
 
 .btn-end:hover { color: var(--text); }
 
-body.phase-done #end-btn {
+/* ending the session is worth spotting from across the room, so it carries the
+   accent throughout, not only once the session is over */
+#end-btn {
   color: #140904;
   background: var(--accent);
   border-color: transparent;
+}
+
+#end-btn:hover { filter: brightness(1.08); }
+
+/* nothing left to skip once the session is over */
+body.phase-done #skip-btn { display: none; }
+
+/* by then it is the only thing left to do, so it also grows */
+body.phase-done #end-btn {
   min-height: 2.6rem;
   font-size: 1rem;
 }

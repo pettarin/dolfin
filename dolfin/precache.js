@@ -1,7 +1,7 @@
 /* dolfin service worker: cache-first precache so the app runs offline. */
 'use strict';
 
-const CACHE = 'dolfin-1.0.0'; // keep in step with the version in the footer
+const CACHE = 'dolfin-2.0.0'; // keep in step with the version in the footer
 
 const ASSETS = [
   './',

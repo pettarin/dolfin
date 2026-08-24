@@ -29,19 +29,52 @@ There are two screens: the Setup Screen and the Timer Screen.
 
 ![The Setup Screen](imgs/setup_screen.png)
 
-It has seven controls, with the default values for the times
-and repetitions matching the Garmin activity I use most frequently
-(1h10m workout):
+It is split into three tabs: "Intervals", "Programs" and "Customization".
 
-| Control                | Default    |
-| ---------------------- | ---------- |
-| Warm up time           | `00:05:00` |
-| Repetitions            | `24`       |
-| Effort time            | `00:01:45` |
-| Rest time              | `00:00:45` |
-| Cool down time         | `00:05:00` |
-| Transition notice time | `00:00:05` |
-| Full screen            | `True`     |
+**"Intervals"** describes a session one field at a time.
+Its default values match the Garmin activity I use most frequently
+(1h02m workout):
+
+| Control        | Default    |
+| -------------- | ---------- |
+| Warm up time   | `00:01:00` |
+| Repetitions    | `24`       |
+| Effort time    | `00:01:45` |
+| Rest time      | `00:00:45` |
+| Cool down time | `00:01:00` |
+
+**"Programs"** describes a session by picking a ready-made effort block
+from a list, rather than typing it.
+It has its own warm up and cool down times, independent of the ones on
+"Intervals", and offers these programs,
+written as `INT: (effort time + rest time) x repetitions`:
+
+| Program                     | Program                     |
+| --------------------------- | --------------------------- |
+| `INT: (01:45 + 00:45) x 4`  | `INT: (02:00 + 01:00) x 5`  |
+| `INT: (01:45 + 00:45) x 6`  | `INT: (02:00 + 01:00) x 10` |
+| `INT: (01:45 + 00:45) x 8`  | `INT: (02:00 + 01:00) x 15` |
+| `INT: (01:45 + 00:45) x 12` | `INT: (02:00 + 01:00) x 20` |
+| `INT: (01:45 + 00:45) x 16` | `INT: (02:00 + 01:00) x 25` |
+| `INT: (01:45 + 00:45) x 18` | `INT: (02:00 + 01:00) x 30` |
+| `INT: (01:45 + 00:45) x 20` | `INT: (02:00 + 01:00) x 40` |
+| `INT: (01:45 + 00:45) x 24` |                             |
+| `INT: (01:45 + 00:45) x 30` |                             |
+| `INT: (01:45 + 00:45) x 32` |                             |
+| `INT: (01:45 + 00:45) x 36` |                             |
+| `INT: (01:45 + 00:45) x 48` |                             |
+
+Both tabs show a read-only "Session total", and the tab you are on when you
+press "Start" is the one that runs.
+Switching to "Customization" does not change that choice.
+
+**"Customization"** holds the preferences that apply to either kind of session:
+
+| Control                    | Default    |
+| -------------------------- | ---------- |
+| Transition notice time (s) | `00:00:05` |
+| Launch full screen         | `True`     |
+| Allow skipping phase       | `False`    |
 
 The "Transition notice time" represents how long before each phase ends
 the countdown starts blinking and the blips start.
@@ -52,8 +85,8 @@ Time fields accept values in `hh:mm:ss`, `mm:ss`, or plain integer number of sec
 
 The "Reset" button restores the default value.
 
-The "OK" button starts the session, launching the timer screen ---
-in fullscreen mode if the corresponding checkbox is selected, otherwise non-fullscreen.
+The "Start" button starts the session, launching the timer screen ---
+in fullscreen mode if "Launch full screen" is selected, otherwise non-fullscreen.
 
 Values are remembered in `localStorage`, so the next visit starts where you left off.
 
@@ -78,8 +111,10 @@ The screen is split into two horizontal bands:
   with a progress bar, the current repetition / total repetitions,
   and the time remaining for completing the workout.
 
-On the bottom right corner there are two buttons:
+On the bottom right corner there are three buttons:
 
+- one to skip the current phase, jumping straight to the next one,
+  shown only when "Allow skipping phase" is selected;
 - one to go/exit fullscreen mode;
 - one to end the workout and go back to the setup screen.
 
@@ -97,8 +132,9 @@ While a workout is running:
 | Action                                          | Input                                                |
 | ----------------------------------------------- | ---------------------------------------------------- |
 | Pause / resume                                  | click/tap anywhere, or `Space`                       |
+| Skip the current phase                          | the **Skip** button, when allowed                    |
 | Enter or leave full screen, session carrying on | the **Go Full Screen** / **Exit Full Screen** button |
-| End the session and go back to setup            | the **End** button, or `Esc`                         |
+| End the session and go back to setup            | the **Stop** button, or `Esc`                        |
 
 The screen is kept awake for the duration of the workout
 via the Screen Wake Lock API where the browser supports it,
