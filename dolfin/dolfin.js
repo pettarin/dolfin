@@ -1,9 +1,9 @@
-/* dolfin — interval timer companion for indoor rowing.
+/* dolfin -- interval timer companion for indoor rowing.
    No dependencies, no build step. */
 'use strict';
 
 (function () {
-  // ── configuration ──────────────────────────────────────────────────────
+  // -- configuration ------------------------------------------------------
 
   // preset effort/rest blocks offered on the Programs tab; the labels are derived
   // from these by programLabel(), so the format lives in exactly one place
@@ -92,20 +92,24 @@
 
   const STORAGE_KEY = 'dolfin.settings.v1';
   const MAX_SECONDS = 6 * 3600;
-  // no practical ceiling, just a guard: the timeline holds two segments per rep,
-  // and an unbounded value would build enough of them to hang the tab
-  const MAX_REPS = 9999;
+  // well past any session anybody rows, and low enough that the timeline it
+  // builds -- two segments per repetition -- stays a sane thing to draw
+  const MAX_REPS = 999;
   // the same guard for a generic plan, on both the phases it builds and the text
   // it is read from, which also bounds what goes into storage
   const MAX_PLAN_CHARS = 20000;
   const MAX_PLAN_SEGMENTS = 999;
   const RANGE_MAX = 300; // the sliders cover 0..5 minutes; type for anything longer
 
-  // how the strip under the session is drawn, by how many phases it has to show:
-  // real gaps while the boxes are wide, an edge on each while they are narrow,
-  // and past the last count one plain band, since a box would be a hairline
-  const STRIP_GAPPED_BOXES = 12;
-  const STRIP_RULED_BOXES = 80;
+  // the boxes of the strip are told apart by the track showing between them. The
+  // gaps share out a slice of the width rather than taking a fixed size each, so
+  // they stay wide while the phases are few and thin out as they multiply,
+  // instead of crowding the boxes out; the cap keeps a short plan from being
+  // mostly gap. Both are percentages of the strip.
+  const STRIP_GAP_SHARE = 12;
+  const STRIP_GAP_MAX = 1.2;
+  // past this many phases a box would be thinner than a hairline, so the strip
+  // is drawn as one band instead
   const STRIP_MAX_BOXES = 1000;
 
   // both lists follow the on-screen order, so the first invalid field gets focus
@@ -187,7 +191,7 @@
     cooldown: 'COOL DOWN',
   };
 
-  // ── dom ────────────────────────────────────────────────────────────────
+  // -- dom ----------------------------------------------------------------
 
   const $ = (id) => document.getElementById(id);
 
@@ -238,7 +242,7 @@
     els['color-' + k] = $('color-' + k);
   });
 
-  // ── parsing / formatting ───────────────────────────────────────────────
+  // -- parsing / formatting -----------------------------------------------
 
   /** Accepts "105", "1:45" and "00:01:45". Returns whole seconds, or null. */
   function parseDuration(raw) {
@@ -363,7 +367,7 @@
     return h > 0 ? h + ':' + String(m).padStart(2, '0') + ':' + ss : m + ':' + ss;
   }
 
-  // ── settings ───────────────────────────────────────────────────────────
+  // -- settings -----------------------------------------------------------
 
   // the last known good state of the whole setup screen, both configurations;
   // replaced at boot by loadSettings(), which owns its colours (see freshDefaults)
@@ -649,7 +653,7 @@
     }
   }
 
-  // ── timeline ───────────────────────────────────────────────────────────
+  // -- timeline -----------------------------------------------------------
 
   /** Flat list of segments with cumulative offsets; zero-length ones dropped. */
   function buildTimeline(cfg) {
@@ -693,7 +697,7 @@
     return cfg.warmup + cfg.reps * cfg.effort + Math.max(0, rests) * cfg.rest + cfg.cooldown;
   }
 
-  // ── audio cues ─────────────────────────────────────────────────────────
+  // -- audio cues ---------------------------------------------------------
 
   let audioCtx = null;
 
@@ -738,7 +742,7 @@
     },
   };
 
-  // ── full screen ────────────────────────────────────────────────────────
+  // -- full screen --------------------------------------------------------
 
   function isFullscreen() {
     return !!(document.fullscreenElement || document.webkitFullscreenElement);
@@ -781,7 +785,7 @@
     }
   }
 
-  // ── wake lock ──────────────────────────────────────────────────────────
+  // -- wake lock ----------------------------------------------------------
 
   let wakeLock = null;
 
@@ -807,7 +811,7 @@
     Promise.resolve(lock.release()).catch(() => {});
   }
 
-  // ── session ────────────────────────────────────────────────────────────
+  // -- session ------------------------------------------------------------
 
   let session = null;
 
@@ -850,8 +854,8 @@
 
     strip.textContent = '';
     strip.classList.toggle('plain', count > STRIP_MAX_BOXES);
-    strip.classList.toggle('ruled', count > STRIP_GAPPED_BOXES && count <= STRIP_RULED_BOXES);
-    strip.style.setProperty('--seg-gap', count <= STRIP_GAPPED_BOXES ? '3px' : '0px');
+    strip.style.setProperty('--seg-gap',
+      (count > 1 ? Math.min(STRIP_GAP_MAX, STRIP_GAP_SHARE / (count - 1)) : 0) + '%');
     if (count > STRIP_MAX_BOXES) return;
 
     // one insertion, so a long session does not lay the strip out over and over
@@ -1065,7 +1069,7 @@
     els[CONFIG_FIELDS[activeConfig].focus].focus({ preventScroll: true });
   }
 
-  // ── setup tabs ─────────────────────────────────────────────────────────
+  // -- setup tabs ---------------------------------------------------------
 
   let activeTab = TABS[0];
   let activeConfig = DEFAULTS.config;
@@ -1108,7 +1112,7 @@
     event.preventDefault();
   });
 
-  // ── setup screen wiring ────────────────────────────────────────────────
+  // -- setup screen wiring ------------------------------------------------
 
   /** Every total stays live, so each is already right when you switch to it. */
   function updateSummary() {
@@ -1117,7 +1121,7 @@
       const ok = Object.keys(read.errors).length === 0;
       setText(
         els[CONFIG_FIELDS[name].total],
-        ok ? formatHMS(totalSeconds(read.values)) : '—'
+        ok ? formatHMS(totalSeconds(read.values)) : '-'
       );
     });
   }
@@ -1197,7 +1201,7 @@
     });
   });
 
-  // ── session screen wiring ──────────────────────────────────────────────
+  // -- session screen wiring ----------------------------------------------
 
   els.endBtn.addEventListener('click', (event) => {
     event.stopPropagation();
@@ -1247,7 +1251,7 @@
     if (session && !session.finished && session.pausedAt === null) acquireWakeLock();
   });
 
-  // ── boot ───────────────────────────────────────────────────────────────
+  // -- boot ---------------------------------------------------------------
 
   fillPrograms();
   settings = loadSettings();

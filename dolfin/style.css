@@ -1,4 +1,4 @@
-/* dolfin — dark, high-contrast, glanceable from across the room. */
+/* dolfin -- dark, high-contrast, glanceable from across the room. */
 
 :root {
   color-scheme: dark;
@@ -63,7 +63,7 @@ body.screen-session {
     calc(var(--pad) + env(safe-area-inset-left));
 }
 
-/* ── setup ─────────────────────────────────────────────────────────────── */
+/* -- setup --------------------------------------------------------------- */
 
 .setup {
   display: grid;
@@ -281,7 +281,7 @@ body.screen-session {
 
 .field-check { margin-bottom: 1.25rem; }
 
-/* `.field label` above is display:block, muted and small — these rules have to
+/* `.field label` above is display:block, muted and small -- these rules have to
    out-specify it, hence `label.check` rather than plain `.check` */
 .field label.check {
   display: flex;
@@ -440,7 +440,7 @@ body.screen-session {
   border-radius: 0.2rem;
 }
 
-/* ── session ───────────────────────────────────────────────────────────── */
+/* -- session ------------------------------------------------------------- */
 
 /* two equal halves: phase on top, whole session below */
 .session {
@@ -526,14 +526,12 @@ body.screen-session {
   background: color-mix(in oklab, var(--phase) 38%, transparent);
 }
 
-/* while the boxes are too narrow for a gap but wide enough to tell apart, an
-   edge keeps two phases of the same kind from reading as one */
-.strip.ruled .strip-seg { box-shadow: inset -1px 0 0 rgba(5, 7, 10, 0.55); }
-
-.strip-seg-warmup   { background: var(--color-warmup, #f2a63a); }
-.strip-seg-effort   { background: var(--color-effort, #ff5c3d); }
-.strip-seg-rest     { background: var(--color-rest, #35b7ff); }
-.strip-seg-cooldown { background: var(--color-cooldown, #2fd6a6); }
+/* held back from the full phase colour: the strip covers half the screen, and at
+   full strength it pulls the eye off the countdown, which is what is being read */
+.strip-seg-warmup   { background: color-mix(in oklab, var(--color-warmup, #f2a63a) 62%, transparent); }
+.strip-seg-effort   { background: color-mix(in oklab, var(--color-effort, #ff5c3d) 62%, transparent); }
+.strip-seg-rest     { background: color-mix(in oklab, var(--color-rest, #35b7ff) 62%, transparent); }
+.strip-seg-cooldown { background: color-mix(in oklab, var(--color-cooldown, #2fd6a6) 62%, transparent); }
 
 /* what is left to run, dimmed: it shrinks to the right as the session goes, so
    its edge is where you are */
@@ -541,7 +539,7 @@ body.screen-session {
   position: absolute;
   inset: 0;
   transform-origin: right center;
-  background: rgba(5, 7, 10, 0.72);
+  background: rgba(5, 7, 10, 0.7);
   will-change: transform;
 }
 
@@ -636,7 +634,7 @@ body.phase-done .rep-counter { font-size: min(11vh, 8vw); }
   flex-wrap: wrap;
   gap: 0.5rem 1rem;
   font-family: var(--mono);
-  /* same size as "next: …" in the top half, for symmetry */
+  /* same size as "next: ..." in the top half, for symmetry */
   font-size: clamp(0.9rem, 3vmin, 1.8rem);
   font-variant-numeric: tabular-nums;
   color: var(--muted);

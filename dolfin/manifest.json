@@ -1,7 +1,7 @@
 {
-  "name": "dolfin — indoor row companion",
+  "name": "dolfin, your indoor rowing companion",
   "short_name": "dolfin",
-  "description": "Full-screen interval timer that follows a warm-up, N effort/rest repetitions and a cool-down.",
+  "description": "A full-screen timer for indoor rowing workouts that runs entirely in the browser, built as a visual companion to the 'Indoor Row' activity of modern smartwatches.",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",

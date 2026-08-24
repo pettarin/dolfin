@@ -1,13 +1,14 @@
 # dolfin
 
-**dolfin** is your indoor row companion
+**dolfin**, your indoor rowing companion.
 
 
 ## Overview
 
-A full-screen interval timer that runs entirely in the browser,
-built as a **visual companion** to the "Indoor row" activity
-on my Garmin Instinct watch.
+A full-screen timer for indoor rowing workouts
+that runs entirely in the browser,
+built as a **visual companion**
+to the "Indoor Row" activity of modern smartwatches.
 
 No backend, no build step, no dependencies:
 **dolfin** is made by just static files
