@@ -277,9 +277,28 @@ body.screen-session {
   outline-offset: 2px;
 }
 
-/* the session total shares the Full screen row: caption left, value right,
-   both inside the one box — but there is nothing to click */
-.field label.check-static { cursor: default; }
+/* the session total is a reading, not a control: it sits on the same two-track
+   row as the durations, so its caption spans the slider and its value lines up
+   with the boxes above. Nothing in it can be typed into or selected. */
+.field .readonly-box {
+  display: flex;
+  align-items: center;
+  min-height: 3.1rem;
+  margin-bottom: 0;
+  padding: 0 0.9rem;
+  background: #070c12;
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* out-specifies the generic `.field label`, which is block, small and muted */
+.field label.readonly-box {
+  font-size: 1.1rem;
+  color: var(--text);
+}
 
 .readonly-value {
   font-family: var(--mono);

@@ -16,7 +16,7 @@ All notable changes to this project will be documented in this file.
 - A "Skip" button on the timer screen, which jumps to the end of the current
   phase; skipping the last phase finishes the session. It works while paused too.
   It is offered only when the new "Allow skipping phase" setting is selected.
-- A "Programs" tab, offering nineteen ready-made effort blocks written as
+- A "Programs" tab, offering twenty-six ready-made effort blocks written as
   `INT: (effort time + rest time) x repetitions`. It carries its own warm up and cool
   down times, independent of the ones on "Intervals", and its own session total.
   The tab you are on when you press "Start" is the one that runs.

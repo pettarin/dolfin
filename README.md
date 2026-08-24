@@ -49,20 +49,23 @@ It has its own warm up and cool down times, independent of the ones on
 "Intervals", and offers these programs,
 written as `INT: (effort time + rest time) x repetitions`:
 
-| Program                     | Program                     |
-| --------------------------- | --------------------------- |
-| `INT: (01:45 + 00:45) x 4`  | `INT: (02:00 + 01:00) x 5`  |
-| `INT: (01:45 + 00:45) x 6`  | `INT: (02:00 + 01:00) x 10` |
-| `INT: (01:45 + 00:45) x 8`  | `INT: (02:00 + 01:00) x 15` |
-| `INT: (01:45 + 00:45) x 12` | `INT: (02:00 + 01:00) x 20` |
-| `INT: (01:45 + 00:45) x 16` | `INT: (02:00 + 01:00) x 25` |
-| `INT: (01:45 + 00:45) x 18` | `INT: (02:00 + 01:00) x 30` |
-| `INT: (01:45 + 00:45) x 20` | `INT: (02:00 + 01:00) x 40` |
-| `INT: (01:45 + 00:45) x 24` |                             |
-| `INT: (01:45 + 00:45) x 30` |                             |
-| `INT: (01:45 + 00:45) x 32` |                             |
-| `INT: (01:45 + 00:45) x 36` |                             |
-| `INT: (01:45 + 00:45) x 48` |                             |
+| Program                     | Program                     | Program                     |
+| --------------------------- | --------------------------- | --------------------------- |
+| `INT: (01:30 + 00:30) x 5`  | `INT: (01:45 + 00:45) x 4`  | `INT: (02:00 + 01:00) x 5`  |
+| `INT: (01:30 + 00:30) x 10` | `INT: (01:45 + 00:45) x 6`  | `INT: (02:00 + 01:00) x 10` |
+| `INT: (01:30 + 00:30) x 15` | `INT: (01:45 + 00:45) x 8`  | `INT: (02:00 + 01:00) x 15` |
+| `INT: (01:30 + 00:30) x 20` | `INT: (01:45 + 00:45) x 12` | `INT: (02:00 + 01:00) x 20` |
+| `INT: (01:30 + 00:30) x 30` | `INT: (01:45 + 00:45) x 16` | `INT: (02:00 + 01:00) x 25` |
+| `INT: (01:30 + 00:30) x 45` | `INT: (01:45 + 00:45) x 18` | `INT: (02:00 + 01:00) x 30` |
+| `INT: (01:30 + 00:30) x 60` | `INT: (01:45 + 00:45) x 20` | `INT: (02:00 + 01:00) x 40` |
+|                             | `INT: (01:45 + 00:45) x 24` |                             |
+|                             | `INT: (01:45 + 00:45) x 30` |                             |
+|                             | `INT: (01:45 + 00:45) x 32` |                             |
+|                             | `INT: (01:45 + 00:45) x 36` |                             |
+|                             | `INT: (01:45 + 00:45) x 48` |                             |
+
+The list opens on `INT: (01:45 + 00:45) x 24`,
+the same block the "Intervals" defaults describe.
 
 Both tabs show a read-only "Session total", and the tab you are on when you
 press "Start" is the one that runs.

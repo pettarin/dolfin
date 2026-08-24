@@ -5,26 +5,16 @@
 (function () {
   // ── configuration ──────────────────────────────────────────────────────
 
-  const DEFAULTS = {
-    reps: 24,
-    effort: 105,
-    rest: 45,
-    warmup: 60,
-    cooldown: 60,
-    // the Programs tab keeps its own warm up and cool down, independent of the
-    // ones above, so a preset can carry a different opening and closing
-    progWarmup: 60,
-    progCooldown: 60,
-    program: 0, // index into PROGRAMS
-    config: 'intervals', // the tab whose settings Start will run
-    notice: 5, // seconds of blinking and blips before a phase ends
-    fullscreen: true,
-    allowSkip: false, // opt in to the Skip button on the timer screen
-  };
-
   // preset effort/rest blocks offered on the Programs tab; the labels are derived
   // from these by programLabel(), so the format lives in exactly one place
   const PROGRAMS = [
+    { reps: 5, effort: 90, rest: 30 },
+    { reps: 10, effort: 90, rest: 30 },
+    { reps: 15, effort: 90, rest: 30 },
+    { reps: 20, effort: 90, rest: 30 },
+    { reps: 30, effort: 90, rest: 30 },
+    { reps: 45, effort: 90, rest: 30 },
+    { reps: 60, effort: 90, rest: 30 },
     { reps: 4, effort: 105, rest: 45 },
     { reps: 6, effort: 105, rest: 45 },
     { reps: 8, effort: 105, rest: 45 },
@@ -45,6 +35,27 @@
     { reps: 30, effort: 120, rest: 60 },
     { reps: 40, effort: 120, rest: 60 },
   ];
+
+  const DEFAULTS = {
+    reps: 24,
+    effort: 105,
+    rest: 45,
+    warmup: 60,
+    cooldown: 60,
+    // the Programs tab keeps its own warm up and cool down, independent of the
+    // ones above, so a preset can carry a different opening and closing
+    progWarmup: 60,
+    progCooldown: 60,
+    // the same block the manual defaults above describe, so the two tabs open
+    // on the same workout; falls back to the first entry if it ever leaves
+    // the list
+    program: Math.max(0, findProgram({ reps: 24, effort: 105, rest: 45 })),
+    config: 'intervals', // the tab whose settings Start will run
+    notice: 5, // seconds of blinking and blips before a phase ends
+    fullscreen: true,
+    allowSkip: false, // opt in to the Skip button on the timer screen
+  };
+
 
   // A rest is scheduled after every repetition, including the last one, before
   // the cool-down. Set to false to drop that final rest.
