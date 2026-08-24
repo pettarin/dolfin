@@ -24,11 +24,12 @@ A live example of **dolfin** can be found at
 
 ## How It Works
 
-There are two screens: the Setup screen and the Workout screen.
+There are two screens: the **Setup** screen and the **Workout** screen.
 
 ### Setup Screen
 
-It is split into three tabs: "Intervals", "Programs", and "Customization".
+It is split into three tabs:
+**Intervals**, **Programs**, and **Customization**.
 
 #### Intervals Tab
 
@@ -38,8 +39,7 @@ The **"Intervals"** tab lets the user
 set up a workout session made by repetitions of effort and rest phases,
 plus optional warm up and cool down phases.
 
-Its default values match the Garmin activity I use most frequently
-(1h02m workout):
+Its default values match the Garmin activity I use most frequently:
 
 | Control        | Default    |
 | -------------- | ---------- |
@@ -49,10 +49,10 @@ Its default values match the Garmin activity I use most frequently
 | Rest time      | `00:00:45` |
 | Cool down time | `00:01:00` |
 
-A warm-up, effort, rest, or cool-down time of `00:00:00`
+A warm up, effort, rest, or cool down time of `00:00:00`
 simply skips that phase.
 
-Press the "Start" button to transition to the Workout screen.
+Press the **Start** button to transition to the Workout screen.
 
 #### Programs Tab
 
@@ -61,7 +61,7 @@ Press the "Start" button to transition to the Workout screen.
 The **"Programs"** tab lets the user pick one of the pre-defined workouts,
 plus optional warm up and cool down phases.
 
-> ![NOTE]
+> [!NOTE]
 > Currently (``v2.0.0``) only interval-type workouts are supported.
 
 The included programs are:
@@ -95,14 +95,14 @@ The included programs are:
 | `INT: (02:00 + 01:00) x 30` |                                          |
 | `INT: (02:00 + 01:00) x 40` |                                          |
 
-Press the "Start" button to transition to the Workout screen.
+Press the **Start** button to transition to the Workout screen.
 
 #### Customization Tab
 
 ![Customization Tab](imgs/setup_customization.png)
 
 The **"Customization"** tab holds the preferences that apply
-to the workout screen, for either "Intervals" or "Programs" workouts:
+to the workout screen, for either **Intervals** or **Programs** workouts:
 
 | Control                    | Default                 |
 | -------------------------- | ----------------------- |
@@ -115,7 +115,8 @@ to the workout screen, for either "Intervals" or "Programs" workouts:
 | Cool down colour           | `#2fd6a6` (light green) |
 | Finished colour            | `#9ab0c6` (grey)        |
 
-The "Transition notice time" represents how long before each phase ends
+The **Transition notice time** setting represents
+how long before each phase ends
 the countdown starts blinking and the blips start.
 Set it to zero for no warning at all.
 
@@ -123,23 +124,25 @@ Time fields accept values in `hh:mm:ss`, `mm:ss`,
 or plain integer number of seconds
 (e.g., `00:01:42`, `01:42` and `102` are all accepted).
 
-The "Default colours" button restores just the colour values,
+The **Default colours** button restores just the colour values,
 leaving the times and the chosen program alone.
 
-The "Reset" button restores the default value for all controls.
+The **Reset** button restores the default value for all controls.
 
-Values are remembered in `localStorage`,
-so the next visit starts where you left off.
+Values are saved in `localStorage`,
+so the next visit starts with the last values set
+(possibly different than the default values).
 
 ### Workout Screen
 
-The **Workout** screen cycles through the defined intervals
-warm-up → ( (effort → rest) × repetitions ) → cool-down.
+The **Workout** screen cycles through the defined phases:
+warm up → ( (effort → rest) × repetitions ) → cool down → end of workout.
+Immediately below a screenshots of each phase:
 
-![Warm-Up Phase](imgs/phases_warm_up.png)
+![Warm Up Phase](imgs/phases_warm_up.png)
 ![Effort Phase](imgs/phases_effort.png)
 ![Rest Phase](imgs/phases_rest.png)
-![Cool-Down Phase](imgs/phases_cool_down.png)
+![Cool Down Phase](imgs/phases_cool_down.png)
 ![End Of Workout](imgs/phases_end_of_workout.png)
 
 The screen is split into two horizontal bands:
@@ -152,14 +155,14 @@ The screen is split into two horizontal bands:
 
 On the bottom right corner there are three buttons:
 
-- one, shown only when "Allow skipping phase" is selected,
+- **Skip**, shown only when the **Allow skipping phase** setting is selected,
   to skip the current phase and jump to the next one;
-- one to go/exit full screen mode;
-- one to end the workout and go back to the setup screen.
+- **Go Full Screen/Exit Full Screen** to toggle the full screen mode;
+- **Stop** to end the workout and go back to the setup screen.
 
 #### Audio Clues
 
-Audio cues are synthesised (no files, so they work offline) short blips,
+Audio cues are synthesised short blips,
 one per second through the transition notice window at the end of every phase.
 A distinct tone plays when a phase starts:
 higher for effort, lower for everything else,
@@ -169,12 +172,12 @@ and three descending tones at the end of the session.
 
 While a workout is running:
 
-| Action                                          | Input                                                |
-| ----------------------------------------------- | ---------------------------------------------------- |
-| Pause / resume                                  | click/tap anywhere, or `Space`                       |
-| Skip the current phase                          | the **Skip** button, when allowed                    |
-| Enter or leave full screen, session carrying on | the **Go Full Screen** / **Exit Full Screen** button |
-| End the session and go back to setup            | the **Stop** button, or `Esc`                        |
+| Action                                           | Input                                                          |
+| ------------------------------------------------ | -------------------------------------------------------------- |
+| Pause / resume                                   | click/tap anywhere, or press the `Space` key                   |
+| Skip the current phase                           | click/tap the **Skip** button                                  |
+| Enter or leave full screen, session carrying on  | click/tap the **Go Full Screen** / **Exit Full Screen** button |
+| Stop the workout and go back to the Setup screen | click/tap the **Stop** button, or press the `Esc` key          |
 
 The screen is kept awake for the duration of the workout
 via the Screen Wake Lock API where the browser supports it,
@@ -245,11 +248,12 @@ then open in your browser
 
 Simply copy the `dolfin/` directory into a location served by `nginx`.
 
-A secure context is needed, that is, serve over HTTPS
-(but, hey, it's 2026, you should use HTTPS always, everywhere, anyway!).
-
 A live example can be found at
 [https://www.albertopettarin.it/dolfin/](https://www.albertopettarin.it/dolfin/)
+
+> [!NOTE]
+> A secure context is needed, that is, serve over HTTPS ---
+> but, hey, it's 2026, you should use HTTPS always, everywhere, anyway!
 
 
 ## Browser Support
