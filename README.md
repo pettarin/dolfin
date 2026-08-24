@@ -79,9 +79,9 @@ Blank lines are ignored,
 and `e` and `r` may be written in upper case.
 
 Anything after an `@` is a free-text label:
-it is shown next to the countdown, as big as it,
-for the whole phase it belongs to.
-The two are sized together to fill the bar,
+it is shown on a line of its own under the countdown,
+and as big as it, for the whole phase it belongs to.
+The two lines are sized together,
 so a long label makes for a smaller reading.
 Rowing plans typically use it for a stroke rate,
 but any short text will do.
@@ -210,7 +210,7 @@ Immediately below a screenshots of each phase:
 ![End Of Workout](imgs/phases_end_of_workout.png)
 
 A phase of a **Generic** workout that carries a label
-shows it right next to the countdown:
+shows it under the countdown, on a line of its own:
 
 ![Effort Phase With A Label](imgs/phases_effort_label.png)
 

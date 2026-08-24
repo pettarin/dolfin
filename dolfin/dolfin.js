@@ -825,22 +825,23 @@
     el.classList.toggle('long', value.length > fits);
   }
 
-  /** The top bar holds one reading: the countdown, and the label of the phase it
-      belongs to, if it has one. The bar is told how many characters the two add
-      up to -- the gap between them is worth about one -- which is what sizes
-      them: the longer the reading, the smaller it is drawn, so it fills the bar
-      whatever it says. */
+  /** The top bar holds the countdown, and under it, on a line of its own, the
+      label of the phase it belongs to, if it has one. The bar is told how many
+      characters that label runs to, which is one of the things that sizes the
+      pair: a longer label is drawn smaller, so it still fits the width. */
   function setReading(clock, label) {
     // the step-down only applies while the countdown has the bar to itself: with
-    // a label beside it, the character count decides the size instead
+    // a label under it, the two-line budget decides the size instead
     setBigText(els.countdown, clock, 5);
     setText(els.phaseLabel, label ? '@ ' + label : '');
     els.phaseBar.classList.toggle('labelled', !!label);
 
-    const chars = clock.length + (label ? label.length + 3 : 0);
+    // the '@ ' it is printed with counts, the label line being the wider of the
+    // two and so the one that sizes them; never zero, it being a divisor
+    const chars = label ? label.length + 2 : 1;
     if (chars !== session.lastChars) {
       session.lastChars = chars;
-      els.phaseBar.style.setProperty('--chars', String(chars));
+      els.phaseBar.style.setProperty('--label-chars', String(chars));
     }
   }
 

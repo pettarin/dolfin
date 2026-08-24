@@ -17,8 +17,8 @@ All notable changes to this project will be documented in this file.
   of the same effort and rest: the phases are written out one per line,
   as `e: 02:00` (effort) and `r: 01:30` (rest),
   with an optional `@ 20 spm` label and `#` comments.
-- The phase label of a generic workout is shown next to the countdown
-  on the Workout screen, in the same size as it,
+- The phase label of a generic workout is shown on the Workout screen
+  under the countdown, on a line of its own and in the same size as it,
   for the whole phase it belongs to.
 - Example workout plans, in the `res/` directory.
 

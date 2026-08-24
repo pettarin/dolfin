@@ -581,8 +581,9 @@ body.screen-session {
   text-shadow: 0 0.02em 0.05em rgba(0, 0, 0, 0.75), 0 0 0.14em rgba(0, 0, 0, 0.55);
 }
 
-/* the "@ 20 spm" a generic plan may carry: one reading with the countdown of the
-   phase it belongs to, and the same size as it -- see .phase-bar.labelled below */
+/* the "@ 20 spm" a generic plan may carry, on a line of its own under the
+   countdown of the phase it belongs to, and the same size as it -- see the
+   rules below */
 .phase-label {
   font-family: var(--mono);
   font-weight: 700;
@@ -599,18 +600,20 @@ body.screen-session {
    never run out of the bar on a narrow screen */
 .countdown.long   { font-size: min(24vh, 13vw); }
 .rep-counter.long { font-size: min(10.5vh, 11vw); }
-/* carrying a label, the bar holds a single reading -- "1:23 @ 20 spm" -- whose
-   two halves take one size, so the label stands exactly as tall as the countdown.
-   No size fits every reading: the session code counts the characters the two add
-   up to (the gap between them is worth about one), and the size that fills the
-   bar without running out of it follows from there. The height cap is what keeps
-   a short reading inside its half of the screen. */
+/* carrying a label, the bar holds two lines -- the countdown, and the label under
+   it -- both in one size, so the label stands exactly as tall as the countdown.
+   That size is the tightest of three limits: the height the two lines and the gap
+   between them have to share, the width the countdown needs, and the width the
+   label needs, which is what the session code counts its characters for. */
 .phase-bar.labelled {
-  --reading: min(33vh, calc(145vw / var(--chars, 13)));
+  --reading: min(20vh, 27vw, calc(140vw / var(--label-chars, 8)));
 }
 
-/* one character wide, in the size the reading ended up at */
-.phase-bar.labelled .bar-label { column-gap: calc(0.6 * var(--reading)); }
+/* the countdown on top, the label under it, parted by a gap in their own size */
+.phase-bar.labelled .bar-label {
+  flex-direction: column;
+  row-gap: calc(0.12 * var(--reading));
+}
 
 .phase-bar.labelled .countdown,
 .phase-bar.labelled .phase-label { font-size: var(--reading); }
