@@ -9,6 +9,13 @@ All notable changes to this project will be documented in this file.
 > [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [3.0.0] - 2026-08-24
+
+### Added
+
+- Support generic workouts
+
+
 ## [2.0.0] - 2026-08-24
 
 ### Added
