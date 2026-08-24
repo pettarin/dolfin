@@ -502,9 +502,47 @@ body.screen-session {
 
 .phase-bar-fill { background: var(--phase); }
 
-.overall-fill {
+/* the whole session laid out end to end: one box per phase, each taking the
+   share of the width its duration takes of the session, in the colour of its
+   kind. The bar clips it, so the ends come out rounded with it. */
+.strip {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  gap: 0 var(--seg-gap, 0px);
+}
+
+.strip-seg {
+  /* the basis is zero and the grow factor is the phase's length in ms, set by
+     buildStrip(), so the boxes share the width in proportion */
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* too many phases to draw one by one: the strip stays a single band that
+   follows the phase running, which is what the bar was before */
+.strip.plain {
   background: rgba(255, 255, 255, 0.28);
   background: color-mix(in oklab, var(--phase) 38%, transparent);
+}
+
+/* while the boxes are too narrow for a gap but wide enough to tell apart, an
+   edge keeps two phases of the same kind from reading as one */
+.strip.ruled .strip-seg { box-shadow: inset -1px 0 0 rgba(5, 7, 10, 0.55); }
+
+.strip-seg-warmup   { background: var(--color-warmup, #f2a63a); }
+.strip-seg-effort   { background: var(--color-effort, #ff5c3d); }
+.strip-seg-rest     { background: var(--color-rest, #35b7ff); }
+.strip-seg-cooldown { background: var(--color-cooldown, #2fd6a6); }
+
+/* what is left to run, dimmed: it shrinks to the right as the session goes, so
+   its edge is where you are */
+.strip-veil {
+  position: absolute;
+  inset: 0;
+  transform-origin: right center;
+  background: rgba(5, 7, 10, 0.72);
+  will-change: transform;
 }
 
 /* the reading sits over the bar, so it needs to survive both track and fill.
@@ -537,6 +575,9 @@ body.screen-session {
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
+  /* sized in em, so it holds up over whichever box it happens to sit on --
+     the one on .bar-label is worth a pixel at the size that box's text is */
+  text-shadow: 0 0.02em 0.05em rgba(0, 0, 0, 0.75), 0 0 0.14em rgba(0, 0, 0, 0.55);
 }
 
 /* the "@ 20 spm" a generic plan may carry: one reading with the countdown of the

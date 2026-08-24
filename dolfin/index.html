@@ -24,7 +24,7 @@
       <img class="logo" src="./icon.svg" alt="" width="56" height="56">
       <div>
         <h1>dolfin</h1>
-        <p class="tagline">indoor row interval companion</p>
+        <p class="tagline">indoor row companion</p>
       </div>
     </header>
 
@@ -309,7 +309,9 @@
 
   <div class="half half-bottom">
     <div class="bar overall-bar">
-      <div class="bar-fill overall-fill" id="overall-fill"></div>
+      <!-- one box per phase, built by buildStrip() from the timeline -->
+      <div class="strip" id="overall-strip"></div>
+      <div class="strip-veil" id="overall-veil"></div>
       <div class="bar-label"><span class="rep-counter" id="rep-counter"></span></div>
     </div>
 

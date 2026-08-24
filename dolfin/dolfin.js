@@ -101,6 +101,13 @@
   const MAX_PLAN_SEGMENTS = 999;
   const RANGE_MAX = 300; // the sliders cover 0..5 minutes; type for anything longer
 
+  // how the strip under the session is drawn, by how many phases it has to show:
+  // real gaps while the boxes are wide, an edge on each while they are narrow,
+  // and past the last count one plain band, since a box would be a hairline
+  const STRIP_GAPPED_BOXES = 12;
+  const STRIP_RULED_BOXES = 80;
+  const STRIP_MAX_BOXES = 1000;
+
   // both lists follow the on-screen order, so the first invalid field gets focus
   const TIME_FIELDS = [
     'warmup', 'effort', 'rest', 'cooldown', 'gen-warmup', 'gen-cooldown',
@@ -200,7 +207,8 @@
     phaseFill: $('phase-bar-fill'),
     countdown: $('countdown'),
     nextUp: $('next-up'),
-    overallFill: $('overall-fill'),
+    overallStrip: $('overall-strip'),
+    overallVeil: $('overall-veil'),
     overallRemaining: $('overall-remaining'),
     pausedOverlay: $('paused-overlay'),
     fullscreen: $('fullscreen'),
@@ -832,6 +840,31 @@
     }
   }
 
+  /** Draws the session as a row of boxes, one per phase, each as wide a share of
+      the strip as its duration is of the session, and in the colour of its kind.
+      Too many phases to tell apart and the strip is left as one band instead:
+      the veil over it reads the same either way. */
+  function buildStrip(timeline) {
+    const count = timeline.segs.length;
+    const strip = els.overallStrip;
+
+    strip.textContent = '';
+    strip.classList.toggle('plain', count > STRIP_MAX_BOXES);
+    strip.classList.toggle('ruled', count > STRIP_GAPPED_BOXES && count <= STRIP_RULED_BOXES);
+    strip.style.setProperty('--seg-gap', count <= STRIP_GAPPED_BOXES ? '3px' : '0px');
+    if (count > STRIP_MAX_BOXES) return;
+
+    // one insertion, so a long session does not lay the strip out over and over
+    const batch = document.createDocumentFragment();
+    timeline.segs.forEach((seg) => {
+      const box = document.createElement('div');
+      box.className = 'strip-seg strip-seg-' + seg.kind;
+      box.style.flexGrow = String(seg.ms);
+      batch.appendChild(box);
+    });
+    strip.appendChild(batch);
+  }
+
   function setBar(el, ratio) {
     const p = Math.min(1, Math.max(0, ratio));
     el.style.transform = 'scaleX(' + p.toFixed(5) + ')';
@@ -879,6 +912,10 @@
       lastChars: -1,
       lastPercent: -1,
     };
+
+    buildStrip(timeline);
+    // nothing run yet, so the veil covers the whole strip
+    setBar(els.overallVeil, 1);
 
     els.endBtn.textContent = 'Stop';
     els.skipBtn.hidden = !cfg.allowSkip;
@@ -939,7 +976,8 @@
     setBigText(els.repCounter, repLabel(seg), 7);
     setText(els.nextUp, nextLabel(session.index));
     setBar(els.phaseFill, inPhase / seg.ms);
-    setBar(els.overallFill, elapsed / session.totalMs);
+    // the veil covers what is left, so it shrinks towards the right as time goes
+    setBar(els.overallVeil, 1 - elapsed / session.totalMs);
     setText(els.overallRemaining, formatHMS(Math.ceil((session.totalMs - elapsed) / 1000)));
 
     els.session.classList.toggle('urgent', notice);
@@ -964,7 +1002,7 @@
     setText(els.nextUp, '');
     setText(els.overallRemaining, '00:00:00');
     setBar(els.phaseFill, 1);
-    setBar(els.overallFill, 1);
+    setBar(els.overallVeil, 0);
     els.phaseBar.setAttribute('aria-valuenow', '100');
     els.pausedOverlay.hidden = true;
     els.endBtn.textContent = 'Home';
@@ -1016,6 +1054,7 @@
     els.session.classList.remove('urgent');
     els.session.hidden = true;
     els.setup.hidden = false;
+    els.overallStrip.textContent = ''; // a long session holds a lot of boxes
     els.body.classList.remove('screen-session');
     els.body.classList.add('screen-setup');
     if (els.body.dataset.phase) {

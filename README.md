@@ -1,6 +1,6 @@
 # dolfin
 
-**dolfin** is your indoor row interval companion
+**dolfin** is your indoor row companion
 
 
 ## Overview
@@ -218,9 +218,16 @@ The screen is split into two horizontal bands:
 - the top half shows the current phase name (and the next one up),
   with a progress bar, a timer counting down the current phase,
   and the phase label, if it has one;
-- the bottom half shows the overall workout progress,
-  with a progress bar, the current repetition / total repetitions,
-  and the time remaining for completing the workout.
+- the bottom half is the whole workout laid out end to end:
+  one box per phase, each as wide a share of the screen as its duration
+  is of the session, and in the colour of its phase.
+  What is still to come is dimmed, so the edge between vivid and dim
+  is where you are. Over it sit the current repetition / total repetitions,
+  and below it the time remaining for completing the workout.
+
+> [!NOTE]
+> A workout with more than a thousand phases is drawn as a single band
+> rather than as boxes, since each box would be thinner than a hairline.
 
 On the bottom right corner there are three buttons:
 

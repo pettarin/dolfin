@@ -24,6 +24,12 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- The bottom half of the Workout screen is now the whole session laid out
+  end to end, one box per phase, each proportional to its duration and in
+  the colour of its phase; what is left to run is dimmed, replacing the
+  single progress bar.
+- The tagline is now "indoor row companion", the workouts no longer being
+  intervals only.
 - The setup screen is now split in four tabs: "Intervals", "Generic",
   "Programs", and "Customizations"; the tab strip wraps to two rows
   on a narrow screen.
