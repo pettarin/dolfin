@@ -179,11 +179,16 @@ or **Programs** workouts:
 | Launch full screen         | `True`                  |
 | Allow skipping phase       | `False`                 |
 | Transition notice time (s) | `00:00:05`              |
-| Warm up colour             | `#f2a63a` (dark yellow) |
-| Effort colour              | `#ff5c3d` (light red)   |
-| Rest colour                | `#35b7ff` (light blue)  |
-| Cool down colour           | `#2fd6a6` (light green) |
-| Finished colour            | `#9ab0c6` (grey)        |
+
+The five phase colours sit in a **Colours** box of their own:
+
+| Colour    | Default                 |
+| --------- | ----------------------- |
+| Warm up   | `#f2a63a` (dark yellow) |
+| Effort    | `#ff5c3d` (light red)   |
+| Rest      | `#35b7ff` (light blue)  |
+| Cool down | `#2fd6a6` (light green) |
+| Finished  | `#9ab0c6` (grey)        |
 
 The **Transition notice time** setting represents
 how long before each phase ends
@@ -194,7 +199,7 @@ Time fields accept values in `hh:mm:ss`, `mm:ss`,
 or plain integer number of seconds
 (e.g., `00:01:42`, `01:42` and `102` are all accepted).
 
-The **Default colours** button restores just the colour values,
+The **Reset defaults** button in that box restores just the colour values,
 leaving the times, the workout plan and the chosen program alone.
 
 The **Reset** button restores the default value for all controls.

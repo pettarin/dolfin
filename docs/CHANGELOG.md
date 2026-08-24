@@ -32,6 +32,9 @@ All notable changes to this project will be documented in this file.
   single progress bar.
 - The tagline is now "indoor row companion", the workouts no longer being
   intervals only.
+- The five phase colours now sit in a "Colours" box of their own on the
+  "Customizations" tab, their labels dropping the word "colour", and the
+  "Default colours" button is now "Reset defaults".
 - The setup screen is now split in four tabs: "Intervals", "Generic",
   "Programs", and "Customizations"; the tab strip wraps to two rows
   on a narrow screen.

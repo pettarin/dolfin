@@ -154,6 +154,25 @@ body.screen-session {
 
 .field { margin-bottom: 1.1rem; }
 
+/* a box drawn round a set of related controls, named by its legend. A fieldset
+   carries a good deal of browser styling of its own, hence the reset, and the
+   min-width, without which it refuses to shrink below its content */
+.group {
+  min-width: 0;
+  /* a wider gap below than the fields use: the box has a border of its own to
+     clear, and its Reset defaults button must not read as the form's Reset */
+  margin: 0 0 2rem;
+  padding: 0.75rem 0.9rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+}
+
+.group legend {
+  padding: 0 0.4rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
 .field label {
   display: block;
   margin-bottom: 0.4rem;
