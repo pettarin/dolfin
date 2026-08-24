@@ -52,7 +52,8 @@
   // the plan the Generic tab opens on: week 1 session 1 of the British Rowing
   // intermediate programme, verbatim, so the format is plain from the first look
   const DEFAULT_PLAN = [
-    '#: britishrowing.org Intermediate Week 1 Session 1',
+    '#: britishrowing.org',
+    '#: Intermediate - Week 1 - Session 1',
     'e: 02:00 @ 20 spm',
     'e: 02:00 @ 22 spm',
     'e: 02:00 @ 24 spm',

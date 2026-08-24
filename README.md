@@ -95,7 +95,8 @@ and a plan of nothing but efforts counts one group per effort.
 For example, this plan:
 
 ```
-#: britishrowing.org Intermediate Week 1 Session 1
+#: britishrowing.org
+#: Intermediate - Week 1 - Session 1
 e: 02:00 @ 20 spm
 e: 02:00 @ 22 spm
 e: 02:00 @ 24 spm
