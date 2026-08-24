@@ -9,7 +9,8 @@ A full-screen interval timer that runs entirely in the browser,
 built as a **visual companion** to the "Indoor row" activity
 on my Garmin Instinct watch.
 
-No backend, no build step, no dependencies: **dolfin** is made by just static files
+No backend, no build step, no dependencies:
+**dolfin** is made by just static files
 that can be simply copied behind a Web server like `nginx`.
 
 Optionally, **dolfin** installs as a PWA and works offline.
@@ -23,15 +24,20 @@ A live example of **dolfin** can be found at
 
 ## How It Works
 
-There are two screens: the Setup Screen and the Timer Screen.
+There are two screens: the Setup screen and the Workout screen.
 
 ### Setup Screen
 
-![The Setup Screen](imgs/setup_screen.png)
+It is split into three tabs: "Intervals", "Programs", and "Customization".
 
-It is split into three tabs: "Intervals", "Programs" and "Customization".
+#### Intervals Tab
 
-**"Intervals"** describes a session one field at a time.
+![Intervals Tab](imgs/setup_intervals.png)
+
+The **"Intervals"** tab lets the user
+set up a workout session made by repetitions of effort and rest phases,
+plus optional warm up and cool down phases.
+
 Its default values match the Garmin activity I use most frequently
 (1h02m workout):
 
@@ -43,79 +49,98 @@ Its default values match the Garmin activity I use most frequently
 | Rest time      | `00:00:45` |
 | Cool down time | `00:01:00` |
 
-**"Programs"** describes a session by picking a ready-made effort block
-from a list, rather than typing it.
-It has its own warm up and cool down times, independent of the ones on
-"Intervals", and offers these programs,
-written as `INT: (effort time + rest time) x repetitions`:
+A warm-up, effort, rest, or cool-down time of `00:00:00`
+simply skips that phase.
 
-| Program                     | Program                     | Program                     |
-| --------------------------- | --------------------------- | --------------------------- |
-| `INT: (01:30 + 00:30) x 5`  | `INT: (01:45 + 00:45) x 4`  | `INT: (02:00 + 01:00) x 5`  |
-| `INT: (01:30 + 00:30) x 10` | `INT: (01:45 + 00:45) x 6`  | `INT: (02:00 + 01:00) x 10` |
-| `INT: (01:30 + 00:30) x 15` | `INT: (01:45 + 00:45) x 8`  | `INT: (02:00 + 01:00) x 15` |
-| `INT: (01:30 + 00:30) x 20` | `INT: (01:45 + 00:45) x 12` | `INT: (02:00 + 01:00) x 20` |
-| `INT: (01:30 + 00:30) x 30` | `INT: (01:45 + 00:45) x 16` | `INT: (02:00 + 01:00) x 25` |
-| `INT: (01:30 + 00:30) x 45` | `INT: (01:45 + 00:45) x 18` | `INT: (02:00 + 01:00) x 30` |
-| `INT: (01:30 + 00:30) x 60` | `INT: (01:45 + 00:45) x 20` | `INT: (02:00 + 01:00) x 40` |
-|                             | `INT: (01:45 + 00:45) x 24` |                             |
-|                             | `INT: (01:45 + 00:45) x 30` |                             |
-|                             | `INT: (01:45 + 00:45) x 32` |                             |
-|                             | `INT: (01:45 + 00:45) x 36` |                             |
-|                             | `INT: (01:45 + 00:45) x 48` |                             |
+Press the "Start" button to transition to the Workout screen.
 
-The list opens on `INT: (01:45 + 00:45) x 24`,
-the same block the "Intervals" defaults describe.
+#### Programs Tab
 
-Both tabs show a read-only "Session total", and the tab you are on when you
-press "Start" is the one that runs.
-Switching to "Customization" does not change that choice.
+![Programs Tab](imgs/setup_programs.png)
 
-**"Customization"** holds the preferences that apply to either kind of session:
+The **"Programs"** tab lets the user pick one of the pre-defined workouts,
+plus optional warm up and cool down phases.
 
-| Control                    | Default    |
-| -------------------------- | ---------- |
-| Transition notice time (s) | `00:00:05` |
-| Launch full screen         | `True`     |
-| Allow skipping phase       | `False`    |
-| Warm up colour             | `#f2a63a`  |
-| Effort colour              | `#ff5c3d`  |
-| Rest colour                | `#35b7ff`  |
-| Cool down colour           | `#2fd6a6`  |
-| Finished colour            | `#9ab0c6`  |
+> ![NOTE]
+> Currently (``v2.0.0``) only interval-type workouts are supported.
 
-Each phase has one colour, which the timer screen uses for the phase name and
-the upper progress bar. The lower bar and the page background are computed from
-it, at 38% and 13% respectively, so picking one colour per phase is enough.
-The "Default colours" button restores just these five,
-leaving the times and the chosen program alone.
+The included programs are:
+
+| Program                     | Description                              |
+| --------------------------- | ---------------------------------------- |
+| `INT: (01:30 + 00:30) x 5`  | Intervals: (effort + rest) x repetitions |
+| `INT: (01:30 + 00:30) x 10` |                                          |
+| `INT: (01:30 + 00:30) x 15` |                                          |
+| `INT: (01:30 + 00:30) x 20` |                                          |
+| `INT: (01:30 + 00:30) x 30` |                                          |
+| `INT: (01:30 + 00:30) x 45` |                                          |
+| `INT: (01:30 + 00:30) x 60` |                                          |
+| `INT: (01:45 + 00:45) x 4`  |                                          |
+| `INT: (01:45 + 00:45) x 6`  |                                          |
+| `INT: (01:45 + 00:45) x 8`  |                                          |
+| `INT: (01:45 + 00:45) x 12` |                                          |
+| `INT: (01:45 + 00:45) x 16` |                                          |
+| `INT: (01:45 + 00:45) x 18` |                                          |
+| `INT: (01:45 + 00:45) x 20` |                                          |
+| `INT: (01:45 + 00:45) x 24` |                                          |
+| `INT: (01:45 + 00:45) x 30` |                                          |
+| `INT: (01:45 + 00:45) x 32` |                                          |
+| `INT: (01:45 + 00:45) x 36` |                                          |
+| `INT: (01:45 + 00:45) x 48` |                                          |
+| `INT: (02:00 + 01:00) x 5`  |                                          |
+| `INT: (02:00 + 01:00) x 10` |                                          |
+| `INT: (02:00 + 01:00) x 15` |                                          |
+| `INT: (02:00 + 01:00) x 20` |                                          |
+| `INT: (02:00 + 01:00) x 25` |                                          |
+| `INT: (02:00 + 01:00) x 30` |                                          |
+| `INT: (02:00 + 01:00) x 40` |                                          |
+
+Press the "Start" button to transition to the Workout screen.
+
+#### Customization Tab
+
+![Customization Tab](imgs/setup_customization.png)
+
+The **"Customization"** tab holds the preferences that apply
+to the workout screen, for either "Intervals" or "Programs" workouts:
+
+| Control                    | Default                 |
+| -------------------------- | ----------------------- |
+| Launch full screen         | `True`                  |
+| Allow skipping phase       | `False`                 |
+| Transition notice time (s) | `00:00:05`              |
+| Warm up colour             | `#f2a63a` (dark yellow) |
+| Effort colour              | `#ff5c3d` (light red)   |
+| Rest colour                | `#35b7ff` (light blue)  |
+| Cool down colour           | `#2fd6a6` (light green) |
+| Finished colour            | `#9ab0c6` (grey)        |
 
 The "Transition notice time" represents how long before each phase ends
 the countdown starts blinking and the blips start.
 Set it to zero for no warning at all.
 
-Time fields accept values in `hh:mm:ss`, `mm:ss`, or plain integer number of seconds
+Time fields accept values in `hh:mm:ss`, `mm:ss`,
+or plain integer number of seconds
 (e.g., `00:01:42`, `01:42` and `102` are all accepted).
 
-The "Reset" button restores the default value.
+The "Default colours" button restores just the colour values,
+leaving the times and the chosen program alone.
 
-The "Start" button starts the session, launching the timer screen ---
-in fullscreen mode if "Launch full screen" is selected, otherwise non-fullscreen.
+The "Reset" button restores the default value for all controls.
 
-Values are remembered in `localStorage`, so the next visit starts where you left off.
+Values are remembered in `localStorage`,
+so the next visit starts where you left off.
 
-### Timer Screen
+### Workout Screen
 
-The timer screen cycles through the defined intervals
+The **Workout** screen cycles through the defined intervals
 warm-up → ( (effort → rest) × repetitions ) → cool-down.
 
-![Warm-Up Phase](imgs/timer_screen_1.png)
-![Effort Phase](imgs/timer_screen_2.png)
-![Rest Phase](imgs/timer_screen_3.png)
-![Cool-Down Phase](imgs/timer_screen_4.png)
-![End Of Workout](imgs/timer_screen_5.png)
-
-A warm-up, effort, rest, or cool-down time of `00:00:00` simply skips that phase.
+![Warm-Up Phase](imgs/phases_warm_up.png)
+![Effort Phase](imgs/phases_effort.png)
+![Rest Phase](imgs/phases_rest.png)
+![Cool-Down Phase](imgs/phases_cool_down.png)
+![End Of Workout](imgs/phases_end_of_workout.png)
 
 The screen is split into two horizontal bands:
 
@@ -127,16 +152,17 @@ The screen is split into two horizontal bands:
 
 On the bottom right corner there are three buttons:
 
-- one to skip the current phase, jumping straight to the next one,
-  shown only when "Allow skipping phase" is selected;
-- one to go/exit fullscreen mode;
+- one, shown only when "Allow skipping phase" is selected,
+  to skip the current phase and jump to the next one;
+- one to go/exit full screen mode;
 - one to end the workout and go back to the setup screen.
 
 #### Audio Clues
 
 Audio cues are synthesised (no files, so they work offline) short blips,
 one per second through the transition notice window at the end of every phase.
-A distinct tone plays when a phase starts: higher for effort, lower for everything else,
+A distinct tone plays when a phase starts:
+higher for effort, lower for everything else,
 and three descending tones at the end of the session.
 
 #### Controls
@@ -160,16 +186,37 @@ so it does not drift if the tab is backgrounded.
 
 ```
 .
-├── README.md
+├── AGENTS.md                           <- directions for coding agents
+├── docs                                <- documentation
+│   ├── CHANGELOG.md
+│   ├── CODE_OF_CONDUCT.md
+│   ├── CONTRIBUTING.md
+│   ├── DEVELOPMENT.md
+│   ├── ROADMAP.md
+│   └── SECURITY.md
+├── dolfin                              <- document root, can be served behind a Web server
+│   ├── dolfin.js                       <- main script
+│   ├── icon-180.png
+│   ├── icon-192.png
+│   ├── icon-512.png
+│   ├── icon.svg
+│   ├── index.html
+│   ├── manifest.json                   <- PWA manifest
+│   ├── precache.js                     <- service worker
+│   └── style.css
+├── imgs                                <- screenshots for the README
+│   ├── phases_cool_down.png
+│   ├── phases_effort.png
+│   ├── phases_end_of_workout.png
+│   ├── phases_rest.png
+│   ├── phases_warm_up.png
+│   ├── setup_customization.png
+│   ├── setup_intervals.png
+│   └── setup_programs.png
 ├── LICENSE
-└── dolfin/            <- this directory is the document root
-    ├── index.html
-    ├── style.css
-    ├── dolfin.js      <- everything: parsing, timeline, clock, cues, wake lock
-    ├── manifest.json
-    ├── precache.js    <- service worker
-    ├── icon.svg
-    └── icon-180.png, icon-192.png, icon-512.png
+├── Makefile
+├── README.md                           <- this README file
+└── VERSION                             <- version of dolfin
 ```
 
 
@@ -177,11 +224,17 @@ so it does not drift if the tab is backgrounded.
 
 ```sh
 cd dolfin
-python3 -m http.server 8080
+python3 -m http.server 8888
+```
+
+or
+
+```sh
+make serve
 ```
 
 then open in your browser
-[http://localhost:8080](http://localhost:8080) .
+[http://localhost:8888](http://localhost:8888) .
 
 > [!TIP]
 > `localhost` counts as a secure context,
