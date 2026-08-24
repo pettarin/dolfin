@@ -442,10 +442,11 @@ body.screen-session {
 
 /* -- session ------------------------------------------------------------- */
 
-/* two equal halves: phase on top, whole session below */
+/* two bands: the phase being run takes two thirds of the height, the session as
+   a whole the remaining third */
 .session {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
   gap: clamp(0.5rem, 2vh, 1.5rem);
   cursor: pointer;
   user-select: none;
@@ -523,15 +524,17 @@ body.screen-session {
    follows the phase running, which is what the bar was before */
 .strip.plain {
   background: rgba(255, 255, 255, 0.28);
-  background: color-mix(in oklab, var(--phase) 38%, transparent);
+  background: color-mix(in oklab, var(--phase) 24%, transparent);
 }
 
-/* held back from the full phase colour: the strip covers half the screen, and at
-   full strength it pulls the eye off the countdown, which is what is being read */
-.strip-seg-warmup   { background: color-mix(in oklab, var(--color-warmup, #f2a63a) 62%, transparent); }
-.strip-seg-effort   { background: color-mix(in oklab, var(--color-effort, #ff5c3d) 62%, transparent); }
-.strip-seg-rest     { background: color-mix(in oklab, var(--color-rest, #35b7ff) 62%, transparent); }
-.strip-seg-cooldown { background: color-mix(in oklab, var(--color-cooldown, #2fd6a6) 62%, transparent); }
+/* well back from the phase colour, quieter even than the single bar this
+   replaced was: any stronger and the strip pulls the eye off the countdown,
+   which is what is being read. This is the one number to turn to have it louder
+   or quieter. */
+.strip-seg-warmup   { background: color-mix(in oklab, var(--color-warmup, #f2a63a) 24%, transparent); }
+.strip-seg-effort   { background: color-mix(in oklab, var(--color-effort, #ff5c3d) 24%, transparent); }
+.strip-seg-rest     { background: color-mix(in oklab, var(--color-rest, #35b7ff) 24%, transparent); }
+.strip-seg-cooldown { background: color-mix(in oklab, var(--color-cooldown, #2fd6a6) 24%, transparent); }
 
 /* what is left to run, dimmed: it shrinks to the right as the session goes, so
    its edge is where you are */
@@ -560,7 +563,7 @@ body.screen-session {
 
 .countdown {
   font-family: var(--mono);
-  font-size: min(25vh, 24vw);
+  font-size: min(33vh, 27vw);
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
@@ -569,7 +572,7 @@ body.screen-session {
 
 .rep-counter {
   font-family: var(--mono);
-  font-size: min(20vh, 16vw);
+  font-size: min(13vh, 16vw);
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
@@ -594,8 +597,8 @@ body.screen-session {
 
 /* long readings (hour-long phases, three-digit reps) step down a size so they
    never run out of the bar on a narrow screen */
-.countdown.long   { font-size: min(18vh, 13vw); }
-.rep-counter.long { font-size: min(16vh, 11vw); }
+.countdown.long   { font-size: min(24vh, 13vw); }
+.rep-counter.long { font-size: min(10.5vh, 11vw); }
 /* carrying a label, the bar holds a single reading -- "1:23 @ 20 spm" -- whose
    two halves take one size, so the label stands exactly as tall as the countdown.
    No size fits every reading: the session code counts the characters the two add
@@ -603,7 +606,7 @@ body.screen-session {
    bar without running out of it follows from there. The height cap is what keeps
    a short reading inside its half of the screen. */
 .phase-bar.labelled {
-  --reading: min(25vh, calc(145vw / var(--chars, 13)));
+  --reading: min(33vh, calc(145vw / var(--chars, 13)));
 }
 
 /* one character wide, in the size the reading ended up at */
@@ -614,7 +617,7 @@ body.screen-session {
 
 /* "Workout Completed" is seventeen characters, half again as long as the widest
    reading the counter otherwise shows, so the finished state drops a step more */
-body.phase-done .rep-counter { font-size: min(11vh, 8vw); }
+body.phase-done .rep-counter { font-size: min(7.5vh, 8vw); }
 
 @media (prefers-reduced-motion: no-preference) {
   .session.urgent .countdown { animation: throb 1s ease-in-out infinite; }

@@ -214,12 +214,14 @@ shows it right next to the countdown:
 
 ![Effort Phase With A Label](imgs/phases_effort_label.png)
 
-The screen is split into two horizontal bands:
+The screen is split into two horizontal bands,
+the phase being run taking two thirds of the height
+and the session as a whole the remaining third:
 
-- the top half shows the current phase name (and the next one up),
+- the top band shows the current phase name (and the next one up),
   with a progress bar, a timer counting down the current phase,
   and the phase label, if it has one;
-- the bottom half is the whole workout laid out end to end:
+- the bottom band is the whole workout laid out end to end:
   one box per phase, each as wide a share of the screen as its duration
   is of the session, and in the colour of its phase.
   What is still to come is dimmed, so the edge between vivid and dim

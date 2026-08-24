@@ -24,7 +24,9 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- The bottom half of the Workout screen is now the whole session laid out
+- The Workout screen now gives the phase being run two thirds of the height,
+  and the session as a whole the remaining third.
+- The bottom band of the Workout screen is now the whole session laid out
   end to end, one box per phase, each proportional to its duration and in
   the colour of its phase; what is left to run is dimmed, replacing the
   single progress bar.
