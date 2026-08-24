@@ -13,7 +13,20 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Support generic workouts
+- The "Generic" tab, for workouts that are not a plain repetition
+  of the same effort and rest: the phases are written out one per line,
+  as `e: 02:00` (effort) and `r: 01:30` (rest),
+  with an optional `@ 20 spm` label and `#` comments.
+- The phase label of a generic workout is shown next to the countdown
+  on the Workout screen, in the same size as it,
+  for the whole phase it belongs to.
+- Example workout plans, in the `res/` directory.
+
+### Changed
+
+- The setup screen is now split in four tabs: "Intervals", "Generic",
+  "Programs", and "Customizations"; the tab strip wraps to two rows
+  on a narrow screen.
 
 
 ## [2.0.0] - 2026-08-24

@@ -32,6 +32,9 @@
       <div class="tabs" id="tabs" role="tablist" aria-label="Setup sections">
         <button type="button" class="tab" id="tab-intervals" role="tab"
                 aria-controls="panel-intervals" aria-selected="true">Intervals</button>
+        <button type="button" class="tab" id="tab-generic" role="tab"
+                aria-controls="panel-generic" aria-selected="false"
+                tabindex="-1">Generic</button>
         <button type="button" class="tab" id="tab-programs" role="tab"
                 aria-controls="panel-programs" aria-selected="false"
                 tabindex="-1">Programs</button>
@@ -101,6 +104,54 @@
           <div class="row">
             <label class="readonly-box" for="summary-total">Session total</label>
             <output class="readonly-box readonly-value" id="summary-total"
+                    aria-live="polite">—</output>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-generic" role="tabpanel"
+           aria-labelledby="tab-generic" hidden>
+        <div class="field">
+          <label for="gen-warmup">Warm up time</label>
+          <div class="row">
+            <input class="slider" id="gen-warmup-range" type="range" min="0" max="300" step="5"
+                   value="60" aria-label="Warm up time in seconds">
+            <input id="gen-warmup" name="gen-warmup" type="text" inputmode="numeric"
+                   spellcheck="false" value="00:01:00" aria-describedby="gen-warmup-error">
+          </div>
+          <p class="error" id="gen-warmup-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="plan">Workout plan</label>
+          <!-- no content here: fillForm() sets it, so the default plan lives in one place.
+               The autocapitalize/autocorrect pair keeps iOS from turning "e:" into "E:" -->
+          <textarea id="plan" name="plan" rows="12" spellcheck="false" autocomplete="off"
+                    autocapitalize="off" autocorrect="off"
+                    aria-describedby="plan-hint plan-error"
+                    placeholder="e: 02:00 @ 20 spm&#10;r: 01:30&#10;e: 02:00 @ 22 spm"></textarea>
+          <p class="field-hint" id="plan-hint">
+            One phase per line: <b>e:</b> effort, <b>r:</b> rest, each with a time and an
+            optional <b>@ label</b>. Lines starting with <b>#</b> are ignored.
+          </p>
+          <p class="error" id="plan-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="gen-cooldown">Cool down time</label>
+          <div class="row">
+            <input class="slider" id="gen-cooldown-range" type="range" min="0" max="300" step="5"
+                   value="60" aria-label="Cool down time in seconds">
+            <input id="gen-cooldown" name="gen-cooldown" type="text" inputmode="numeric"
+                   spellcheck="false" value="00:01:00" aria-describedby="gen-cooldown-error">
+          </div>
+          <p class="error" id="gen-cooldown-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <div class="row">
+            <label class="readonly-box" for="gen-summary-total">Session total</label>
+            <output class="readonly-box readonly-value" id="gen-summary-total"
                     aria-live="polite">—</output>
           </div>
         </div>
@@ -249,7 +300,10 @@
     <div class="bar phase-bar" id="phase-bar" role="progressbar"
          aria-label="Current phase progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
       <div class="bar-fill phase-bar-fill" id="phase-bar-fill"></div>
-      <div class="bar-label"><span class="countdown" id="countdown">0:00</span></div>
+      <div class="bar-label">
+        <span class="countdown" id="countdown">0:00</span>
+        <span class="phase-label" id="phase-label"></span>
+      </div>
     </div>
   </div>
 

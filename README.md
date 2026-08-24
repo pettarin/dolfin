@@ -28,8 +28,8 @@ There are two screens: the **Setup** screen and the **Workout** screen.
 
 ### Setup Screen
 
-It is split into three tabs:
-**Intervals**, **Programs**, and **Customization**.
+It is split into four tabs:
+**Intervals**, **Generic**, **Programs**, and **Customization**.
 
 #### Intervals Tab
 
@@ -54,6 +54,67 @@ simply skips that phase.
 
 Press the **Start** button to transition to the Workout screen.
 
+#### Generic Tab
+
+![Generic Tab](imgs/setup_generic.png)
+
+The **"Generic"** tab lets the user write out a workout
+that is not a plain repetition of the same effort and rest,
+plus optional warm up and cool down phases.
+
+The plan is written one phase per line:
+
+| Line                | Meaning                                         |
+| ------------------- | ----------------------------------------------- |
+| `e: 02:00`          | an effort phase, two minutes long                |
+| `r: 01:30`          | a rest phase, ninety seconds long                |
+| `e: 02:00 @ 20 spm` | an effort phase, labelled `20 spm`               |
+| `#: anything`       | a comment, ignored (any line starting with `#`)  |
+| `e: 01:00 ; r: 30`  | two phases on one line, separated by `;`         |
+
+Times accept the same `hh:mm:ss`, `mm:ss` or plain-seconds forms
+as every other time field, and must be greater than zero.
+Blank lines are ignored,
+and `e` and `r` may be written in upper case.
+
+Anything after an `@` is a free-text label:
+it is shown next to the countdown, as big as it,
+for the whole phase it belongs to.
+The two are sized together to fill the bar,
+so a long label makes for a smaller reading.
+Rowing plans typically use it for a stroke rate,
+but any short text will do.
+
+For example, this plan:
+
+```
+#: britishrowing.org Intermediate Week 1 Session 1
+e: 02:00 @ 20 spm
+e: 02:00 @ 22 spm
+e: 02:00 @ 24 spm
+e: 02:00 @ 22 spm
+e: 02:00 @ 20 spm
+```
+
+runs five two-minute efforts back to back,
+each announcing the stroke rate to hold,
+and is the one the tab opens on:
+
+| Control        | Default                    |
+| -------------- | -------------------------- |
+| Warm up time   | `00:01:00`                 |
+| Workout plan   | the five-effort plan above |
+| Cool down time | `00:01:00`                 |
+
+A few more examples, taken from the
+[British Rowing](https://www.britishrowing.org) intermediate training programme,
+are in the `res/` directory.
+
+If a line cannot be read, the **Session total** shows `—`,
+and pressing **Start** reports which line is at fault.
+
+Press the **Start** button to transition to the Workout screen.
+
 #### Programs Tab
 
 ![Programs Tab](imgs/setup_programs.png)
@@ -62,7 +123,8 @@ The **"Programs"** tab lets the user pick one of the pre-defined workouts,
 plus optional warm up and cool down phases.
 
 > [!NOTE]
-> Currently (``v2.0.0``) only interval-type workouts are supported.
+> Currently (``v3.0.0``) only interval-type programs are included.
+> Any other workout can be written out by hand in the **Generic** tab.
 
 The included programs are:
 
@@ -102,7 +164,8 @@ Press the **Start** button to transition to the Workout screen.
 ![Customization Tab](imgs/setup_customization.png)
 
 The **"Customization"** tab holds the preferences that apply
-to the workout screen, for either **Intervals** or **Programs** workouts:
+to the workout screen, for **Intervals**, **Generic**
+or **Programs** workouts:
 
 | Control                    | Default                 |
 | -------------------------- | ----------------------- |
@@ -125,7 +188,7 @@ or plain integer number of seconds
 (e.g., `00:01:42`, `01:42` and `102` are all accepted).
 
 The **Default colours** button restores just the colour values,
-leaving the times and the chosen program alone.
+leaving the times, the workout plan and the chosen program alone.
 
 The **Reset** button restores the default value for all controls.
 
@@ -145,10 +208,16 @@ Immediately below a screenshots of each phase:
 ![Cool Down Phase](imgs/phases_cool_down.png)
 ![End Of Workout](imgs/phases_end_of_workout.png)
 
+A phase of a **Generic** workout that carries a label
+shows it right next to the countdown:
+
+![Effort Phase With A Label](imgs/phases_effort_label.png)
+
 The screen is split into two horizontal bands:
 
 - the top half shows the current phase name (and the next one up),
-  with a progress bar and a timer counting down the current phase;
+  with a progress bar, a timer counting down the current phase,
+  and the phase label, if it has one;
 - the bottom half shows the overall workout progress,
   with a progress bar, the current repetition / total repetitions,
   and the time remaining for completing the workout.
@@ -210,15 +279,19 @@ so it does not drift if the tab is backgrounded.
 ├── imgs                                <- screenshots for the README
 │   ├── phases_cool_down.png
 │   ├── phases_effort.png
+│   ├── phases_effort_label.png
 │   ├── phases_end_of_workout.png
 │   ├── phases_rest.png
 │   ├── phases_warm_up.png
 │   ├── setup_customization.png
+│   ├── setup_generic.png
 │   ├── setup_intervals.png
 │   └── setup_programs.png
 ├── LICENSE
 ├── Makefile
 ├── README.md                           <- this README file
+├── res                                 <- example plans for the Generic tab
+│   └── british_rowing_org
 └── VERSION                             <- version of dolfin
 ```
 

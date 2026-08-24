@@ -12,7 +12,7 @@ Rough plan, broken down by milestone:
   (warm-up + (effort + rest) x repetitions + cool-down)
 - Additional customizations, for example the workout colours
 
-## v3.0.0
+## v3.0.0 - Released
 
 - Support other types of workouts
   (e.g., different times x different SPM)

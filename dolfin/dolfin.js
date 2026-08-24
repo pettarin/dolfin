@@ -49,14 +49,29 @@
   // on-screen order, which is also the order a session runs in
   const COLOR_FIELDS = ['warmup', 'effort', 'rest', 'cooldown', 'done'];
 
+  // the plan the Generic tab opens on: week 1 session 1 of the British Rowing
+  // intermediate programme, verbatim, so the format is plain from the first look
+  const DEFAULT_PLAN = [
+    '#: britishrowing.org Intermediate Week 1 Session 1',
+    'e: 02:00 @ 20 spm',
+    'e: 02:00 @ 22 spm',
+    'e: 02:00 @ 24 spm',
+    'e: 02:00 @ 22 spm',
+    'e: 02:00 @ 20 spm',
+  ].join('\n');
+
   const DEFAULTS = {
     reps: 24,
     effort: 105,
     rest: 45,
     warmup: 60,
     cooldown: 60,
-    // the Programs tab keeps its own warm up and cool down, independent of the
-    // ones above, so a preset can carry a different opening and closing
+    // the Generic and Programs tabs keep their own warm up and cool down,
+    // independent of the ones above, so each can carry a different opening and
+    // closing without disturbing the others
+    genWarmup: 60,
+    genCooldown: 60,
+    plan: DEFAULT_PLAN,
     progWarmup: 60,
     progCooldown: 60,
     // the same block the manual defaults above describe, so the two tabs open
@@ -80,25 +95,33 @@
   // no practical ceiling, just a guard: the timeline holds two segments per rep,
   // and an unbounded value would build enough of them to hang the tab
   const MAX_REPS = 9999;
+  // the same guard for a generic plan, on both the phases it builds and the text
+  // it is read from, which also bounds what goes into storage
+  const MAX_PLAN_CHARS = 20000;
+  const MAX_PLAN_SEGMENTS = 999;
   const RANGE_MAX = 300; // the sliders cover 0..5 minutes; type for anything longer
 
   // both lists follow the on-screen order, so the first invalid field gets focus
   const TIME_FIELDS = [
-    'warmup', 'effort', 'rest', 'cooldown', 'prog-warmup', 'prog-cooldown', 'notice',
+    'warmup', 'effort', 'rest', 'cooldown', 'gen-warmup', 'gen-cooldown',
+    'prog-warmup', 'prog-cooldown', 'notice',
   ];
+  // the plan rides along: it has an error box, a tab to be revealed in and a
+  // total to keep live, like every other field, it just holds no single value
   const ALL_FIELDS = [
-    'warmup', 'reps', 'effort', 'rest', 'cooldown', 'prog-warmup', 'prog-cooldown', 'notice',
+    'warmup', 'reps', 'effort', 'rest', 'cooldown', 'gen-warmup', 'plan', 'gen-cooldown',
+    'prog-warmup', 'prog-cooldown', 'notice',
   ];
 
   // shown as a bare number rather than hh:mm:ss
   const PLAIN_FIELDS = ['reps', 'notice'];
 
-  // the setup form is split in three panels; the first one is shown on load
-  const TABS = ['intervals', 'programs', 'customization'];
+  // the setup form is split in four panels; the first one is shown on load
+  const TABS = ['intervals', 'generic', 'programs', 'customization'];
 
-  // the two panels that describe a session; Customization only holds preferences,
-  // so visiting it leaves the choice of which one Start runs alone
-  const CONFIG_TABS = ['intervals', 'programs'];
+  // the three panels that describe a session; Customization only holds
+  // preferences, so visiting it leaves the choice of which one Start runs alone
+  const CONFIG_TABS = ['intervals', 'generic', 'programs'];
 
   // which panel holds each field, so a failed validation can reveal it
   const FIELD_TAB = {
@@ -107,17 +130,48 @@
     effort: 'intervals',
     rest: 'intervals',
     cooldown: 'intervals',
+    'gen-warmup': 'generic',
+    plan: 'generic',
+    'gen-cooldown': 'generic',
     'prog-warmup': 'programs',
     'prog-cooldown': 'programs',
     notice: 'customization',
   };
 
-  // the durations each configuration contributes to the timeline, in on-screen
-  // order, keyed by the field that carries them
+  // what each configuration owns on the setup screen, in on-screen order: the two
+  // duration fields, the field that gets the focus and the blame when there is
+  // nothing to run, the message that goes with it, and its total readout
   const CONFIG_FIELDS = {
-    intervals: { warmup: 'warmup', cooldown: 'cooldown' },
-    programs: { warmup: 'prog-warmup', cooldown: 'prog-cooldown' },
+    intervals: {
+      warmup: 'warmup',
+      cooldown: 'cooldown',
+      focus: 'reps',
+      empty: 'Nothing to run: add a warm up, a cool down or a repetition.',
+      total: 'summary-total',
+    },
+    generic: {
+      warmup: 'gen-warmup',
+      cooldown: 'gen-cooldown',
+      focus: 'plan',
+      empty: 'Nothing to run: add a warm up, a cool down or a phase.',
+      total: 'gen-summary-total',
+    },
+    programs: {
+      warmup: 'prog-warmup',
+      cooldown: 'prog-cooldown',
+      focus: 'prog-warmup',
+      empty: 'Nothing to run: add a warm up, a cool down or a repetition.',
+      total: 'prog-summary-total',
+    },
   };
+
+  // what a plan line may open with, and how it reads on the session screen
+  const PLAN_KINDS = { e: 'effort', r: 'rest' };
+
+  // "e: 02:00 @ 20 spm": a kind, a duration, and an optional label after the @.
+  // The kind is left wide open so a typo is reported rather than mistaken for
+  // something else
+  const PLAN_SEGMENT = /^([a-z]+)\s*:\s*([^@]*?)\s*(?:@\s*(.*))?$/i;
 
   const LABEL = {
     warmup: 'WARM UP',
@@ -138,10 +192,9 @@
     resetBtn: $('reset-btn'),
     startBtn: $('start-btn'),
     endBtn: $('end-btn'),
-    summaryTotal: $('summary-total'),
-    progSummaryTotal: $('prog-summary-total'),
     program: $('program'),
     phaseName: $('phase-name'),
+    phaseLabel: $('phase-label'),
     repCounter: $('rep-counter'),
     phaseBar: $('phase-bar'),
     phaseFill: $('phase-bar-fill'),
@@ -167,6 +220,10 @@
   TABS.forEach((t) => {
     els[t + 'Tab'] = $('tab-' + t);
     els[t + 'Panel'] = $('panel-' + t);
+  });
+
+  CONFIG_TABS.forEach((t) => {
+    els[CONFIG_FIELDS[t].total] = $(CONFIG_FIELDS[t].total);
   });
 
   COLOR_FIELDS.forEach((k) => {
@@ -203,8 +260,65 @@
     return [h, m, s].map((n) => String(n).padStart(2, '0')).join(':');
   }
 
+  /** Reads the plan text into a list of { kind, secs, label } phases. Blank lines
+      and lines opening with '#' are skipped; a line may hold several phases
+      separated by ';', which is the one-line form of the same workout. Returns
+      { segments: [...], error: null }, or { segments: null, error: 'Line 4: ...' }. */
+  function parsePlan(text) {
+    const segments = [];
+    const lines = String(text == null ? '' : text).split('\n');
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      // the comment is spotted before the split, so a title may contain a ';'
+      if (line === '' || line.charAt(0) === '#') continue;
+
+      const where = 'Line ' + (i + 1) + ': ';
+      const chunks = line.split(';');
+
+      for (let j = 0; j < chunks.length; j++) {
+        const chunk = chunks[j].trim();
+        if (chunk === '') continue;
+
+        const parts = PLAN_SEGMENT.exec(chunk);
+        const kind = parts ? PLAN_KINDS[parts[1].toLowerCase()] : null;
+        if (!kind) {
+          return {
+            segments: null,
+            error: where + 'use "e: mm:ss" for an effort or "r: mm:ss" for a rest,'
+              + ' with an optional "@ label".',
+          };
+        }
+
+        const secs = parseDuration(parts[2]);
+        if (secs === null) {
+          return { segments: null, error: where + 'use hh:mm:ss, mm:ss or plain seconds.' };
+        }
+        if (secs === 0) {
+          return { segments: null, error: where + 'the time must be greater than zero.' };
+        }
+        if (segments.length === MAX_PLAN_SEGMENTS) {
+          return {
+            segments: null,
+            error: 'Too many phases: keep the plan to ' + MAX_PLAN_SEGMENTS + '.',
+          };
+        }
+
+        segments.push({
+          kind: kind,
+          secs: secs,
+          label: parts[3] ? parts[3].trim() : '',
+        });
+      }
+    }
+
+    return { segments: segments, error: null };
+  }
+
   /** Reads a field's box: a plain count for reps, a duration for the rest. */
   function parseField(field, text) {
+    // free text, several phases at a time: there is no single value to read
+    if (field === 'plan') return null;
     if (field === 'reps') {
       const s = String(text).trim();
       return /^\d+$/.test(s) ? Number(s) : null;
@@ -282,7 +396,17 @@
     const errors = {};
     const fields = CONFIG_FIELDS[name];
 
-    if (name === 'programs') {
+    if (name === 'generic') {
+      const parsed = parsePlan(els.plan.value);
+      if (parsed.error) {
+        errors.plan = parsed.error;
+      } else {
+        values.segments = parsed.segments;
+        // the efforts of a plan are its repetitions, so the counter on the
+        // session screen reads the same as it does for the other two tabs
+        values.reps = parsed.segments.filter((seg) => seg.kind === 'effort').length;
+      }
+    } else if (name === 'programs') {
       // the effort block comes from the list, so it cannot be out of range
       const p = currentProgram();
       values.reps = p.reps;
@@ -316,8 +440,7 @@
 
     // everything at zero would build an empty timeline and start nothing
     if (Object.keys(errors).length === 0 && totalSeconds(values) === 0) {
-      errors[name === 'programs' ? fields.warmup : 'reps'] =
-        'Nothing to run: add a warm up, a cool down or a repetition.';
+      errors[fields.focus] = fields.empty;
     }
 
     return { values: values, errors: errors };
@@ -386,6 +509,8 @@
     effort: 'effort',
     rest: 'rest',
     cooldown: 'cooldown',
+    'gen-warmup': 'genWarmup',
+    'gen-cooldown': 'genCooldown',
     'prog-warmup': 'progWarmup',
     'prog-cooldown': 'progCooldown',
     notice: 'notice',
@@ -399,6 +524,7 @@
       els[f].value = formatField(f, secs);
       syncRange(f, secs);
     });
+    els.plan.value = cfg.plan;
     els.program.value = String(cfg.program);
     els.fullscreen.checked = cfg.fullscreen !== false;
     els.allowSkip.checked = cfg.allowSkip === true;
@@ -421,6 +547,9 @@
       if (secs !== null) cfg[FIELD_KEY[f]] = secs;
     });
 
+    // stored as typed, invalid lines and all: a plan half written is still worth
+    // coming back to, unlike a box that will not parse into a number
+    cfg.plan = els.plan.value.slice(0, MAX_PLAN_CHARS);
     cfg.program = selectedProgram();
     cfg.config = activeConfig;
     cfg.fullscreen = els.fullscreen.checked === true;
@@ -434,9 +563,9 @@
   function canonicalize(name) {
     const fields = CONFIG_FIELDS[name];
     const list =
-      name === 'programs'
-        ? [fields.warmup, fields.cooldown]
-        : ['warmup', 'effort', 'rest', 'cooldown'];
+      name === 'intervals'
+        ? ['warmup', 'effort', 'rest', 'cooldown']
+        : [fields.warmup, fields.cooldown];
 
     list.forEach((f) => {
       const secs = parseDuration(els[f].value);
@@ -471,6 +600,9 @@
         cfg[key] = stored[key];
       }
     });
+    if (typeof stored.plan === 'string' && stored.plan.length <= MAX_PLAN_CHARS) {
+      cfg.plan = stored.plan;
+    }
     const found = findProgram(stored.program);
     if (found !== -1) cfg.program = found;
     // 3.0.0 development builds stored a bare index; honour one that still fits
@@ -516,17 +648,27 @@
     const segs = [];
     let t = 0;
 
-    function push(kind, secs, rep) {
+    function push(kind, secs, rep, label) {
       if (secs <= 0) return;
       const ms = secs * 1000;
-      segs.push({ kind: kind, rep: rep, ms: ms, start: t, end: t + ms });
+      segs.push({ kind: kind, rep: rep, label: label || '', ms: ms, start: t, end: t + ms });
       t += ms;
     }
 
     push('warmup', cfg.warmup, 0);
-    for (let r = 1; r <= cfg.reps; r++) {
-      push('effort', cfg.effort, r);
-      if (INCLUDE_TRAILING_REST || r < cfg.reps) push('rest', cfg.rest, r);
+    if (cfg.segments) {
+      // a generic plan spells its phases out; every one of them carries the
+      // number of the effort it is part of, so the counter keeps counting
+      let rep = 0;
+      cfg.segments.forEach((seg) => {
+        if (seg.kind === 'effort') rep++;
+        push(seg.kind, seg.secs, rep, seg.label);
+      });
+    } else {
+      for (let r = 1; r <= cfg.reps; r++) {
+        push('effort', cfg.effort, r);
+        if (INCLUDE_TRAILING_REST || r < cfg.reps) push('rest', cfg.rest, r);
+      }
     }
     push('cooldown', cfg.cooldown, 0);
 
@@ -534,6 +676,11 @@
   }
 
   function totalSeconds(cfg) {
+    // a generic plan brings its own phases; the other two describe a block of
+    // repetitions instead
+    if (cfg.segments) {
+      return cfg.segments.reduce((sum, seg) => sum + seg.secs, cfg.warmup + cfg.cooldown);
+    }
     const rests = INCLUDE_TRAILING_REST ? cfg.reps : cfg.reps - 1;
     return cfg.warmup + cfg.reps * cfg.effort + Math.max(0, rests) * cfg.rest + cfg.cooldown;
   }
@@ -666,6 +813,25 @@
     el.classList.toggle('long', value.length > fits);
   }
 
+  /** The top bar holds one reading: the countdown, and the label of the phase it
+      belongs to, if it has one. The bar is told how many characters the two add
+      up to -- the gap between them is worth about one -- which is what sizes
+      them: the longer the reading, the smaller it is drawn, so it fills the bar
+      whatever it says. */
+  function setReading(clock, label) {
+    // the step-down only applies while the countdown has the bar to itself: with
+    // a label beside it, the character count decides the size instead
+    setBigText(els.countdown, clock, 5);
+    setText(els.phaseLabel, label ? '@ ' + label : '');
+    els.phaseBar.classList.toggle('labelled', !!label);
+
+    const chars = clock.length + (label ? label.length + 3 : 0);
+    if (chars !== session.lastChars) {
+      session.lastChars = chars;
+      els.phaseBar.style.setProperty('--chars', String(chars));
+    }
+  }
+
   function setBar(el, ratio) {
     const p = Math.min(1, Math.max(0, ratio));
     el.style.transform = 'scaleX(' + p.toFixed(5) + ')';
@@ -710,6 +876,7 @@
       raf: 0,
       finished: false,
       lastBlip: -1,
+      lastChars: -1,
       lastPercent: -1,
     };
 
@@ -768,8 +935,8 @@
     }
 
     setText(els.phaseName, LABEL[seg.kind]);
+    setReading(formatClock(remainSec), seg.label);
     setBigText(els.repCounter, repLabel(seg), 7);
-    setBigText(els.countdown, formatClock(remainSec), 5);
     setText(els.nextUp, nextLabel(session.index));
     setBar(els.phaseFill, inPhase / seg.ms);
     setBar(els.overallFill, elapsed / session.totalMs);
@@ -792,8 +959,8 @@
     setPhaseClass('done');
     els.session.classList.remove('urgent');
     setText(els.phaseName, 'FINISHED');
+    setReading('0:00', '');
     setBigText(els.repCounter, 'Workout Completed', 7);
-    setText(els.countdown, '0:00');
     setText(els.nextUp, '');
     setText(els.overallRemaining, '00:00:00');
     setBar(els.phaseFill, 1);
@@ -856,7 +1023,7 @@
       delete els.body.dataset.phase;
     }
     selectTab(activeConfig);
-    els[activeConfig === 'programs' ? 'prog-warmup' : 'reps'].focus({ preventScroll: true });
+    els[CONFIG_FIELDS[activeConfig].focus].focus({ preventScroll: true });
   }
 
   // ── setup tabs ─────────────────────────────────────────────────────────
@@ -904,13 +1071,15 @@
 
   // ── setup screen wiring ────────────────────────────────────────────────
 
-  /** Both totals stay live, so each is already right when you switch to it. */
+  /** Every total stays live, so each is already right when you switch to it. */
   function updateSummary() {
     CONFIG_TABS.forEach((name) => {
       const read = readConfig(name);
       const ok = Object.keys(read.errors).length === 0;
-      const out = name === 'programs' ? els.progSummaryTotal : els.summaryTotal;
-      setText(out, ok ? formatHMS(totalSeconds(read.values)) : '—');
+      setText(
+        els[CONFIG_FIELDS[name].total],
+        ok ? formatHMS(totalSeconds(read.values)) : '—'
+      );
     });
   }
 
