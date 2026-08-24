@@ -78,6 +78,17 @@ Switching to "Customization" does not change that choice.
 | Transition notice time (s) | `00:00:05` |
 | Launch full screen         | `True`     |
 | Allow skipping phase       | `False`    |
+| Warm up colour             | `#f2a63a`  |
+| Effort colour              | `#ff5c3d`  |
+| Rest colour                | `#35b7ff`  |
+| Cool down colour           | `#2fd6a6`  |
+| Finished colour            | `#9ab0c6`  |
+
+Each phase has one colour, which the timer screen uses for the phase name and
+the upper progress bar. The lower bar and the page background are computed from
+it, at 38% and 13% respectively, so picking one colour per phase is enough.
+The "Default colours" button restores just these five,
+leaving the times and the chosen program alone.
 
 The "Transition notice time" represents how long before each phase ends
 the countdown starts blinking and the blips start.

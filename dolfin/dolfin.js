@@ -36,6 +36,19 @@
     { reps: 40, effort: 120, rest: 60 },
   ];
 
+  // the five phase colours; keep in step with the fallbacks in style.css. One
+  // value each: the bottom bar and the page background are color-mix()ed from it
+  const PHASE_COLORS = {
+    warmup: '#f2a63a',
+    effort: '#ff5c3d',
+    rest: '#35b7ff',
+    cooldown: '#2fd6a6',
+    done: '#9ab0c6',
+  };
+
+  // on-screen order, which is also the order a session runs in
+  const COLOR_FIELDS = ['warmup', 'effort', 'rest', 'cooldown', 'done'];
+
   const DEFAULTS = {
     reps: 24,
     effort: 105,
@@ -54,6 +67,7 @@
     notice: 5, // seconds of blinking and blips before a phase ends
     fullscreen: true,
     allowSkip: false, // opt in to the Skip button on the timer screen
+    colors: Object.assign({}, PHASE_COLORS),
   };
 
 
@@ -138,6 +152,7 @@
     pausedOverlay: $('paused-overlay'),
     fullscreen: $('fullscreen'),
     allowSkip: $('allow-skip'),
+    defaultColorsBtn: $('default-colors-btn'),
     fsBtn: $('fs-btn'),
     skipBtn: $('skip-btn'),
     tabs: $('tabs'),
@@ -152,6 +167,10 @@
   TABS.forEach((t) => {
     els[t + 'Tab'] = $('tab-' + t);
     els[t + 'Panel'] = $('panel-' + t);
+  });
+
+  COLOR_FIELDS.forEach((k) => {
+    els['color-' + k] = $('color-' + k);
   });
 
   // ── parsing / formatting ───────────────────────────────────────────────
@@ -224,8 +243,9 @@
 
   // ── settings ───────────────────────────────────────────────────────────
 
-  // the last known good state of the whole setup screen, both configurations
-  let settings = Object.assign({}, DEFAULTS);
+  // the last known good state of the whole setup screen, both configurations;
+  // replaced at boot by loadSettings(), which owns its colours (see freshDefaults)
+  let settings = freshDefaults();
 
   /** Fills the combobox from PROGRAMS. Called once, at boot. */
   function fillPrograms() {
@@ -342,6 +362,24 @@
     els[field].removeAttribute('aria-invalid');
   }
 
+  /** Pushes the chosen phase colours onto the root, where the CSS picks them up
+      as the fallbacks of the five body.phase-* rules. */
+  function applyColors(colors) {
+    COLOR_FIELDS.forEach((k) => {
+      document.documentElement.style.setProperty('--color-' + k, colors[k]);
+    });
+  }
+
+  /** Reads the five swatches. Anything a browser hands back is already a valid
+      "#rrggbb", so there is nothing to reject here. */
+  function readColors() {
+    const colors = {};
+    COLOR_FIELDS.forEach((k) => {
+      colors[k] = els['color-' + k].value;
+    });
+    return colors;
+  }
+
   /** The stored key each duration field is filled from and saved back into. */
   const FIELD_KEY = {
     warmup: 'warmup',
@@ -364,6 +402,9 @@
     els.program.value = String(cfg.program);
     els.fullscreen.checked = cfg.fullscreen !== false;
     els.allowSkip.checked = cfg.allowSkip === true;
+    COLOR_FIELDS.forEach((k) => {
+      els['color-' + k].value = cfg.colors[k];
+    });
   }
 
   /** Every control on the setup screen, in the shape that gets stored. A field
@@ -384,6 +425,7 @@
     cfg.config = activeConfig;
     cfg.fullscreen = els.fullscreen.checked === true;
     cfg.allowSkip = els.allowSkip.checked === true;
+    cfg.colors = readColors();
 
     return cfg;
   }
@@ -404,6 +446,12 @@
     });
   }
 
+  /** A copy of the defaults that owns its colours: Object.assign is shallow, so
+      without this the caller would hold a reference to DEFAULTS.colors itself. */
+  function freshDefaults() {
+    return Object.assign({}, DEFAULTS, { colors: Object.assign({}, PHASE_COLORS) });
+  }
+
   function loadSettings() {
     let stored = null;
     try {
@@ -411,9 +459,9 @@
     } catch (err) {
       stored = null;
     }
-    if (!stored || typeof stored !== 'object') return Object.assign({}, DEFAULTS);
+    if (!stored || typeof stored !== 'object') return freshDefaults();
 
-    const cfg = Object.assign({}, DEFAULTS);
+    const cfg = freshDefaults();
     if (Number.isInteger(stored.reps) && stored.reps >= 0 && stored.reps <= MAX_REPS) {
       cfg.reps = stored.reps;
     }
@@ -433,6 +481,12 @@
     if (CONFIG_TABS.indexOf(stored.config) !== -1) cfg.config = stored.config;
     if (typeof stored.fullscreen === 'boolean') cfg.fullscreen = stored.fullscreen;
     if (typeof stored.allowSkip === 'boolean') cfg.allowSkip = stored.allowSkip;
+    // each colour is checked on its own, so one bad entry cannot lose the rest
+    if (stored.colors && typeof stored.colors === 'object') {
+      COLOR_FIELDS.forEach((k) => {
+        if (/^#[0-9a-f]{6}$/i.test(stored.colors[k])) cfg.colors[k] = stored.colors[k];
+      });
+    }
     return cfg;
   }
 
@@ -882,8 +936,9 @@
 
   els.resetBtn.addEventListener('click', () => {
     clearSettings();
-    settings = Object.assign({}, DEFAULTS);
+    settings = freshDefaults();
     fillForm(settings);
+    applyColors(settings.colors);
     showErrors({});
     updateSummary();
     selectTab(TABS[0]);
@@ -909,6 +964,18 @@
   });
 
   els.program.addEventListener('change', updateSummary);
+
+  COLOR_FIELDS.forEach((k) => {
+    // live, so what the swatch shows and what a session would use never differ
+    els['color-' + k].addEventListener('input', () => applyColors(readColors()));
+  });
+
+  els.defaultColorsBtn.addEventListener('click', () => {
+    COLOR_FIELDS.forEach((k) => {
+      els['color-' + k].value = PHASE_COLORS[k];
+    });
+    applyColors(PHASE_COLORS);
+  });
 
   // only the durations get rewritten into hh:mm:ss when you leave the box
   TIME_FIELDS.forEach((f) => {
@@ -977,6 +1044,7 @@
   fillPrograms();
   settings = loadSettings();
   fillForm(settings);
+  applyColors(settings.colors);
   showErrors({});
   updateSummary();
   selectTab(settings.config);

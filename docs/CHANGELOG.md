@@ -13,6 +13,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- The five phase colours -- warm up, effort, rest, cool down and finished -- can
+  be set on the "Customization" tab. Each one drives the phase name and the upper
+  progress bar; the lower bar and the page background are computed from it. A
+  "Default colours" button restores them without touching anything else.
 - A "Skip" button on the timer screen, which jumps to the end of the current
   phase; skipping the last phase finishes the session. It works while paused too.
   It is offered only when the new "Allow skipping phase" setting is selected.

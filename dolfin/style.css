@@ -21,11 +21,15 @@
   --value-box: 9rem; /* every value box, and the Reset button under them */
 }
 
-body.phase-warmup   { --phase: #f2a63a; }
-body.phase-effort   { --phase: #ff5c3d; }
-body.phase-rest     { --phase: #35b7ff; }
-body.phase-cooldown { --phase: #2fd6a6; }
-body.phase-done     { --phase: #9ab0c6; }
+/* the swatches on the Customization tab set the --color-* properties; the
+   fallbacks here are the defaults, and stay in step with PHASE_COLORS in
+   dolfin.js. Everything else -- the bars, the background, the phase name -- is
+   derived from --phase, so these five values are the only ones to set. */
+body.phase-warmup   { --phase: var(--color-warmup, #f2a63a); }
+body.phase-effort   { --phase: var(--color-effort, #ff5c3d); }
+body.phase-rest     { --phase: var(--color-rest, #35b7ff); }
+body.phase-cooldown { --phase: var(--color-cooldown, #2fd6a6); }
+body.phase-done     { --phase: var(--color-done, #9ab0c6); }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -272,6 +276,20 @@ body.screen-session {
   cursor: pointer;
 }
 
+/* the swatch takes the place of a checkbox in its row, so it is sized like one
+   -- a touch wider, since a colour is worth seeing */
+.field label.check input[type="color"] {
+  width: 3.2rem;
+  height: 1.9rem;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+}
+
+/* without these the browser draws its own frame inside our box */
+.field input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.field input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 0.25rem; }
+.field input[type="color"]::-moz-color-swatch { border: 0; border-radius: 0.25rem; }
+
 .field label.check:focus-within {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -348,6 +366,10 @@ body.screen-session {
 }
 
 .btn-ghost:hover { color: var(--text); }
+
+/* a lone ghost button spanning its own row, rather than sharing one with Start.
+   Must come after .btn-ghost, whose `flex: 0 0` it overrides at equal weight */
+.btn-wide { flex: 1; }
 
 .hint {
   margin: 1.1rem 0 0;
