@@ -160,7 +160,7 @@ body.screen-session {
 .group {
   min-width: 0;
   /* a wider gap below than the fields use: the box has a border of its own to
-     clear, and its Reset defaults button must not read as the form's Reset */
+     clear, and its Reset colours button must not read as the form's Reset */
   margin: 0 0 2rem;
   padding: 0.75rem 0.9rem 0.9rem;
   border: 1px solid var(--line);

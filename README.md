@@ -218,7 +218,7 @@ Time fields accept values in `hh:mm:ss`, `mm:ss`,
 or plain integer number of seconds
 (e.g., `00:01:42`, `01:42` and `102` are all accepted).
 
-The **Reset defaults** button in that box restores just the colour values,
+The **Reset colours** button in that box restores the default colours,
 leaving the times, the workout plan and the chosen program alone.
 
 The **Reset** button restores the default value for all controls.
