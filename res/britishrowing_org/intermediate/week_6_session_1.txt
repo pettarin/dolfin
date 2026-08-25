@@ -1,0 +1,7 @@
+#: britishrowing.org
+#: Intermediate - Week 6 - Session 1
+e: 03:00 @ 20 spm
+e: 03:00 @ 22 spm
+e: 03:00 @ 24 spm
+e: 03:00 @ 22 spm
+e: 03:00 @ 20 spm

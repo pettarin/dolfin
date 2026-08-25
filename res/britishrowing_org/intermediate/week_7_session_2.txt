@@ -1,0 +1,5 @@
+#: britishrowing.org
+#: Intermediate - Week 7 - Session 2
+e: 06:00 @ 1000m row
+r: 02:30
+e: 06:00 @ 1000m row

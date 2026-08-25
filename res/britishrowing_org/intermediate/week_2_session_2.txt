@@ -1,0 +1,15 @@
+#: britishrowing.org
+#: Intermediate - Week 2 - Session 2
+e: 01:00
+r: 01:30
+e: 01:00
+r: 01:30
+e: 01:00
+r: 01:30
+r: 02:00
+e: 01:00
+r: 01:30
+e: 01:00
+r: 01:30
+e: 01:00
+r: 01:30
