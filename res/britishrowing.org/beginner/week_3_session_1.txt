@@ -1,0 +1,10 @@
+#: britishrowing.org
+#: Beginner - Week 3 - Session 1
+e: 03:00 @ low 500m
+r: 02:00
+e: 03:00 @ low 500m
+r: 02:00
+e: 03:00 @ low 500m
+r: 02:00
+e: 03:00 @ low 500m
+r: 02:00

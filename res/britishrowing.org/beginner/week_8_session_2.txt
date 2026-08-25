@@ -1,0 +1,8 @@
+#: britishrowing.org
+#: Beginner - Week 8 - Session 2
+e: 03:00 @ medium 500m
+r: 02:00
+e: 06:00 @ medium 1000m
+r: 02:00
+e: 03:00 @ high 500m
+r: 02:00

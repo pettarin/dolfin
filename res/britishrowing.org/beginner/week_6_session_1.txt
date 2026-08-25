@@ -1,0 +1,14 @@
+#: britishrowing.org
+#: Beginner - Week 6 - Session 1
+e: 01:00 @ high intensity
+r: 01:00
+e: 01:00 @ high intensity
+r: 01:00
+e: 01:00 @ high intensity
+r: 01:00
+e: 01:00 @ high intensity
+r: 01:00
+e: 01:00 @ high intensity
+r: 01:00
+e: 01:00 @ high intensity
+r: 01:00

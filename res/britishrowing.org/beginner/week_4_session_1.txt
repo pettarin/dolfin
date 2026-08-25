@@ -1,0 +1,6 @@
+#: britishrowing.org
+#: Beginner - Week 4 - Session 1
+e: 06:00 @ low 1000m
+r: 05:00
+e: 06:00 @ low 1000m
+r: 05:00

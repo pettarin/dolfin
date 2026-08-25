@@ -1,0 +1,12 @@
+#: britishrowing.org
+#: Beginner - Week 5 - Session 1
+e: 01:30 @ low 30 strokes
+e: 00:30 @ medium 10 strokes
+e: 01:30 @ low 30 strokes
+e: 00:30 @ medium 10 strokes
+e: 01:30 @ low 30 strokes
+e: 00:30 @ medium 10 strokes
+e: 01:30 @ low 30 strokes
+e: 00:30 @ medium 10 strokes
+e: 01:30 @ low 30 strokes
+e: 00:30 @ medium 10 strokes

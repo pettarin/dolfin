@@ -1,0 +1,4 @@
+#: britishrowing.org
+#: Beginner - Week 3 - Session 2
+e: 05:00 @ low intensity
+e: 05:00 @ medium intensity

@@ -1,0 +1,8 @@
+#: britishrowing.org
+#: Beginner - Week 2 - Session 2
+e: 05:00 @ low intensity
+r: 03:00
+e: 05:00 @ low intensity
+r: 03:00
+e: 05:00 @ low intensity
+r: 03:00

@@ -1,0 +1,10 @@
+#: britishrowing.org
+#: Beginner - Week 8 - Session 1
+e: 05:00 @ medium intensity
+r: 03:00
+e: 05:00 @ medium intensity
+r: 03:00
+e: 05:00 @ medium intensity
+r: 03:00
+e: 05:00 @ medium intensity
+r: 03:00

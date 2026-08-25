@@ -1,0 +1,10 @@
+#: britishrowing.org
+#: Beginner - Week 6 - Session 2
+e: 03:00 @ medium 500m
+r: 02:00
+e: 03:00 @ medium 500m
+r: 02:00
+e: 03:00 @ medium 500m
+r: 02:00
+e: 03:00 @ medium 500m
+r: 02:00

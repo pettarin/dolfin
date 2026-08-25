@@ -1,0 +1,13 @@
+#: britishrowing.org
+#: Beginner - Week 7 - Session 2
+e: 02:00 @ low intensity
+e: 02:00 @ medium intensity
+e: 01:00 @ high intensity
+e: 02:00 @ medium intensity
+e: 03:00 @ low intensity
+r: 05:00
+e: 02:00 @ low intensity
+e: 02:00 @ medium intensity
+e: 01:00 @ high intensity
+e: 02:00 @ medium intensity
+e: 03:00 @ low intensity
