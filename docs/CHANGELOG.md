@@ -43,6 +43,9 @@ All notable changes to this project will be documented in this file.
 - The setup screen is now split in four tabs: "Programs", "Intervals",
   "Generic", and "Customizations"; it opens on "Programs" rather than on
   "Intervals", and the tab strip wraps to two rows on a narrow screen.
+- The setup card now hangs from the top of the screen rather than sitting
+  in the middle of it, so switching tab no longer moves the head and the
+  tab strip up or down as the panels differ in height.
 - The "Allow skipping phase" setting is now on by default,
   so the "Skip" button is there unless it is cleared.
 - Every program now carries the label it is listed by, rather than having one

@@ -68,9 +68,12 @@ body.screen-session {
 .setup {
   display: grid;
   justify-items: center;
-  /* "safe" so a card taller than the viewport stays scrollable from the top
-     instead of having its head clipped (landscape phones) */
-  align-content: safe center;
+  /* the card hangs from the top rather than sitting in the middle: the four
+     panels are of four different heights, and centring moved the head and the
+     tab strip every time you switched tab. Starting at the top also keeps a
+     card taller than the viewport scrollable from its head, which is what the
+     "safe" in a centred alignment was there for */
+  align-content: start;
   overflow-y: auto;
 }
 
