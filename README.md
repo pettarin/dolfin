@@ -45,34 +45,11 @@ An **interval** program is a block of effort and rest,
 repeated a number of times.
 The predefined interval programs are:
 
-| Interval Programs      | Description             |
-| ---------------------- | ----------------------- |
-| `(01:30 + 00:30) x 5`  | effort + rest, repeated |
-| `(01:30 + 00:30) x 10` |                         |
-| `(01:30 + 00:30) x 15` |                         |
-| `(01:30 + 00:30) x 20` |                         |
-| `(01:30 + 00:30) x 30` |                         |
-| `(01:30 + 00:30) x 45` |                         |
-| `(01:30 + 00:30) x 60` |                         |
-| `(01:45 + 00:45) x 4`  |                         |
-| `(01:45 + 00:45) x 6`  |                         |
-| `(01:45 + 00:45) x 8`  |                         |
-| `(01:45 + 00:45) x 12` |                         |
-| `(01:45 + 00:45) x 16` |                         |
-| `(01:45 + 00:45) x 18` |                         |
-| `(01:45 + 00:45) x 20` |                         |
-| `(01:45 + 00:45) x 24` |                         |
-| `(01:45 + 00:45) x 30` |                         |
-| `(01:45 + 00:45) x 32` |                         |
-| `(01:45 + 00:45) x 36` |                         |
-| `(01:45 + 00:45) x 48` |                         |
-| `(02:00 + 01:00) x 5`  |                         |
-| `(02:00 + 01:00) x 10` |                         |
-| `(02:00 + 01:00) x 15` |                         |
-| `(02:00 + 01:00) x 20` |                         |
-| `(02:00 + 01:00) x 25` |                         |
-| `(02:00 + 01:00) x 30` |                         |
-| `(02:00 + 01:00) x 40` |                         |
+| Interval Programs                                                 | Description                   |
+| ----------------------------------------------------------------- | ----------------------------- |
+| `(01:30 + 00:30) x {5, 10, 15, 20, 30, 45, 60}`                   | (effort + rest) x repetitions |
+| `(01:45 + 00:45) x {4, 6, 8, 12, 16, 18, 20, 24, 30, 32, 36, 48}` |                               |
+| `(02:00 + 01:00) x {5, 10, 15, 20, 25, 30, 40}`                   |                               |
 
 > [!TIP]
 > It is possible to define a custom interval workout,
@@ -89,7 +66,7 @@ published by
 
 > [!TIP]
 > It is possible to define a custom generic workout,
-> with parameters different than the predefined ones,
+> with phases and parameters different than the predefined ones,
 > in the **Generic** tab.
 
 Press the **Start** button to transition to the **Workout** screen.
