@@ -140,12 +140,12 @@ e: 01:00
 ...
 ```
 
-| Line                | Meaning                                         |
-| ------------------- | ----------------------------------------------- |
-| `#: anything`       | a comment, ignored (any line starting with `#`) |
-| `e: 02:00 @ 20 spm` | an effort phase, labelled `20 spm`              |
-| `r: 01:30`          | a rest phase, ninety seconds long               |
-| `e: 01:00`          | an effort phase, one minute long                |
+| Line                  | Meaning                            |
+| --------------------- | ---------------------------------- |
+| `#: britishrowing.org | a comment, ignored                 |
+| `e: 02:00 @ 20 spm`   | an effort phase, labelled `20 spm` |
+| `r: 01:30`            | a rest phase, ninety seconds long  |
+| `e: 01:00`            | an effort phase, one minute long   |
 
 Times accept the same `hh:mm:ss`, `mm:ss` or plain-seconds forms
 as every other time field, and must be greater than zero.
