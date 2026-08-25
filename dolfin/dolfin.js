@@ -5,35 +5,91 @@
 (function () {
   // -- configuration ------------------------------------------------------
 
-  // preset effort/rest blocks offered on the Programs tab; the labels are derived
-  // from these by programLabel(), so the format lives in exactly one place
+  // the workouts offered on the Programs tab. A program is either an interval
+  // block, run as the Intervals tab runs one, or a generic plan, written in the
+  // syntax the Generic tab takes; either way it carries the group it is listed
+  // under and the label the combobox shows it by. Rows of a group sit together,
+  // which is how fillPrograms() knows where one optgroup ends and the next opens
   const PROGRAMS = [
-    { reps: 5, effort: 90, rest: 30 },
-    { reps: 10, effort: 90, rest: 30 },
-    { reps: 15, effort: 90, rest: 30 },
-    { reps: 20, effort: 90, rest: 30 },
-    { reps: 30, effort: 90, rest: 30 },
-    { reps: 45, effort: 90, rest: 30 },
-    { reps: 60, effort: 90, rest: 30 },
-    { reps: 4, effort: 105, rest: 45 },
-    { reps: 6, effort: 105, rest: 45 },
-    { reps: 8, effort: 105, rest: 45 },
-    { reps: 12, effort: 105, rest: 45 },
-    { reps: 16, effort: 105, rest: 45 },
-    { reps: 18, effort: 105, rest: 45 },
-    { reps: 20, effort: 105, rest: 45 },
-    { reps: 24, effort: 105, rest: 45 },
-    { reps: 30, effort: 105, rest: 45 },
-    { reps: 32, effort: 105, rest: 45 },
-    { reps: 36, effort: 105, rest: 45 },
-    { reps: 48, effort: 105, rest: 45 },
-    { reps: 5, effort: 120, rest: 60 },
-    { reps: 10, effort: 120, rest: 60 },
-    { reps: 15, effort: 120, rest: 60 },
-    { reps: 20, effort: 120, rest: 60 },
-    { reps: 25, effort: 120, rest: 60 },
-    { reps: 30, effort: 120, rest: 60 },
-    { reps: 40, effort: 120, rest: 60 },
+    { type: 'intervals', group: 'Intervals', label: '(01:30 + 00:30) x 5',
+      reps: 5, effort: 90, rest: 30 },
+    { type: 'intervals', group: 'Intervals', label: '(01:30 + 00:30) x 10',
+      reps: 10, effort: 90, rest: 30 },
+    { type: 'intervals', group: 'Intervals', label: '(01:30 + 00:30) x 15',
+      reps: 15, effort: 90, rest: 30 },
+    { type: 'intervals', group: 'Intervals', label: '(01:30 + 00:30) x 20',
+      reps: 20, effort: 90, rest: 30 },
+    { type: 'intervals', group: 'Intervals', label: '(01:30 + 00:30) x 30',
+      reps: 30, effort: 90, rest: 30 },
+    { type: 'intervals', group: 'Intervals', label: '(01:30 + 00:30) x 45',
+      reps: 45, effort: 90, rest: 30 },
+    { type: 'intervals', group: 'Intervals', label: '(01:30 + 00:30) x 60',
+      reps: 60, effort: 90, rest: 30 },
+    { type: 'intervals', group: 'Intervals', label: '(01:45 + 00:45) x 4',
+      reps: 4, effort: 105, rest: 45 },
+    { type: 'intervals', group: 'Intervals', label: '(01:45 + 00:45) x 6',
+      reps: 6, effort: 105, rest: 45 },
+    { type: 'intervals', group: 'Intervals', label: '(01:45 + 00:45) x 8',
+      reps: 8, effort: 105, rest: 45 },
+    { type: 'intervals', group: 'Intervals', label: '(01:45 + 00:45) x 12',
+      reps: 12, effort: 105, rest: 45 },
+    { type: 'intervals', group: 'Intervals', label: '(01:45 + 00:45) x 16',
+      reps: 16, effort: 105, rest: 45 },
+    { type: 'intervals', group: 'Intervals', label: '(01:45 + 00:45) x 18',
+      reps: 18, effort: 105, rest: 45 },
+    { type: 'intervals', group: 'Intervals', label: '(01:45 + 00:45) x 20',
+      reps: 20, effort: 105, rest: 45 },
+    { type: 'intervals', group: 'Intervals', label: '(01:45 + 00:45) x 24',
+      reps: 24, effort: 105, rest: 45 },
+    { type: 'intervals', group: 'Intervals', label: '(01:45 + 00:45) x 30',
+      reps: 30, effort: 105, rest: 45 },
+    { type: 'intervals', group: 'Intervals', label: '(01:45 + 00:45) x 32',
+      reps: 32, effort: 105, rest: 45 },
+    { type: 'intervals', group: 'Intervals', label: '(01:45 + 00:45) x 36',
+      reps: 36, effort: 105, rest: 45 },
+    { type: 'intervals', group: 'Intervals', label: '(01:45 + 00:45) x 48',
+      reps: 48, effort: 105, rest: 45 },
+    { type: 'intervals', group: 'Intervals', label: '(02:00 + 01:00) x 5',
+      reps: 5, effort: 120, rest: 60 },
+    { type: 'intervals', group: 'Intervals', label: '(02:00 + 01:00) x 10',
+      reps: 10, effort: 120, rest: 60 },
+    { type: 'intervals', group: 'Intervals', label: '(02:00 + 01:00) x 15',
+      reps: 15, effort: 120, rest: 60 },
+    { type: 'intervals', group: 'Intervals', label: '(02:00 + 01:00) x 20',
+      reps: 20, effort: 120, rest: 60 },
+    { type: 'intervals', group: 'Intervals', label: '(02:00 + 01:00) x 25',
+      reps: 25, effort: 120, rest: 60 },
+    { type: 'intervals', group: 'Intervals', label: '(02:00 + 01:00) x 30',
+      reps: 30, effort: 120, rest: 60 },
+    { type: 'intervals', group: 'Intervals', label: '(02:00 + 01:00) x 40',
+      reps: 40, effort: 120, rest: 60 },
+
+    { type: 'generic', group: 'britishrowing.org',
+      label: 'Intermediate - Week 1 - Session 1',
+      plan: [
+        'e: 02:00 @ 20 spm',
+        'e: 02:00 @ 22 spm',
+        'e: 02:00 @ 24 spm',
+        'e: 02:00 @ 22 spm',
+        'e: 02:00 @ 20 spm',
+      ].join('\n') },
+    { type: 'generic', group: 'britishrowing.org',
+      label: 'Intermediate - Week 1 - Session 2',
+      plan: [
+        'e: 01:00',
+        'r: 01:30',
+        'e: 01:00',
+        'r: 01:30',
+        'e: 01:00',
+        'r: 01:30',
+        'r: 03:00',
+        'e: 01:00',
+        'r: 01:30',
+        'e: 01:00',
+        'r: 01:30',
+        'e: 01:00',
+        'r: 01:30',
+      ].join('\n') },
   ];
 
   // the five phase colours; keep in step with the fallbacks in style.css. One
@@ -78,7 +134,7 @@
     // the same block the manual defaults above describe, so the two tabs open
     // on the same workout; falls back to the first entry if it ever leaves
     // the list
-    program: Math.max(0, findProgram({ reps: 24, effort: 105, rest: 45 })),
+    program: Math.max(0, findIntervals({ reps: 24, effort: 105, rest: 45 })),
     config: 'intervals', // the tab whose settings Start will run
     notice: 5, // seconds of blinking and blips before a phase ends
     fullscreen: true,
@@ -366,20 +422,6 @@
     return PLAIN_FIELDS.indexOf(field) !== -1 ? String(secs) : formatHMS(secs);
   }
 
-  /** Zero-padded minutes and seconds: "01:45". Programs never run to hours. */
-  function formatMS(sec) {
-    const m = Math.floor(sec / 60);
-    const s = sec % 60;
-    return [m, s].map((n) => String(n).padStart(2, '0')).join(':');
-  }
-
-  /** A program read out as "INT: (01:45 + 00:45) x 8". The prefix names the kind
-      of program; kinds other than intervals will bring their own prefix and their
-      own body. */
-  function programLabel(p) {
-    return 'INT: (' + formatMS(p.effort) + ' + ' + formatMS(p.rest) + ') x ' + p.reps;
-  }
-
   /** Display form: "1:45", "12:03:00". */
   function formatClock(sec) {
     const total = Math.max(0, Math.round(sec));
@@ -396,22 +438,57 @@
   // replaced at boot by loadSettings(), which owns its colours (see freshDefaults)
   let settings = freshDefaults();
 
-  /** Fills the combobox from PROGRAMS. Called once, at boot. */
+  /** Fills the combobox from PROGRAMS: an optgroup per group, an option per
+      program, reading the label it carries. A change of group opens the next
+      optgroup, so the list only has to keep the rows of a group together.
+      Called once, at boot. */
   function fillPrograms() {
+    let group = null;
+
     PROGRAMS.forEach((p, i) => {
+      if (group === null || group.label !== p.group) {
+        group = document.createElement('optgroup');
+        group.label = p.group;
+        els.program.appendChild(group);
+      }
       const option = document.createElement('option');
       option.value = String(i);
-      option.textContent = programLabel(p);
-      els.program.appendChild(option);
+      option.textContent = p.label;
+      group.appendChild(option);
     });
   }
 
-  /** Where a stored program sits in the list now, or -1 if it is gone. */
+  /** Where an interval block sits in the list, or -1 if it is not there. The
+      defaults name a program this way, and so did the value stored back when
+      every program was an interval block. */
+  function findIntervals(p) {
+    return PROGRAMS.findIndex(
+      (q) => q.type === 'intervals' && q.reps === p.reps
+        && q.effort === p.effort && q.rest === p.rest
+    );
+  }
+
+  /** Where a stored program sits in the list now, or -1 if it is gone. A program
+      is named by the group and the label it is shown under, a pair that survives
+      the list growing or being reordered. */
   function findProgram(p) {
     if (!p || typeof p !== 'object') return -1;
-    return PROGRAMS.findIndex(
-      (q) => q.reps === p.reps && q.effort === p.effort && q.rest === p.rest
-    );
+    if (typeof p.label === 'string') {
+      return PROGRAMS.findIndex((q) => q.group === p.group && q.label === p.label);
+    }
+    return findIntervals(p);
+  }
+
+  /** Reads the plan of every generic program into the phases it spells out, once,
+      at boot. The plans ship with the app, so they parse by construction; a
+      program then carries its segments and its repetitions the way a plan typed
+      into the Generic tab does. */
+  function preparePrograms() {
+    PROGRAMS.forEach((p) => {
+      if (p.type !== 'generic') return;
+      p.segments = parsePlan(p.plan).segments || [];
+      p.reps = numberPlan(p.segments);
+    });
   }
 
   /** The index the combobox is on, falling back to the first program. */
@@ -442,11 +519,18 @@
         values.reps = numberPlan(parsed.segments);
       }
     } else if (name === 'programs') {
-      // the effort block comes from the list, so it cannot be out of range
       const p = currentProgram();
-      values.reps = p.reps;
-      values.effort = p.effort;
-      values.rest = p.rest;
+      if (p.type === 'generic') {
+        // the plan was read at boot; its groups are its repetitions, so the
+        // counter on the session screen reads as it does on the Generic tab
+        values.segments = p.segments;
+        values.reps = p.reps;
+      } else {
+        // the effort block comes from the list, so it cannot be out of range
+        values.reps = p.reps;
+        values.effort = p.effort;
+        values.rest = p.rest;
+      }
     } else {
       const reps = parseField('reps', els.reps.value);
       if (reps === null || reps < 0 || reps > MAX_REPS) {
@@ -659,9 +743,12 @@
 
   function saveSettings(cfg) {
     try {
-      // the program goes out by value, so growing or reordering PROGRAMS later
-      // cannot silently move somebody's saved choice
-      const out = Object.assign({}, cfg, { program: PROGRAMS[cfg.program] });
+      // the program goes out by name rather than by index, so growing or
+      // reordering PROGRAMS later cannot silently move somebody's saved choice
+      const p = PROGRAMS[cfg.program];
+      const out = Object.assign({}, cfg, {
+        program: { group: p.group, label: p.label },
+      });
       localStorage.setItem(STORAGE_KEY, JSON.stringify(out));
     } catch (err) {
       /* private mode / quota: not worth bothering the user */
@@ -1273,6 +1360,7 @@
 
   // -- boot ---------------------------------------------------------------
 
+  preparePrograms();
   fillPrograms();
   settings = loadSettings();
   fillForm(settings);

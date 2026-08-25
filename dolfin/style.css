@@ -237,17 +237,19 @@ body.screen-session {
 }
 
 /* the combobox wears the same box as the inputs; it spans the panel because
-   "20 x (02:00 + 01:00)" does not fit the narrow value box the rows use */
+   "Intermediate - Week 1 - Session 1" does not fit the narrow value box the
+   rows use */
 .field select {
   width: 100%;
   min-height: 3.1rem;
   padding: 0 2.4rem 0 0.9rem;
   font-family: var(--mono);
-  /* the labels are long and fixed-width: "INT: 12 x (01:45 + 00:45)" is 25
-     monospace characters, and a native select clips rather than scrolls. On a
-     320px screen the box gives the text about 200px, so it has to scale down
-     with the viewport, capping at a step below the inputs' 1.35rem */
-  font-size: clamp(0.8rem, 4vw, 1.15rem);
+  /* the labels are long and fixed-width: the longest of them,
+     "Intermediate - Week 1 - Session 1", is 33 monospace characters, and a
+     native select clips rather than scrolls. On a 320px screen the box gives
+     the text about 200px, which those 33 characters fill at 3.1vw, so the size
+     follows the viewport, capping at a step below the inputs' 1.35rem */
+  font-size: clamp(0.6rem, 3.1vw, 1.15rem);
   color: var(--text);
   background: #070c12;
   border: 1px solid var(--line);
@@ -260,6 +262,15 @@ body.screen-session {
   background-repeat: no-repeat;
   background-position: right 0.9rem center;
   background-size: 0.75rem;
+}
+
+/* the headings of the groups the programs are listed under. The popup is drawn
+   by the browser, so this only lands where it lets them be styled; the point is
+   that a heading reads as a heading and not as one more program */
+.field optgroup {
+  color: var(--muted);
+  background: #070c12;
+  font-style: normal;
 }
 
 .field select:focus-visible {

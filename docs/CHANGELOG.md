@@ -21,6 +21,10 @@ All notable changes to this project will be documented in this file.
   under the countdown, on a line of its own and in the same size as it,
   for the whole phase it belongs to.
 - Example workout plans, in the `res/` directory.
+- Generic programs on the "Programs" tab: a program is now either an
+  interval block, as before, or a workout written out phase by phase in the
+  syntax the "Generic" tab takes. The two British Rowing intermediate
+  sessions in the `res/` directory are the first of them.
 
 ### Changed
 
@@ -38,6 +42,10 @@ All notable changes to this project will be documented in this file.
 - The setup screen is now split in four tabs: "Intervals", "Generic",
   "Programs", and "Customizations"; the tab strip wraps to two rows
   on a narrow screen.
+- Every program now carries the label it is listed by, rather than having one
+  derived from its times, and the "Program" combobox groups the programs by
+  where they come from. The labels of the interval programs consequently drop
+  their `INT: ` prefix, the "Intervals" group heading now saying as much.
 
 
 ## [2.0.0] - 2026-08-24
