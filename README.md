@@ -31,8 +31,6 @@ There are two screens: the **Setup** screen and the **Workout** screen.
 
 It is split into four tabs:
 **Programs**, **Intervals**, **Generic**, and **Customization**.
-It opens on **Programs**, unless the last session was started
-from another one.
 
 #### Programs Tab
 
@@ -41,18 +39,13 @@ from another one.
 The **"Programs"** tab lets the user pick one of the pre-defined workouts,
 plus optional warm up and cool down phases.
 
-A program is one of two kinds.
-An **interval** program is a block of effort and rest repeated,
-the same shape the **Intervals** tab builds;
-a **generic** program is a workout written out phase by phase,
-in the very syntax the **Workout plan** of the **Generic** tab takes,
-labels and all.
-Either way it is picked from a single combobox,
-where the programs are grouped by where they come from.
+A program is one of two kinds: **interval** or **generic**.
 
-Under **Intervals**:
+An **interval** program is a block of effort and rest,
+repeated a number of times.
+The predefined interval programs are:
 
-| Program                | Description             |
+| Interval Programs      | Description             |
 | ---------------------- | ----------------------- |
 | `(01:30 + 00:30) x 5`  | effort + rest, repeated |
 | `(01:30 + 00:30) x 10` |                         |
@@ -81,25 +74,25 @@ Under **Intervals**:
 | `(02:00 + 01:00) x 30` |                         |
 | `(02:00 + 01:00) x 40` |                         |
 
-Then the eight-week indoor rowing programmes published by
-[British Rowing](https://www.britishrowing.org),
-one group per level and in the order they are meant to be worked through:
+> [!TIP]
+> It is possible to define a custom interval workout,
+> with parameters different than the predefined ones,
+> in the **Intervals** tab builds.
 
-| Group                              | Sessions | Description                                                   |
-| ---------------------------------- | -------- | ------------------------------------------------------------- |
-| `britishrowing.org - Beginner`     | 16       | low, medium and high intensity efforts, up to a 2000m row     |
-| `britishrowing.org - Intermediate` | 15       | stroke rate ladders to 26 spm, and sets of one-minute efforts |
-| `britishrowing.org - Advanced`     | 15       | ladders to 28 spm, and sharper sets, down to thirty seconds   |
+A **generic** program is a workout written out phase by phase,
+in the very syntax the **Generic** tab takes.
 
-Each is listed as `Week 1 - Session 1` and so on,
-and each is the plan of the same name under `res/britishrowing.org/`,
-so any of them can be read, adapted, or pasted into the **Generic** tab.
+Currently the predefined generic programs
+include the 8-weeks Beginner/Intermediate/Advanced training programs
+published by
+[British Rowing](https://www.britishrowing.org).
 
 > [!TIP]
-> A program that is not in the list can always be written out by hand
-> in the **Generic** tab.
+> It is possible to define a custom interval workout,
+> with parameters different than the predefined ones,
+> in the **Generic** tab builds.
 
-Press the **Start** button to transition to the Workout screen.
+Press the **Start** button to transition to the **Workout** screen.
 
 #### Intervals Tab
 
@@ -109,7 +102,7 @@ The **"Intervals"** tab lets the user
 set up a workout session made by repetitions of effort and rest phases,
 plus optional warm up and cool down phases.
 
-Its default values match the Garmin activity I use most frequently:
+Its default values are:
 
 | Control        | Default    |
 | -------------- | ---------- |
@@ -119,10 +112,14 @@ Its default values match the Garmin activity I use most frequently:
 | Rest time      | `00:00:45` |
 | Cool down time | `00:01:00` |
 
+Time fields accept values in `hh:mm:ss`, `mm:ss`,
+or plain integer number of seconds
+(e.g., `00:01:42`, `01:42` and `102` are all accepted).
+
 A warm up, effort, rest, or cool down time of `00:00:00`
 simply skips that phase.
 
-Press the **Start** button to transition to the Workout screen.
+Press the **Start** button to transition to the **Workout** screen.
 
 #### Generic Tab
 
@@ -134,79 +131,59 @@ plus optional warm up and cool down phases.
 
 The plan is written one phase per line:
 
+```
+#: britishrowing.org
+#: Advanced - Week 6 - Session 2
+e: 02:00 @ 26-28 spm
+r: 01:30
+e: 01:00
+...
+```
+
 | Line                | Meaning                                         |
 | ------------------- | ----------------------------------------------- |
-| `e: 02:00`          | an effort phase, two minutes long                |
-| `r: 01:30`          | a rest phase, ninety seconds long                |
-| `e: 02:00 @ 20 spm` | an effort phase, labelled `20 spm`               |
-| `#: anything`       | a comment, ignored (any line starting with `#`)  |
-| `e: 01:00 ; r: 30`  | two phases on one line, separated by `;`         |
+| `#: anything`       | a comment, ignored (any line starting with `#`) |
+| `e: 02:00 @ 20 spm` | an effort phase, labelled `20 spm`              |
+| `r: 01:30`          | a rest phase, ninety seconds long               |
+| `e: 01:00`          | an effort phase, one minute long                |
 
 Times accept the same `hh:mm:ss`, `mm:ss` or plain-seconds forms
 as every other time field, and must be greater than zero.
-Blank lines are ignored,
-and `e` and `r` may be written in upper case.
+Blank lines and lines starting with `#` are ignored,
+and `e` (effort) and `r` (rest) may be written in upper case.
+Anything after an `@` is a free-text label,
+which is shown under the phase countdown.
 
-Anything after an `@` is a free-text label:
-it is shown on a line of its own under the countdown,
-and as big as it, for the whole phase it belongs to.
-The two lines are sized together,
-so a long label makes for a smaller reading.
-Rowing plans typically use it for a stroke rate,
-but any short text will do.
-
-On the Workout screen the counter reads the phase group being run:
-an effort opens a group and a rest closes it,
-so an `e:` and the `r:` after it count as one group,
-a rest following another rest counts as a group of its own,
-and a plan of nothing but efforts counts one group per effort.
-
-For example, this plan:
-
-```
-#: britishrowing.org
-#: Intermediate - Week 1 - Session 1
-e: 02:00 @ 20 spm
-e: 02:00 @ 22 spm
-e: 02:00 @ 24 spm
-e: 02:00 @ 22 spm
-e: 02:00 @ 20 spm
-```
-
-runs five two-minute efforts back to back,
-each announcing the stroke rate to hold,
-and is the one the tab opens on:
-
-| Control        | Default                    |
-| -------------- | -------------------------- |
-| Warm up time   | `00:01:00`                 |
-| Workout plan   | the five-effort plan above |
-| Cool down time | `00:01:00`                 |
-
-A few more examples, taken from the
-[British Rowing](https://www.britishrowing.org) intermediate training programme,
-are in the `res/` directory.
+Full examples, corresponding to the programs published by
+[British Rowing](https://www.britishrowing.org)
+and available in the **Programs** tab,
+are located in the `res/` directory.
 
 If a line cannot be read, the **Session total** shows `—`,
-and pressing **Start** reports which line is at fault.
+and pressing **Start** reports the problematic line.
 
-Press the **Start** button to transition to the Workout screen.
+Press the **Start** button to transition to the **Workout** screen.
 
 #### Customization Tab
 
 ![Customization Tab](imgs/setup_customization.png)
 
 The **"Customization"** tab holds the preferences that apply
-to the workout screen, for **Intervals**, **Generic**
-or **Programs** workouts:
+to the **Workout** screen for all types of workout
+(programs, intervals, and generic):
 
-| Control                    | Default                 |
-| -------------------------- | ----------------------- |
-| Launch full screen         | `True`                  |
-| Allow skipping phase       | `True`                  |
-| Transition notice time (s) | `00:00:05`              |
+| Control                    | Default    |
+| -------------------------- | ---------- |
+| Launch full screen         | `True`     |
+| Allow skipping phase       | `True`     |
+| Transition notice time (s) | `00:00:05` |
 
-The five phase colours sit in a **Colours** box of their own:
+The **Transition notice time** setting represents
+how long before each phase ends
+the countdown starts blinking and the blips start.
+Set it to zero for no warning at all.
+
+The five phase colours can be customized as well:
 
 | Colour    | Default                 |
 | --------- | ----------------------- |
@@ -215,15 +192,6 @@ The five phase colours sit in a **Colours** box of their own:
 | Rest      | `#35b7ff` (light blue)  |
 | Cool down | `#2fd6a6` (light green) |
 | Finished  | `#9ab0c6` (grey)        |
-
-The **Transition notice time** setting represents
-how long before each phase ends
-the countdown starts blinking and the blips start.
-Set it to zero for no warning at all.
-
-Time fields accept values in `hh:mm:ss`, `mm:ss`,
-or plain integer number of seconds
-(e.g., `00:01:42`, `01:42` and `102` are all accepted).
 
 The **Reset colours** button in that box restores the default colours,
 leaving the times, the workout plan and the chosen program alone.
@@ -237,7 +205,10 @@ so the next visit starts with the last values set
 ### Workout Screen
 
 The **Workout** screen cycles through the defined phases:
-warm up → ( (effort → rest) × repetitions ) → cool down → end of workout.
+
+- interval workouts: warm up → ( (effort → rest) × repetitions ) → cool down → end of workout;
+- generic workouts: warm up → ( phases as defined in the plan) → cool down → end of workout.
+
 Immediately below a screenshots of each phase:
 
 ![Warm Up Phase](imgs/phases_warm_up.png)
@@ -251,9 +222,7 @@ shows it under the countdown, on a line of its own:
 
 ![Effort Phase With A Label](imgs/phases_effort_label.png)
 
-The screen is split into two horizontal bands,
-the phase being run taking two thirds of the height
-and the session as a whole the remaining third:
+The screen is split into two horizontal bands:
 
 - the top band shows the current phase name (and the next one up),
   with a progress bar, a timer counting down the current phase,
@@ -264,10 +233,6 @@ and the session as a whole the remaining third:
   What is still to come is dimmed, so the edge between vivid and dim
   is where you are. Over it sit the current repetition / total repetitions,
   and below it the time remaining for completing the workout.
-
-> [!NOTE]
-> A workout with more than a thousand phases is drawn as a single band
-> rather than as boxes, since each box would be thinner than a hairline.
 
 On the bottom right corner there are three buttons:
 
