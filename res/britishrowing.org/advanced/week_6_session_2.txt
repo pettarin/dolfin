@@ -1,0 +1,17 @@
+#: britishrowing.org
+#: Advanced - Week 6 - Session 2
+e: 01:00 @ 26-28 spm
+r: 01:00
+e: 01:00 @ 26-28 spm
+r: 01:00
+e: 01:00 @ 26-28 spm
+r: 01:00
+r: 03:00
+e: 00:30 @ 28+ spm
+r: 01:00
+e: 00:30 @ 28+ spm
+r: 01:00
+e: 00:30 @ 28+ spm
+r: 01:00
+e: 00:30 @ 28+ spm
+r: 01:00

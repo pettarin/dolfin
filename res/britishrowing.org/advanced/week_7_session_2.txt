@@ -1,0 +1,5 @@
+#: britishrowing.org
+#: Advanced - Week 7 - Session 2
+e: 06:00 @ 26-28 spm 1000m
+r: 02:30
+e: 06:00 @ 26-28 spm 1000m
