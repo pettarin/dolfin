@@ -23,7 +23,7 @@ A live example of **dolfin** can be found at
 [https://www.albertopettarin.it/dolfin/](https://www.albertopettarin.it/dolfin/)
 
 
-## How It Works
+## User Guide
 
 There are two screens: the **Setup** screen and the **Workout** screen.
 
@@ -88,7 +88,7 @@ published by
 [British Rowing](https://www.britishrowing.org).
 
 > [!TIP]
-> It is possible to define a custom interval workout,
+> It is possible to define a custom generic workout,
 > with parameters different than the predefined ones,
 > in the **Generic** tab.
 
@@ -266,49 +266,22 @@ and the clock is anchored to wall time,
 so it does not drift if the tab is backgrounded.
 
 
-## Layout
+## Deployment
 
-```
-.
-├── AGENTS.md                           <- directions for coding agents
-├── docs                                <- documentation
-│   ├── CHANGELOG.md
-│   ├── CODE_OF_CONDUCT.md
-│   ├── CONTRIBUTING.md
-│   ├── DEVELOPMENT.md
-│   ├── ROADMAP.md
-│   └── SECURITY.md
-├── dolfin                              <- document root, can be served behind a Web server
-│   ├── dolfin.js                       <- main script
-│   ├── icon-180.png
-│   ├── icon-192.png
-│   ├── icon-512.png
-│   ├── icon.svg
-│   ├── index.html
-│   ├── manifest.json                   <- PWA manifest
-│   ├── precache.js                     <- service worker
-│   └── style.css
-├── imgs                                <- screenshots for the README
-│   ├── phases_cool_down.png
-│   ├── phases_effort.png
-│   ├── phases_effort_label.png
-│   ├── phases_end_of_workout.png
-│   ├── phases_rest.png
-│   ├── phases_warm_up.png
-│   ├── setup_customization.png
-│   ├── setup_generic.png
-│   ├── setup_intervals.png
-│   └── setup_programs.png
-├── LICENSE
-├── Makefile
-├── README.md                           <- this README file
-├── res                                 <- the plans behind the britishrowing.org programs
-│   └── britishrowing.org
-└── VERSION                             <- version of dolfin
-```
+### Under `nginx`
+
+Simply copy the `dolfin/` directory into a location served by `nginx`.
+Other Web servers (Apache, IIS, etc.) should "simply work" as well.
+
+A live example can be found at
+[https://www.albertopettarin.it/dolfin/](https://www.albertopettarin.it/dolfin/)
+
+> [!NOTE]
+> A secure context is needed, that is, serve over HTTPS ---
+> but, hey, it's 2026, you should use HTTPS always, everywhere, anyway!
 
 
-## Running It Locally
+### Local Web Server
 
 ```sh
 cd dolfin
@@ -327,32 +300,6 @@ then open in your browser
 > [!TIP]
 > `localhost` counts as a secure context,
 > so the service worker registers and offline mode can be tested there.
-
-
-## Deploying Behind `nginx`
-
-Simply copy the `dolfin/` directory into a location served by `nginx`.
-
-A live example can be found at
-[https://www.albertopettarin.it/dolfin/](https://www.albertopettarin.it/dolfin/)
-
-> [!NOTE]
-> A secure context is needed, that is, serve over HTTPS ---
-> but, hey, it's 2026, you should use HTTPS always, everywhere, anyway!
-
-
-## Browser Support
-
-Any reasonably recent browser is supported.
-
-`AudioContext`, `localStorage`, the Fullscreen API,
-and the Screen Wake Lock API are each used defensively:
-if a browser lacks support for a feature,
-that feature is skipped and the timer itself is unaffected.
-
-On iOS the way to get a full-screen session
-is to install **dolfin** to the home screen,
-where it opens without browser chrome anyway.
 
 
 ## Licence
