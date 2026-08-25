@@ -16,3 +16,8 @@ Rough plan, broken down by milestone:
 
 - Support other types of workouts
   (e.g., different times x different SPM)
+
+## v4.0.0
+
+- Simpler way of adding predefined programs
+- Support a standard (JSON? YAML?) syntax to define a generic workout plan
