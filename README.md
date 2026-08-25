@@ -77,7 +77,7 @@ The predefined interval programs are:
 > [!TIP]
 > It is possible to define a custom interval workout,
 > with parameters different than the predefined ones,
-> in the **Intervals** tab builds.
+> in the **Intervals** tab.
 
 A **generic** program is a workout written out phase by phase,
 in the very syntax the **Generic** tab takes.
@@ -90,7 +90,7 @@ published by
 > [!TIP]
 > It is possible to define a custom interval workout,
 > with parameters different than the predefined ones,
-> in the **Generic** tab builds.
+> in the **Generic** tab.
 
 Press the **Start** button to transition to the **Workout** screen.
 
@@ -207,7 +207,7 @@ so the next visit starts with the last values set
 The **Workout** screen cycles through the defined phases:
 
 - interval workouts: warm up → ( (effort → rest) × repetitions ) → cool down → end of workout;
-- generic workouts: warm up → ( phases as defined in the plan) → cool down → end of workout.
+- generic workouts: warm up → ( phases as defined in the plan ) → cool down → end of workout.
 
 Immediately below a screenshots of each phase:
 
@@ -351,7 +351,7 @@ if a browser lacks support for a feature,
 that feature is skipped and the timer itself is unaffected.
 
 On iOS the way to get a full-screen session
-is to install dolfin to the home screen,
+is to install **dolfin** to the home screen,
 where it opens without browser chrome anyway.
 
 
