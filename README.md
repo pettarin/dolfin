@@ -333,7 +333,7 @@ so it does not drift if the tab is backgrounded.
 ├── Makefile
 ├── README.md                           <- this README file
 ├── res                                 <- example plans, in the Generic tab syntax
-│   └── british_rowing_org
+│   └── britishrowing_org
 └── VERSION                             <- version of dolfin
 ```
 
