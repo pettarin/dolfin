@@ -23,8 +23,9 @@ All notable changes to this project will be documented in this file.
 - Example workout plans, in the `res/` directory.
 - Generic programs on the "Programs" tab: a program is now either an
   interval block, as before, or a workout written out phase by phase in the
-  syntax the "Generic" tab takes. The two British Rowing intermediate
-  sessions in the `res/` directory are the first of them.
+  syntax the "Generic" tab takes. The forty-six British Rowing sessions in
+  the `res/` directory all come as programs of that kind, in a group per
+  level: Beginner, then Intermediate, then Advanced.
 
 ### Changed
 

@@ -81,14 +81,19 @@ Under **Intervals**:
 | `(02:00 + 01:00) x 30` |                         |
 | `(02:00 + 01:00) x 40` |                         |
 
-Under **britishrowing.org**, from the
-[British Rowing](https://www.britishrowing.org) intermediate training programme
-(the same sessions the `res/` directory holds as plain text):
+Then the eight-week indoor rowing programmes published by
+[British Rowing](https://www.britishrowing.org),
+one group per level and in the order they are meant to be worked through:
 
-| Program                             | Description                           |
-| ----------------------------------- | ------------------------------------- |
-| `Intermediate - Week 1 - Session 1` | 5 x 2:00 at 20, 22, 24, 22, 20 spm    |
-| `Intermediate - Week 1 - Session 2` | 6 x (1:00 + 1:30), a 3:00 rest midway |
+| Group                              | Sessions | Description                                                   |
+| ---------------------------------- | -------- | ------------------------------------------------------------- |
+| `britishrowing.org - Beginner`     | 16       | low, medium and high intensity efforts, up to a 2000m row     |
+| `britishrowing.org - Intermediate` | 15       | stroke rate ladders to 26 spm, and sets of one-minute efforts |
+| `britishrowing.org - Advanced`     | 15       | ladders to 28 spm, and sharper sets, down to thirty seconds   |
+
+Each is listed as `Week 1 - Session 1` and so on,
+and each is the plan of the same name under `res/britishrowing.org/`,
+so any of them can be read, adapted, or pasted into the **Generic** tab.
 
 > [!TIP]
 > A program that is not in the list can always be written out by hand
@@ -332,7 +337,7 @@ so it does not drift if the tab is backgrounded.
 ├── LICENSE
 ├── Makefile
 ├── README.md                           <- this README file
-├── res                                 <- example plans, in the Generic tab syntax
+├── res                                 <- the plans behind the britishrowing.org programs
 │   └── britishrowing.org
 └── VERSION                             <- version of dolfin
 ```
