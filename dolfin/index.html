@@ -30,21 +30,61 @@
 
     <form id="setup-form" novalidate autocomplete="off">
       <div class="tabs" id="tabs" role="tablist" aria-label="Setup sections">
+        <button type="button" class="tab" id="tab-programs" role="tab"
+                aria-controls="panel-programs" aria-selected="true">Programs</button>
         <button type="button" class="tab" id="tab-intervals" role="tab"
-                aria-controls="panel-intervals" aria-selected="true">Intervals</button>
+                aria-controls="panel-intervals" aria-selected="false"
+                tabindex="-1">Intervals</button>
         <button type="button" class="tab" id="tab-generic" role="tab"
                 aria-controls="panel-generic" aria-selected="false"
                 tabindex="-1">Generic</button>
-        <button type="button" class="tab" id="tab-programs" role="tab"
-                aria-controls="panel-programs" aria-selected="false"
-                tabindex="-1">Programs</button>
         <button type="button" class="tab" id="tab-customization" role="tab"
                 aria-controls="panel-customization" aria-selected="false"
                 tabindex="-1">Customization</button>
       </div>
 
+      <div class="panel" id="panel-programs" role="tabpanel"
+           aria-labelledby="tab-programs">
+        <div class="field">
+          <label for="prog-warmup">Warm up time</label>
+          <div class="row">
+            <input class="slider" id="prog-warmup-range" type="range" min="0" max="300" step="5"
+                   value="60" aria-label="Warm up time in seconds">
+            <input id="prog-warmup" name="prog-warmup" type="text" inputmode="numeric"
+                   spellcheck="false" value="00:01:00" aria-describedby="prog-warmup-error">
+          </div>
+          <p class="error" id="prog-warmup-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="program">Program</label>
+          <!-- options and the groups they sit in are built from PROGRAMS in
+               dolfin.js, so the list lives in one place -->
+          <select id="program" name="program"></select>
+        </div>
+
+        <div class="field">
+          <label for="prog-cooldown">Cool down time</label>
+          <div class="row">
+            <input class="slider" id="prog-cooldown-range" type="range" min="0" max="300" step="5"
+                   value="60" aria-label="Cool down time in seconds">
+            <input id="prog-cooldown" name="prog-cooldown" type="text" inputmode="numeric"
+                   spellcheck="false" value="00:01:00" aria-describedby="prog-cooldown-error">
+          </div>
+          <p class="error" id="prog-cooldown-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <div class="row">
+            <label class="readonly-box" for="prog-summary-total">Session total</label>
+            <output class="readonly-box readonly-value" id="prog-summary-total"
+                    aria-live="polite">-</output>
+          </div>
+        </div>
+      </div>
+
       <div class="panel" id="panel-intervals" role="tabpanel"
-           aria-labelledby="tab-intervals">
+           aria-labelledby="tab-intervals" hidden>
         <div class="field">
           <label for="warmup">Warm up time</label>
           <div class="row">
@@ -152,46 +192,6 @@
           <div class="row">
             <label class="readonly-box" for="gen-summary-total">Session total</label>
             <output class="readonly-box readonly-value" id="gen-summary-total"
-                    aria-live="polite">-</output>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel" id="panel-programs" role="tabpanel"
-           aria-labelledby="tab-programs" hidden>
-        <div class="field">
-          <label for="prog-warmup">Warm up time</label>
-          <div class="row">
-            <input class="slider" id="prog-warmup-range" type="range" min="0" max="300" step="5"
-                   value="60" aria-label="Warm up time in seconds">
-            <input id="prog-warmup" name="prog-warmup" type="text" inputmode="numeric"
-                   spellcheck="false" value="00:01:00" aria-describedby="prog-warmup-error">
-          </div>
-          <p class="error" id="prog-warmup-error" hidden></p>
-        </div>
-
-        <div class="field">
-          <label for="program">Program</label>
-          <!-- options and the groups they sit in are built from PROGRAMS in
-               dolfin.js, so the list lives in one place -->
-          <select id="program" name="program"></select>
-        </div>
-
-        <div class="field">
-          <label for="prog-cooldown">Cool down time</label>
-          <div class="row">
-            <input class="slider" id="prog-cooldown-range" type="range" min="0" max="300" step="5"
-                   value="60" aria-label="Cool down time in seconds">
-            <input id="prog-cooldown" name="prog-cooldown" type="text" inputmode="numeric"
-                   spellcheck="false" value="00:01:00" aria-describedby="prog-cooldown-error">
-          </div>
-          <p class="error" id="prog-cooldown-error" hidden></p>
-        </div>
-
-        <div class="field">
-          <div class="row">
-            <label class="readonly-box" for="prog-summary-total">Session total</label>
-            <output class="readonly-box readonly-value" id="prog-summary-total"
                     aria-live="polite">-</output>
           </div>
         </div>

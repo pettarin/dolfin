@@ -30,7 +30,71 @@ There are two screens: the **Setup** screen and the **Workout** screen.
 ### Setup Screen
 
 It is split into four tabs:
-**Intervals**, **Generic**, **Programs**, and **Customization**.
+**Programs**, **Intervals**, **Generic**, and **Customization**.
+It opens on **Programs**, unless the last session was started
+from another one.
+
+#### Programs Tab
+
+![Programs Tab](imgs/setup_programs.png)
+
+The **"Programs"** tab lets the user pick one of the pre-defined workouts,
+plus optional warm up and cool down phases.
+
+A program is one of two kinds.
+An **interval** program is a block of effort and rest repeated,
+the same shape the **Intervals** tab builds;
+a **generic** program is a workout written out phase by phase,
+in the very syntax the **Workout plan** of the **Generic** tab takes,
+labels and all.
+Either way it is picked from a single combobox,
+where the programs are grouped by where they come from.
+
+Under **Intervals**:
+
+| Program                | Description             |
+| ---------------------- | ----------------------- |
+| `(01:30 + 00:30) x 5`  | effort + rest, repeated |
+| `(01:30 + 00:30) x 10` |                         |
+| `(01:30 + 00:30) x 15` |                         |
+| `(01:30 + 00:30) x 20` |                         |
+| `(01:30 + 00:30) x 30` |                         |
+| `(01:30 + 00:30) x 45` |                         |
+| `(01:30 + 00:30) x 60` |                         |
+| `(01:45 + 00:45) x 4`  |                         |
+| `(01:45 + 00:45) x 6`  |                         |
+| `(01:45 + 00:45) x 8`  |                         |
+| `(01:45 + 00:45) x 12` |                         |
+| `(01:45 + 00:45) x 16` |                         |
+| `(01:45 + 00:45) x 18` |                         |
+| `(01:45 + 00:45) x 20` |                         |
+| `(01:45 + 00:45) x 24` |                         |
+| `(01:45 + 00:45) x 30` |                         |
+| `(01:45 + 00:45) x 32` |                         |
+| `(01:45 + 00:45) x 36` |                         |
+| `(01:45 + 00:45) x 48` |                         |
+| `(02:00 + 01:00) x 5`  |                         |
+| `(02:00 + 01:00) x 10` |                         |
+| `(02:00 + 01:00) x 15` |                         |
+| `(02:00 + 01:00) x 20` |                         |
+| `(02:00 + 01:00) x 25` |                         |
+| `(02:00 + 01:00) x 30` |                         |
+| `(02:00 + 01:00) x 40` |                         |
+
+Under **britishrowing.org**, from the
+[British Rowing](https://www.britishrowing.org) intermediate training programme
+(the same sessions the `res/` directory holds as plain text):
+
+| Program                             | Description                           |
+| ----------------------------------- | ------------------------------------- |
+| `Intermediate - Week 1 - Session 1` | 5 x 2:00 at 20, 22, 24, 22, 20 spm    |
+| `Intermediate - Week 1 - Session 2` | 6 x (1:00 + 1:30), a 3:00 rest midway |
+
+> [!TIP]
+> A program that is not in the list can always be written out by hand
+> in the **Generic** tab.
+
+Press the **Start** button to transition to the Workout screen.
 
 #### Intervals Tab
 
@@ -120,68 +184,6 @@ are in the `res/` directory.
 
 If a line cannot be read, the **Session total** shows `—`,
 and pressing **Start** reports which line is at fault.
-
-Press the **Start** button to transition to the Workout screen.
-
-#### Programs Tab
-
-![Programs Tab](imgs/setup_programs.png)
-
-The **"Programs"** tab lets the user pick one of the pre-defined workouts,
-plus optional warm up and cool down phases.
-
-A program is one of two kinds.
-An **interval** program is a block of effort and rest repeated,
-the same shape the **Intervals** tab builds;
-a **generic** program is a workout written out phase by phase,
-in the very syntax the **Workout plan** of the **Generic** tab takes,
-labels and all.
-Either way it is picked from a single combobox,
-where the programs are grouped by where they come from.
-
-Under **Intervals**:
-
-| Program                | Description             |
-| ---------------------- | ----------------------- |
-| `(01:30 + 00:30) x 5`  | effort + rest, repeated |
-| `(01:30 + 00:30) x 10` |                         |
-| `(01:30 + 00:30) x 15` |                         |
-| `(01:30 + 00:30) x 20` |                         |
-| `(01:30 + 00:30) x 30` |                         |
-| `(01:30 + 00:30) x 45` |                         |
-| `(01:30 + 00:30) x 60` |                         |
-| `(01:45 + 00:45) x 4`  |                         |
-| `(01:45 + 00:45) x 6`  |                         |
-| `(01:45 + 00:45) x 8`  |                         |
-| `(01:45 + 00:45) x 12` |                         |
-| `(01:45 + 00:45) x 16` |                         |
-| `(01:45 + 00:45) x 18` |                         |
-| `(01:45 + 00:45) x 20` |                         |
-| `(01:45 + 00:45) x 24` |                         |
-| `(01:45 + 00:45) x 30` |                         |
-| `(01:45 + 00:45) x 32` |                         |
-| `(01:45 + 00:45) x 36` |                         |
-| `(01:45 + 00:45) x 48` |                         |
-| `(02:00 + 01:00) x 5`  |                         |
-| `(02:00 + 01:00) x 10` |                         |
-| `(02:00 + 01:00) x 15` |                         |
-| `(02:00 + 01:00) x 20` |                         |
-| `(02:00 + 01:00) x 25` |                         |
-| `(02:00 + 01:00) x 30` |                         |
-| `(02:00 + 01:00) x 40` |                         |
-
-Under **britishrowing.org**, from the
-[British Rowing](https://www.britishrowing.org) intermediate training programme
-(the same sessions the `res/` directory holds as plain text):
-
-| Program                             | Description                           |
-| ----------------------------------- | ------------------------------------- |
-| `Intermediate - Week 1 - Session 1` | 5 x 2:00 at 20, 22, 24, 22, 20 spm    |
-| `Intermediate - Week 1 - Session 2` | 6 x (1:00 + 1:30), a 3:00 rest midway |
-
-> [!TIP]
-> A program that is not in the list can always be written out by hand
-> in the **Generic** tab.
 
 Press the **Start** button to transition to the Workout screen.
 

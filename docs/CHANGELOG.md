@@ -39,9 +39,9 @@ All notable changes to this project will be documented in this file.
 - The five phase colours now sit in a "Colours" box of their own on the
   "Customizations" tab, their labels dropping the word "colour", and the
   "Default colours" button is now "Reset colours".
-- The setup screen is now split in four tabs: "Intervals", "Generic",
-  "Programs", and "Customizations"; the tab strip wraps to two rows
-  on a narrow screen.
+- The setup screen is now split in four tabs: "Programs", "Intervals",
+  "Generic", and "Customizations"; it opens on "Programs" rather than on
+  "Intervals", and the tab strip wraps to two rows on a narrow screen.
 - The "Allow skipping phase" setting is now on by default,
   so the "Skip" button is there unless it is cleared.
 - Every program now carries the label it is listed by, rather than having one

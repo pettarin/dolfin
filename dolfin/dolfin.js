@@ -135,7 +135,7 @@
     // on the same workout; falls back to the first entry if it ever leaves
     // the list
     program: Math.max(0, findIntervals({ reps: 24, effort: 105, rest: 45 })),
-    config: 'intervals', // the tab whose settings Start will run
+    config: 'programs', // the tab whose settings Start will run
     notice: 5, // seconds of blinking and blips before a phase ends
     fullscreen: true,
     allowSkip: true, // the Skip button on the timer screen, until it is cleared
@@ -171,25 +171,25 @@
 
   // both lists follow the on-screen order, so the first invalid field gets focus
   const TIME_FIELDS = [
-    'warmup', 'effort', 'rest', 'cooldown', 'gen-warmup', 'gen-cooldown',
-    'prog-warmup', 'prog-cooldown', 'notice',
+    'prog-warmup', 'prog-cooldown', 'warmup', 'effort', 'rest', 'cooldown',
+    'gen-warmup', 'gen-cooldown', 'notice',
   ];
   // the plan rides along: it has an error box, a tab to be revealed in and a
   // total to keep live, like every other field, it just holds no single value
   const ALL_FIELDS = [
-    'warmup', 'reps', 'effort', 'rest', 'cooldown', 'gen-warmup', 'plan', 'gen-cooldown',
-    'prog-warmup', 'prog-cooldown', 'notice',
+    'prog-warmup', 'prog-cooldown', 'warmup', 'reps', 'effort', 'rest', 'cooldown',
+    'gen-warmup', 'plan', 'gen-cooldown', 'notice',
   ];
 
   // shown as a bare number rather than hh:mm:ss
   const PLAIN_FIELDS = ['reps', 'notice'];
 
   // the setup form is split in four panels; the first one is shown on load
-  const TABS = ['intervals', 'generic', 'programs', 'customization'];
+  const TABS = ['programs', 'intervals', 'generic', 'customization'];
 
   // the three panels that describe a session; Customization only holds
   // preferences, so visiting it leaves the choice of which one Start runs alone
-  const CONFIG_TABS = ['intervals', 'generic', 'programs'];
+  const CONFIG_TABS = ['programs', 'intervals', 'generic'];
 
   // which panel holds each field, so a failed validation can reveal it
   const FIELD_TAB = {
@@ -1261,7 +1261,7 @@
     showErrors({});
     updateSummary();
     selectTab(TABS[0]);
-    els.reps.focus();
+    els[CONFIG_FIELDS[TABS[0]].focus].focus();
   });
 
   ALL_FIELDS.forEach((f) => {
