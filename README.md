@@ -196,7 +196,7 @@ or **Programs** workouts:
 | Control                    | Default                 |
 | -------------------------- | ----------------------- |
 | Launch full screen         | `True`                  |
-| Allow skipping phase       | `False`                 |
+| Allow skipping phase       | `True`                  |
 | Transition notice time (s) | `00:00:05`              |
 
 The five phase colours sit in a **Colours** box of their own:

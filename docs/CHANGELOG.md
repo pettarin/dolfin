@@ -42,6 +42,8 @@ All notable changes to this project will be documented in this file.
 - The setup screen is now split in four tabs: "Intervals", "Generic",
   "Programs", and "Customizations"; the tab strip wraps to two rows
   on a narrow screen.
+- The "Allow skipping phase" setting is now on by default,
+  so the "Skip" button is there unless it is cleared.
 - Every program now carries the label it is listed by, rather than having one
   derived from its times, and the "Program" combobox groups the programs by
   where they come from. The labels of the interval programs consequently drop

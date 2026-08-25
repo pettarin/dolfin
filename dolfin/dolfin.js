@@ -138,7 +138,7 @@
     config: 'intervals', // the tab whose settings Start will run
     notice: 5, // seconds of blinking and blips before a phase ends
     fullscreen: true,
-    allowSkip: false, // opt in to the Skip button on the timer screen
+    allowSkip: true, // the Skip button on the timer screen, until it is cleared
     colors: Object.assign({}, PHASE_COLORS),
   };
 
