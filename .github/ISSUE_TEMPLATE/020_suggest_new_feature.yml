@@ -1,0 +1,82 @@
+name: Suggest a new feature
+description: File a report suggesting a new feature.
+title: "[NewFeature]: "
+labels: ["enhancement", "feature", "idea", "triage"]
+projects: []
+assignees: []
+type: enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this report suggesting a new feature!
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the new feature or enhancement you would like to suggest.
+      placeholder: I would like to be able to do this and that.
+      value: I would like to be able to do this and that.
+    validations:
+      required: true
+  - type: dropdown
+    id: roles
+    attributes:
+      label: Is the new feature or enhancement specific to certain roles of dolfin? Select one or more options.
+      multiple: true
+      options:
+        - Users
+        - Maintainers
+        - (any)
+        - (other)
+      default: 3
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: Is the new feature or enhancement specific to certain browsers? Select one or more options.
+      multiple: true
+      options:
+        - Chrome
+        - Edge
+        - Firefox
+        - Safari
+        - (any)
+        - (other)
+      default: 4
+    validations:
+      required: true
+  - type: dropdown
+    id: oses
+    attributes:
+      label: Is the new feature or enhancement specific to certain operating systems? Select one or more options.
+      multiple: true
+      options:
+        - Android
+        - Linux
+        - MacOS
+        - Windows
+        - iOS
+        - iPadOS
+        - (any)
+        - (other)
+      default: 6
+    validations:
+      required: true
+  - type: checkboxes
+    id: agreetococ
+    attributes:
+      label: Code Of Conduct
+      description: By submitting this report, you agree to follow the [Code of Conduct of dolfin](https://github.com/pettarin/dolfin?tab=coc-ov-file).
+      options:
+        - label: I agree to follow the Code of Conduct of dolfin
+          required: true
+  - type: upload
+    id: screenshotsorvideos
+    attributes:
+      label: Upload Screenshots/Videos
+      description: If relevant, please upload screenshots and/or videos to help explain the new feature or enhancement.
+    validations:
+      required: false
+
