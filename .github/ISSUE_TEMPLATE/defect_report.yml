@@ -1,4 +1,4 @@
-name: Defect Report
+name: Report a defect (bug)
 description: File a report for a defect.
 title: "[Defect]: "
 labels: ["bug", "defect", "triage"]
