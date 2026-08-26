@@ -4,7 +4,7 @@ By submitting this pull request:
 
 - I have read, understood, and followed the [rules for contributing code](https://github.com/pettarin/dolfin?tab=contributing-ov-file);
 - I agree to follow the [Code of Conduct of dolfin](https://github.com/pettarin/dolfin?tab=coc-ov-file);
-- I agree to apply to my contributions the terms of the current [LICENSE](https://github.com/pettarin/dolfin/blob/main/LICENSE).
+- I agree to apply the terms of the current [LICENSE](https://github.com/pettarin/dolfin/blob/main/LICENSE) to my contributions.
 
 ## Scope Of This Pull Request
 
