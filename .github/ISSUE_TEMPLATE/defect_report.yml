@@ -1,5 +1,5 @@
-name: Defect Report
-description: File a report for a defect.
+name: "Defect Report"
+description: "File a report for a defect."
 title: "[Defect]: "
 labels: ["bug", "defect", "triage"]
 projects: []
