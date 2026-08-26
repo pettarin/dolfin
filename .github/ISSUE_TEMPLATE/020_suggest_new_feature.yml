@@ -20,12 +20,12 @@ body:
     validations:
       required: true
   - type: textarea
-    id: motivation
+    id: rationale
     attributes:
-      label: Usefulness
-      description: Describe the reason you think the new feature or enhancement would be useful.
-      placeholder: I use dolfin in this and that specif way, and this would help me with this and that.
-      value: I use dolfin in this and that specif way, and this would help me with this and that.
+      label: Rationale
+      description: Describe why you think the new feature or enhancement should be implemented.
+      placeholder: This new feature would help me with this and that.
+      value: This new feature would help me with this and that.
     validations:
       required: true
   - type: dropdown
@@ -34,11 +34,12 @@ body:
       label: Is the new feature or enhancement specific to certain roles of dolfin? Select one or more options.
       multiple: true
       options:
-        - Users
         - Maintainers
+        - Users
+        - Perspective Users
         - (any)
         - (other)
-      default: 2
+      default: 3
     validations:
       required: true
   - type: dropdown
