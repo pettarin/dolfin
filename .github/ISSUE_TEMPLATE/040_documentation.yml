@@ -1,0 +1,76 @@
+name: Suggest a documentation change
+description: File a report suggesting a change to the documentation.
+title: "[Docs]: "
+labels: ["documentation", "docs", "triage"]
+projects: []
+assignees: []
+type: documentation
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a change to the documentation!
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the change to the documentation you would like to suggest.
+      placeholder: I would like to have this bit of information described in place X and/or file Y.
+      value: I would like to have this bit of information described in place X and/or file Y.
+    validations:
+      required: true
+  - type: dropdown
+    id: roles
+    attributes:
+      label: Is the documentation change specific to certain roles of dolfin? Select one or more options.
+      multiple: true
+      options:
+        - Maintainers
+        - Users
+        - Perspective Users
+        - (any)
+        - (other)
+      default: 3
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: Is the documentation change specific to certain browsers? Select one or more options.
+      multiple: true
+      options:
+        - Chrome
+        - Edge
+        - Firefox
+        - Safari
+        - (any)
+        - (other)
+      default: 4
+    validations:
+      required: true
+  - type: dropdown
+    id: oses
+    attributes:
+      label: Is the documentation change specific to certain operating systems? Select one or more options.
+      multiple: true
+      options:
+        - Android
+        - Linux
+        - MacOS
+        - Windows
+        - iOS
+        - iPadOS
+        - (any)
+        - (other)
+      default: 6
+    validations:
+      required: true
+  - type: checkboxes
+    id: agreetococ
+    attributes:
+      label: Code Of Conduct
+      description: By submitting this report, you agree to follow the [Code of Conduct of dolfin](https://github.com/pettarin/dolfin?tab=coc-ov-file).
+      options:
+        - label: I agree to follow the Code of Conduct of dolfin
+          required: true
+
