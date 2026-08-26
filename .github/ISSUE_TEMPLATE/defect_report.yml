@@ -1,5 +1,5 @@
-name: "Defect Report"
-description: "File a report for a defect."
+name: Defect Report
+description: File a report for a defect.
 title: "[Defect]: "
 labels: ["bug", "defect", "triage"]
 projects: []
@@ -16,7 +16,7 @@ body:
       label: Symptoms
       description: Describe what went wrong, along with the steps to reproduce it.
       placeholder: I did this and that, and this problem happened.
-      value: ""
+      value: I did this and that, and this problem happened.
     validations:
       required: true
   - type: textarea
@@ -25,7 +25,7 @@ body:
       label: Expected Behavior
       description: Describe what you expected to happen instead.
       placeholder: I expected this to happen instead.
-      value: ""
+      value: I expected this to happen instead.
     validations:
       required: true
   - type: dropdown
