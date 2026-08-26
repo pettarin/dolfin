@@ -14,9 +14,12 @@ This pull request addresses Issue #REPLACE_ID_HERE (get the ID from https://gith
 
 ## Performed Tests
 
-I tested the changes on the following browsers and devices/operating systems:
+The changes in this pull request have been tested on the following browsers and devices/operating systems:
 
 - LIST
 - THEM
 - HERE
 
+## Additional Notes
+
+(Optional) Add any relevant additional remarks here.
