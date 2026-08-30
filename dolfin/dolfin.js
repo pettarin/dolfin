@@ -628,6 +628,9 @@
     notice: 5, // seconds of blinking and blips before a phase ends
     fullscreen: true,
     allowSkip: true, // the Skip button on the timer screen, until it is cleared
+    // the workout screen in equal bands rather than two thirds phase, one third
+    // session; off, so the phase keeps the room it has by default
+    biggerPanel: false,
     colors: Object.assign({}, PHASE_COLORS),
   };
 
@@ -763,6 +766,7 @@
     pausedOverlay: $('paused-overlay'),
     fullscreen: $('fullscreen'),
     allowSkip: $('allow-skip'),
+    biggerPanel: $('bigger-panel'),
     defaultColorsBtn: $('default-colors-btn'),
     fsBtn: $('fs-btn'),
     skipBtn: $('skip-btn'),
@@ -1064,6 +1068,7 @@
 
     read.values.fullscreen = els.fullscreen.checked === true;
     read.values.allowSkip = els.allowSkip.checked === true;
+    read.values.biggerPanel = els.biggerPanel.checked === true;
 
     return read;
   }
@@ -1136,6 +1141,7 @@
     els.program.value = String(cfg.program);
     els.fullscreen.checked = cfg.fullscreen !== false;
     els.allowSkip.checked = cfg.allowSkip === true;
+    els.biggerPanel.checked = cfg.biggerPanel === true;
     COLOR_FIELDS.forEach((k) => {
       els['color-' + k].value = cfg.colors[k];
     });
@@ -1162,6 +1168,7 @@
     cfg.config = activeConfig;
     cfg.fullscreen = els.fullscreen.checked === true;
     cfg.allowSkip = els.allowSkip.checked === true;
+    cfg.biggerPanel = els.biggerPanel.checked === true;
     cfg.colors = readColors();
 
     return cfg;
@@ -1220,6 +1227,7 @@
     if (CONFIG_TABS.indexOf(stored.config) !== -1) cfg.config = stored.config;
     if (typeof stored.fullscreen === 'boolean') cfg.fullscreen = stored.fullscreen;
     if (typeof stored.allowSkip === 'boolean') cfg.allowSkip = stored.allowSkip;
+    if (typeof stored.biggerPanel === 'boolean') cfg.biggerPanel = stored.biggerPanel;
     // each colour is checked on its own, so one bad entry cannot lose the rest
     if (stored.colors && typeof stored.colors === 'object') {
       COLOR_FIELDS.forEach((k) => {
@@ -1518,6 +1526,9 @@
 
     els.endBtn.textContent = 'Stop';
     els.skipBtn.hidden = !cfg.allowSkip;
+    // set and cleared here, so a session started with the setting off always
+    // opens on the bands the stylesheet gives by default
+    els.session.classList.toggle('bigger-panel', cfg.biggerPanel === true);
     updateFsButton();
     els.pausedOverlay.hidden = true;
     els.session.classList.remove('urgent');

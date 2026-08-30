@@ -484,6 +484,32 @@ body.screen-session {
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
+  /* every reading on this screen is capped in vh, and each cap is set for the
+     band that holds it, so the caps travel with the split: these are the ones
+     the bands above are due. The rules that spend them are at the end of this
+     section, and nothing else moves with the split -- the width caps there
+     answer to the width, which the split leaves alone. */
+  --cap-counter: 13vh;
+  --cap-counter-done: 7.5vh;
+  --cap-counter-long: 10.5vh;
+  --cap-countdown: 33vh;
+  --cap-countdown-long: 24vh;
+  --cap-reading: 20vh;
+}
+
+/* the "Bigger progress panel" setting: two equal bands instead, the session
+   taking half the height and the phase the other half. The top band loses a
+   quarter of its height and the bottom one gains a half, so each cap moves the
+   same way -- back to what these were before the phase was given two thirds of
+   the screen. */
+.session.bigger-panel {
+  grid-template-rows: 1fr 1fr;
+  --cap-counter: 20vh;
+  --cap-counter-done: 11vh;
+  --cap-counter-long: 16vh;
+  --cap-countdown: 25vh;
+  --cap-countdown-long: 18vh;
+  --cap-reading: 15vh;
 }
 
 .half {
@@ -596,7 +622,7 @@ body.screen-session {
 
 .countdown {
   font-family: var(--mono);
-  font-size: min(33vh, 27vw);
+  font-size: min(var(--cap-countdown), 27vw);
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
@@ -605,7 +631,7 @@ body.screen-session {
 
 .rep-counter {
   font-family: var(--mono);
-  font-size: min(13vh, 16vw);
+  font-size: min(var(--cap-counter), 16vw);
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
@@ -631,15 +657,15 @@ body.screen-session {
 
 /* long readings (hour-long phases, three-digit reps) step down a size so they
    never run out of the bar on a narrow screen */
-.countdown.long   { font-size: min(24vh, 13vw); }
-.rep-counter.long { font-size: min(10.5vh, 11vw); }
+.countdown.long   { font-size: min(var(--cap-countdown-long), 13vw); }
+.rep-counter.long { font-size: min(var(--cap-counter-long), 11vw); }
 /* carrying a label, the bar holds two lines -- the countdown, and the label under
    it -- both in one size, so the label stands exactly as tall as the countdown.
    That size is the tightest of three limits: the height the two lines and the gap
    between them have to share, the width the countdown needs, and the width the
    label needs, which is what the session code counts its characters for. */
 .phase-bar.labelled {
-  --reading: min(20vh, 27vw, calc(140vw / var(--label-chars, 8)));
+  --reading: min(var(--cap-reading), 27vw, calc(140vw / var(--label-chars, 8)));
 }
 
 /* the countdown on top, the label under it, parted by a gap in their own size */
@@ -653,7 +679,7 @@ body.screen-session {
 
 /* "Workout Completed" is seventeen characters, half again as long as the widest
    reading the counter otherwise shows, so the finished state drops a step more */
-body.phase-done .rep-counter { font-size: min(7.5vh, 8vw); }
+body.phase-done .rep-counter { font-size: min(var(--cap-counter-done), 8vw); }
 
 @media (prefers-reduced-motion: no-preference) {
   .session.urgent .countdown { animation: throb 1s ease-in-out infinite; }
