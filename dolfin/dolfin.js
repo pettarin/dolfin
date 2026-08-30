@@ -1501,6 +1501,15 @@
     return 'next: ' + LABEL[next.kind] + ' ' + formatClock(next.ms / 1000);
   }
 
+  /** The caption of the phase being run. With the panel hidden the repetition
+      it belongs to has nowhere else to be shown, so it rides here instead --
+      "EFFORT 2/5" -- written tight, the header being a narrow place. */
+  function phaseCaption(seg) {
+    const name = LABEL[seg.kind];
+    if (!session.panelHidden || !seg.rep) return name;
+    return name + ' ' + seg.rep + '/' + session.reps;
+  }
+
   function repLabel(seg) {
     return seg.rep ? seg.rep + ' / ' + session.reps : '';
   }
@@ -1514,6 +1523,9 @@
       totalMs: timeline.totalMs,
       reps: cfg.reps,
       notice: cfg.notice,
+      // with the panel hidden the counter it carries has nowhere to go, so the
+      // caption takes it in -- see phaseCaption()
+      panelHidden: cfg.progressPanel === 'hide',
       startedAt: performance.now(),
       pausedAt: null,
       pausedAccum: 0,
@@ -1587,7 +1599,7 @@
       cue.blip();
     }
 
-    setText(els.phaseName, LABEL[seg.kind]);
+    setText(els.phaseName, phaseCaption(seg));
     setReading(formatClock(remainSec), seg.label);
     setBigText(els.repCounter, repLabel(seg), 7);
     setText(els.nextUp, nextLabel(session.index));

@@ -18,7 +18,8 @@ All notable changes to this project will be documented in this file.
   is the third of the height it has always had; "Large" splits the screen
   into two equal bands; "Hide" drops the panel altogether, leaving the phase
   the screen down to the buttons. Every reading is sized for the room its
-  band has under the value chosen.
+  band has under the value chosen, and under "Hide" the phase caption takes
+  in the repetition the panel would have carried, as "EFFORT 2/5".
 
 
 ## [3.0.0] - 2026-08-24
