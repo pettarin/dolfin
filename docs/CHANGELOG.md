@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- The "Show progress panel" setting in the "Customization" tab, choosing how
+- The "Progress panel" setting in the "Customization" tab, choosing how
   much of the Workout screen the session panel takes: "Small", the default,
   is the third of the height it has always had; "Large" splits the screen
   into two equal bands; "Hide" drops the panel altogether, leaving the phase
