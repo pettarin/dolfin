@@ -13,10 +13,12 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- The "Show bigger progress panel" setting in the "Customization" tab, off by
-  default: with it on, the Workout screen is split into two equal bands,
-  the session taking half the height instead of a third, and every reading
-  in each band is sized for the room it has.
+- The "Show progress panel" setting in the "Customization" tab, choosing how
+  much of the Workout screen the session panel takes: "Small", the default,
+  is the third of the height it has always had; "Large" splits the screen
+  into two equal bands; "Hide" drops the panel altogether, leaving the phase
+  the screen down to the buttons. Every reading is sized for the room its
+  band has under the value chosen.
 
 
 ## [3.0.0] - 2026-08-24

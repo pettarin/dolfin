@@ -628,9 +628,9 @@
     notice: 5, // seconds of blinking and blips before a phase ends
     fullscreen: true,
     allowSkip: true, // the Skip button on the timer screen, until it is cleared
-    // the workout screen in equal bands rather than two thirds phase, one third
-    // session; off, so the phase keeps the room it has by default
-    biggerPanel: false,
+    // how much of the workout screen the session panel takes, one of PANELS;
+    // 'small' is the third of the height it has always had
+    progressPanel: 'small',
     colors: Object.assign({}, PHASE_COLORS),
   };
 
@@ -678,6 +678,11 @@
 
   // the setup form is split in four panels; the first one is shown on load
   const TABS = ['programs', 'intervals', 'generic', 'customization'];
+
+  // what the session panel on the workout screen can be: gone, half the height,
+  // or the third it takes by default. Only ever checked against, so the order
+  // here is the lexicographic one, not the dropdown's none-to-most
+  const PANELS = ['hide', 'large', 'small'];
 
   // the three panels that describe a session; Customization only holds
   // preferences, so visiting it leaves the choice of which one Start runs alone
@@ -766,7 +771,7 @@
     pausedOverlay: $('paused-overlay'),
     fullscreen: $('fullscreen'),
     allowSkip: $('allow-skip'),
-    biggerPanel: $('bigger-panel'),
+    progressPanel: $('progress-panel'),
     defaultColorsBtn: $('default-colors-btn'),
     fsBtn: $('fs-btn'),
     skipBtn: $('skip-btn'),
@@ -1068,7 +1073,7 @@
 
     read.values.fullscreen = els.fullscreen.checked === true;
     read.values.allowSkip = els.allowSkip.checked === true;
-    read.values.biggerPanel = els.biggerPanel.checked === true;
+    read.values.progressPanel = els.progressPanel.value;
 
     return read;
   }
@@ -1141,7 +1146,7 @@
     els.program.value = String(cfg.program);
     els.fullscreen.checked = cfg.fullscreen !== false;
     els.allowSkip.checked = cfg.allowSkip === true;
-    els.biggerPanel.checked = cfg.biggerPanel === true;
+    els.progressPanel.value = cfg.progressPanel;
     COLOR_FIELDS.forEach((k) => {
       els['color-' + k].value = cfg.colors[k];
     });
@@ -1168,7 +1173,7 @@
     cfg.config = activeConfig;
     cfg.fullscreen = els.fullscreen.checked === true;
     cfg.allowSkip = els.allowSkip.checked === true;
-    cfg.biggerPanel = els.biggerPanel.checked === true;
+    cfg.progressPanel = els.progressPanel.value;
     cfg.colors = readColors();
 
     return cfg;
@@ -1227,7 +1232,7 @@
     if (CONFIG_TABS.indexOf(stored.config) !== -1) cfg.config = stored.config;
     if (typeof stored.fullscreen === 'boolean') cfg.fullscreen = stored.fullscreen;
     if (typeof stored.allowSkip === 'boolean') cfg.allowSkip = stored.allowSkip;
-    if (typeof stored.biggerPanel === 'boolean') cfg.biggerPanel = stored.biggerPanel;
+    if (PANELS.indexOf(stored.progressPanel) !== -1) cfg.progressPanel = stored.progressPanel;
     // each colour is checked on its own, so one bad entry cannot lose the rest
     if (stored.colors && typeof stored.colors === 'object') {
       COLOR_FIELDS.forEach((k) => {
@@ -1526,9 +1531,10 @@
 
     els.endBtn.textContent = 'Stop';
     els.skipBtn.hidden = !cfg.allowSkip;
-    // set and cleared here, so a session started with the setting off always
-    // opens on the bands the stylesheet gives by default
-    els.session.classList.toggle('bigger-panel', cfg.biggerPanel === true);
+    // both set and cleared here, so a session started on one value never opens
+    // wearing another's; 'small' is the bands the stylesheet gives by default
+    els.session.classList.toggle('panel-large', cfg.progressPanel === 'large');
+    els.session.classList.toggle('panel-hide', cfg.progressPanel === 'hide');
     updateFsButton();
     els.pausedOverlay.hidden = true;
     els.session.classList.remove('urgent');

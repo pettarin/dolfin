@@ -486,7 +486,7 @@ body.screen-session {
   -webkit-user-select: none;
   /* every reading on this screen is capped in vh, and each cap is set for the
      band that holds it, so the caps travel with the split: these are the ones
-     the bands above are due. The rules that spend them are at the end of this
+     the bands above are due, the "Small" the setting opens on. The rules that spend them are at the end of this
      section, and nothing else moves with the split -- the width caps there
      answer to the width, which the split leaves alone. */
   --cap-counter: 13vh;
@@ -497,12 +497,12 @@ body.screen-session {
   --cap-reading: 20vh;
 }
 
-/* the "Show bigger progress panel" setting: two equal bands instead, the session
-   taking half the height and the phase the other half. The top band loses a
-   quarter of its height and the bottom one gains a half, so each cap moves the
-   same way -- back to what these were before the phase was given two thirds of
-   the screen. */
-.session.bigger-panel {
+/* "Large", from the "Show progress panel" setting: two equal bands instead, the
+   session taking half the height and the phase the other half. The top band
+   loses a quarter of its height and the bottom one gains a half, so each cap
+   moves the same way -- back to what these were before the phase was given two
+   thirds of the screen. */
+.session.panel-large {
   grid-template-rows: 1fr 1fr;
   --cap-counter: 20vh;
   --cap-counter-done: 11vh;
@@ -511,6 +511,22 @@ body.screen-session {
   --cap-countdown-long: 18vh;
   --cap-reading: 15vh;
 }
+
+/* "Hide": no strip at all, so the phase band runs down to the footer, which
+   stays -- the time left and the buttons live in it. The readings it holds gain
+   half again the height the bands above leave them, and the counter caps are
+   left out: nothing they size is on screen. */
+.session.panel-hide {
+  grid-template-rows: 1fr auto;
+  --cap-countdown: 50vh;
+  --cap-countdown-long: 36vh;
+  --cap-reading: 30vh;
+}
+
+/* the strip, the veil, and the counter drawn over them go together; the footer
+   under them is then the only row the band has, and wants no gap above it */
+.session.panel-hide .overall-bar { display: none; }
+.session.panel-hide .half-bottom { grid-template-rows: auto; }
 
 .half {
   display: grid;
