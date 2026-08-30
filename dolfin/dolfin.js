@@ -1213,7 +1213,6 @@
     }
     const found = findProgram(stored.program);
     if (found !== -1) cfg.program = found;
-    // 3.0.0 development builds stored a bare index; honour one that still fits
     else if (Number.isInteger(stored.program) && stored.program >= 0
              && stored.program < PROGRAMS.length) {
       cfg.program = stored.program;

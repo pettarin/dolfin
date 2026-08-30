@@ -34,7 +34,8 @@ body:
       label: Version
       description: What version of dolfin are you using?
       options:
-        - 3.0.0 (latest release)
+        - 3.1.0 (latest release)
+        - 3.0.0
         - 2.0.0
         - 1.0.0
         - main
