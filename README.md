@@ -151,8 +151,9 @@ to the **Workout** screen for all types of workout
 
 | Control                    | Default    |
 | -------------------------- | ---------- |
-| Launch full screen         | `True`     |
 | Allow skipping phase       | `True`     |
+| Launch full screen         | `True`     |
+| Progress panel             | `Small`    |
 | Transition notice time (s) | `00:00:05` |
 
 The **Transition notice time** setting represents
