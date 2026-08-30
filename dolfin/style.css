@@ -497,7 +497,7 @@ body.screen-session {
   --cap-reading: 20vh;
 }
 
-/* the "Bigger progress panel" setting: two equal bands instead, the session
+/* the "Show bigger progress panel" setting: two equal bands instead, the session
    taking half the height and the phase the other half. The top band loses a
    quarter of its height and the bottom one gains a half, so each cap moves the
    same way -- back to what these were before the phase was given two thirds of

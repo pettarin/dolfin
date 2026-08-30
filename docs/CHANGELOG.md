@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- The "Bigger progress panel" setting in the "Customization" tab, off by
+- The "Show bigger progress panel" setting in the "Customization" tab, off by
   default: with it on, the Workout screen is split into two equal bands,
   the session taking half the height instead of a third, and every reading
   in each band is sized for the room it has.
