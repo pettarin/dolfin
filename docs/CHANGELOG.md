@@ -11,6 +11,13 @@ All notable changes to this project will be documented in this file.
 
 ## [3.1.1] - 2026-10-19
 
+### Changed
+
+- Leaving the Workout screen, by "Stop", "Home" or Escape, now puts the
+  focus on the selected tab of the setup screen instead of its first field,
+  so that on a phone or tablet the on-screen keyboard no longer pops up and
+  hides most of the screen.
+
 
 ## [3.1.0] - 2026-08-30
 

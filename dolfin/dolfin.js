@@ -1690,7 +1690,9 @@
       delete els.body.dataset.phase;
     }
     selectTab(activeConfig);
-    els[CONFIG_FIELDS[activeConfig].focus].focus({ preventScroll: true });
+    // the tab, not a field: focusing a field summons the on-screen keyboard,
+    // which on a tablet held sideways hides most of the screen
+    els[activeConfig + 'Tab'].focus({ preventScroll: true });
   }
 
   // -- setup tabs ---------------------------------------------------------
